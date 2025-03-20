@@ -1,0 +1,44 @@
+﻿@model Factory.DAL.Models.Warehouses.MainWarehouse
+
+@{
+    ViewData["Title"] = "Manage Sub-Warehouses";
+    Layout = "_LogedUser";
+
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+
+    @await Html.PartialAsync("_PageTitle")
+
+    <div class="mb-3">
+        <a href="@Url.Action("CreateSubWarehouse", new { mainWarehouseId = Model.Id })" class="btn btn-outline-primary">Create New Sub-Warehouse</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name (EN)</th>
+                <th>Name (AR)</th>
+                <th>Address (EN)</th>
+                <th>Address (AR)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subWarehouse in Model.SubWarehouses)
+            {
+                <tr>
+                    <td>@subWarehouse.NameEn</td>
+                    <td>@subWarehouse.NameAr</td>
+                    <td>@subWarehouse.AddressEn</td>
+                    <td>@subWarehouse.AddressAr</td>
+                    <td>
+                        <a href="@Url.Action("EditSubWarehouse", new { id = subWarehouse.Id })" class="btn btn-outline-warning btn-sm">Edit</a>
+                        <a href="@Url.Action("DeleteSubWarehouse", new { id = subWarehouse.Id })" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

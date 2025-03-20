@@ -1,0 +1,32 @@
+﻿@model Factory.PL.ViewModels.Settings.SettingsViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+
+    @await Html.PartialAsync("_PageTitle")
+
+
+    <form asp-action="Create">
+        <input type="hidden" asp-for="UserId" /> <!-- Hidden field for UserId -->
+
+        <partial name="_SettingsForm" model="Model" />
+
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="bi bi-save me-2"></i> Save
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-2"></i> Back to List
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

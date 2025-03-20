@@ -1,0 +1,43 @@
+﻿@model Factory.PL.ViewModels.Home.PartnerViewModel
+
+@{
+    ViewData["Title"] = "Create Partner";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="LogoFile" class="form-label">Logo</label>
+            <input asp-for="LogoFile"  class="form-control" />
+            <span asp-validation-for="LogoFile" class="text-danger"></span>
+        </div>
+
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-outline-secondary">
+                <i class="bi bi-check-circle me-2"></i> Create Partner
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,29 @@
+﻿@model Factory.PL.ViewModels.Auth.ApplicationRolesViewModel
+@{
+    ViewData["Title"] = "Edit Role";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <form method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label for="Name" class="form-label">
+                <i class="bi bi-person-badge me-2"></i> Role Name
+            </label>
+            <input type="text" asp-for="Name" class="form-control" id="Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="bi bi-save me-2"></i> Update Role
+            </button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

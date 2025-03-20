@@ -1,0 +1,208 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
+
+@{
+    ViewData["Title"] = $"Welcome to the {appSettings.Value.CompanyName} Platform";
+    Layout = "_OnboardingLayout";
+}
+
+<div class="container-fluid px-0">
+    <!-- Header Section -->
+    <div class="row g-0">
+        <div class="col-12 text-center py-5 bg-light">
+            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">Welcome to <span class="text-primary">@appSettings.Value.CompanyName</span></h1>
+            <p class="lead animate__animated animate__fadeIn animate__delay-1s">We're excited to have you on board! Let's take a moment to show you around.</p>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="row g-0">
+        <div class="col-12 px-4">
+            <div class="progress mb-4" style="height: 10px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="tourProgress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tour Slides -->
+    <div class="tour-container">
+        <!-- Slide 1 -->
+        <div class="tour-slide active animate__animated animate__fadeIn" id="slide-1">
+            <div class="row g-0 align-items-center py-4 px-3">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <img src="~/assets/images/login.png" alt="Dashboard Overview" class="img-fluid rounded animate__animated animate__zoomIn" />
+                </div>
+                <div class="col-md-6 ps-md-5">
+                    <h2 class="fw-bold mb-4 animate__animated animate__fadeInRight">Your Personalized Dashboard</h2>
+                    <p class="lead animate__animated animate__fadeInRight animate__delay-1s">Your dashboard gives you a quick overview of all your important metrics and recent activities. Everything you need is just a click away.</p>
+                    <ul class="list-group list-group-flush mt-4">
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInRight animate__delay-1s"><i class="fas fa-chart-line text-primary me-2"></i> Real-time analytics and insights</li>
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInRight animate__delay-1s"><i class="fas fa-tasks text-primary me-2"></i> Quick access to recent projects</li>
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInRight animate__delay-1s"><i class="fas fa-bell text-primary me-2"></i> Important notifications and alerts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="tour-slide animate__animated" id="slide-2">
+            <div class="row g-0 align-items-center py-4 px-3">
+                <div class="col-md-6 order-md-2 mb-4 mb-md-0">
+                    <img src="~/assets/images/login.png" alt="Integrations" class="img-fluid rounded  animate__animated animate__zoomIn" />
+                </div>
+                <div class="col-md-6 order-md-1 pe-md-5">
+                    <h2 class="fw-bold mb-4 animate__animated animate__fadeInLeft">Powerful Integrations</h2>
+                    <p class="lead animate__animated animate__fadeInLeft animate__delay-1s">Connect with all your favorite tools and services. Our platform integrates seamlessly with hundreds of business applications.</p>
+                    <ul class="list-group list-group-flush mt-4">
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInLeft animate__delay-1s"><i class="fab fa-slack text-primary me-2"></i> Slack for team communication</li>
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInLeft animate__delay-1s"><i class="fab fa-google text-primary me-2"></i> Google Workspace for documents</li>
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInLeft animate__delay-1s"><i class="fab fa-salesforce text-primary me-2"></i> Salesforce for CRM</li>
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInLeft animate__delay-1s"><i class="fas fa-plus-circle text-primary me-2"></i> And many more...</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="tour-slide animate__animated" id="slide-3">
+            <div class="row g-0 align-items-center py-4 px-3">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <img src="~/assets/images/login.png" alt="Advanced Reporting" class="img-fluid rounded  animate__animated animate__zoomIn" />
+                </div>
+                <div class="col-md-6 ps-md-5">
+                    <h2 class="fw-bold mb-4 animate__animated animate__fadeInRight">Advanced Reporting</h2>
+                    <p class="lead animate__animated animate__fadeInRight animate__delay-1s">Generate comprehensive reports with just a few clicks. Visualize your data with beautiful charts and graphs.</p>
+                    <ul class="list-group list-group-flush mt-4">
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInRight animate__delay-1s"><i class="fas fa-file-export text-primary me-2"></i> Export in multiple formats</li>
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInRight animate__delay-1s"><i class="fas fa-calendar-alt text-primary me-2"></i> Schedule automated reports</li>
+                        <li class="list-group-item bg-transparent ps-0 animate__animated animate__fadeInRight animate__delay-1s"><i class="fas fa-share-alt text-primary me-2"></i> Share with team members</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="tour-slide animate__animated" id="slide-4">
+            <div class="py-5 px-3 text-center">
+                <h2 class="fw-bold mb-3 animate__animated animate__fadeInDown">You're All Set!</h2>
+                <p class="lead mb-5 animate__animated animate__fadeIn animate__delay-1s">You're now ready to explore the full potential of our platform.</p>
+
+                <div class="row justify-content-center g-4 mb-5">
+                    <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="card h-100">
+                            <div class="card-body p-4">
+                                <i class="fas fa-book fa-3x mb-3 text-primary"></i>
+                                <h4 class="fw-bold">Documentation</h4>
+                                <p>Explore our comprehensive guides and tutorials</p>
+                                <a href="#" class="btn btn-outline-primary mt-2">View Docs</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="card h-100">
+                            <div class="card-body p-4">
+                                <i class="fas fa-video fa-3x mb-3 text-primary"></i>
+                                <h4 class="fw-bold">Video Tutorials</h4>
+                                <p>Watch step-by-step video guides</p>
+                                <a href="#" class="btn btn-outline-primary mt-2">Watch Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="card h-100">
+                            <div class="card-body p-4">
+                                <i class="fas fa-headset fa-3x mb-3 text-primary"></i>
+                                <h4 class="fw-bold">Support</h4>
+                                <p>Get help from our customer success team</p>
+                                <a href="#" class="btn btn-outline-primary mt-2">Contact Support</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a asp-controller="onboardingUser" asp-action="TourComplete" class="btn btn-outline-primary btn-lg px-4 py-2 animate__animated animate__fadeInUp animate__delay-2s">Go to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="row g-0">
+        <div class="col-12 d-flex justify-content-between align-items-center p-4 bg-light">
+            <button class="btn btn-outline-secondary px-4" id="prevSlide" disabled><i class="fas fa-arrow-left me-2"></i> Previous</button>
+
+            <div class="d-flex">
+                <span class="tour-dot active mx-2 d-inline-block rounded-circle bg-primary" style="width: 10px; height: 10px; cursor: pointer;" data-slide="1"></span>
+                <span class="tour-dot mx-2 d-inline-block rounded-circle bg-secondary" style="width: 10px; height: 10px; cursor: pointer;" data-slide="2"></span>
+                <span class="tour-dot mx-2 d-inline-block rounded-circle bg-secondary" style="width: 10px; height: 10px; cursor: pointer;" data-slide="3"></span>
+                <span class="tour-dot mx-2 d-inline-block rounded-circle bg-secondary" style="width: 10px; height: 10px; cursor: pointer;" data-slide="4"></span>
+            </div>
+
+            <button class="btn btn-outline-primary px-4" id="nextSlide">Next <i class="fas fa-arrow-right ms-2"></i></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Tour navigation functionality
+            const totalSlides = 4;
+            let currentSlide = 1;
+
+            // Update progress bar
+            function updateProgress() {
+                const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+                $("#tourProgress").css("width", progress + "%").attr("aria-valuenow", progress);
+            }
+
+            // Show specific slide with animation
+            function showSlide(slideNumber) {
+                $(".tour-slide").removeClass("active animate__fadeIn").hide();
+                $("#slide-" + slideNumber).addClass("active animate__fadeIn").fadeIn(400);
+
+                // Update dots
+                $(".tour-dot").removeClass("bg-primary").addClass("bg-secondary");
+                $(".tour-dot[data-slide='" + slideNumber + "']").removeClass("bg-secondary").addClass("bg-primary");
+
+                // Update buttons
+                $("#prevSlide").prop("disabled", slideNumber === 1);
+
+                if (slideNumber === totalSlides) {
+                    $("#nextSlide").text("Finish ").append('<i class="fas fa-check ms-2"></i>').removeClass("btn-outline-primary").addClass("btn-outline-success");
+                } else {
+                    $("#nextSlide").text("Next ").append('<i class="fas fa-arrow-right ms-2"></i>').removeClass("btn-outline-success").addClass("btn-outline-primary");
+                }
+
+                updateProgress();
+            }
+
+            // Next button click
+            $("#nextSlide").click(function() {
+                if (currentSlide < totalSlides) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                } else {
+                    // Redirect to dashboard on finish
+                    window.location.href = "@Url.Action("TourComplete", "onboardingUser")";
+                }
+            });
+
+            // Previous button click
+            $("#prevSlide").click(function() {
+                if (currentSlide > 1) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            });
+
+            // Dot navigation
+            $(".tour-dot").click(function() {
+                currentSlide = parseInt($(this).data("slide"));
+                showSlide(currentSlide);
+            });
+
+            // Initialize
+            $(".tour-slide").not(".active").hide();
+            updateProgress();
+        });
+    </script>
+}

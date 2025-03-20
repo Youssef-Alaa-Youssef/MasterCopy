@@ -1,0 +1,71 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
+
+@{
+    ViewData["Title"] = $"Privacy Policy | {appSettings.Value.CompanyName}";
+    Layout = "_Auth";
+
+}
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h1 class="display-4 text-center mb-4">Privacy Policy</h1>
+            <p class="text-muted text-center">Last updated: [Date]</p>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 mb-3">Introduction</h2>
+                    <p>
+                        At <strong>@appSettings.Value.CompanyName</strong>, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our software solutions for glass factories.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 mb-3">Information We Collect</h2>
+                    <p>
+                        We may collect the following types of information:
+                    </p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Personal Information:</strong> Name, email address, phone number, etc.</li>
+                        <li class="list-group-item"><strong>Usage Data:</strong> Information about how you use our software.</li>
+                        <li class="list-group-item"><strong>Technical Data:</strong> IP address, browser type, operating system, etc.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 mb-3">How We Use Your Information</h2>
+                    <p>
+                        We use the information we collect to:
+                    </p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Provide and maintain our software services.</li>
+                        <li class="list-group-item">Improve and personalize your experience.</li>
+                        <li class="list-group-item">Communicate with you about updates and support.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 mb-3">Data Security</h2>
+                    <p>
+                        We implement industry-standard security measures to protect your data from unauthorized access, alteration, or disclosure.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 mb-3">Contact Us</h2>
+                    <p>
+                        If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy{@appSettings.Value.CompanyName}.com" class="text-decoration-none">privacy@mastercopy.com</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

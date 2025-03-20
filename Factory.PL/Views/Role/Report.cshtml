@@ -1,0 +1,36 @@
+﻿@model Factory.PL.ViewModels.RoleListViewModel
+
+@{
+    ViewData["Title"] = "Role Report";
+    Layout = "_LogedUser";
+    int Counter = 0;
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <h2 class="text-center mb-4   py-3 px-4 rounded">
+        <a href="javascript:window.print()" class="btn btn-outline-info float-end">
+            Print Report
+        </a>
+    </h2>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Role Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model.Roles)
+            {
+                <tr>
+                    <td>@Counter++</td>
+                    <td>@role.RoleName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,142 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
+
+@{
+    var isRtl = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isRtl ? "ltr" : "rtl";
+}
+
+
+<div class="chat-icon @dir" id="chatIcon">
+    <i class="bi bi-chat-dots"></i> 
+</div>
+
+<div class="floating-chat-container @dir" id="chatContainer">
+    <div class="floating-chat-header">
+        <div class="ai-avatar">
+            <i class="bi bi-robot"></i> 
+        </div>
+        <div class="ai-info">
+            <h3>@appSettings.Value.CompanyName AI Assistant</h3>
+            <p>Online • Ready to help</p>
+        </div>
+        <div class="chat-close" id="chatClose">
+            <i class="bi bi-x"></i> 
+        </div>
+    </div>
+
+    <div class="floating-chat-body" id="chatMessages">
+        <div class="message ai-message">
+            Hello! How can I assist you today?
+            <span class="message-time">Just now</span>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+        </div>
+    </div>
+
+    <div class="floating-chat-footer">
+        <input type="text" class="chat-input" id="messageInput" placeholder="Type your message here...">
+        <button class="send-btn" id="sendButton">
+            <i class="bi bi-send"></i> 
+        </button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatIcon = document.getElementById('chatIcon');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatClose = document.getElementById('chatClose');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const chatMessages = document.getElementById('chatMessages');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        chatIcon.addEventListener('click', function() {
+            chatContainer.classList.add('open');
+            chatIcon.style.display = 'none';
+            messageInput.focus();
+        });
+
+        chatClose.addEventListener('click', function() {
+            chatContainer.classList.remove('open');
+            chatIcon.style.display = 'flex';
+        });
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                messageInput.value = '';
+
+                showTypingIndicator();
+
+                fetch('@Url.Action("SendMessage", "AIChat")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage(data.message, false, data.isError);
+                    }, 600 + Math.random() * 1200);
+                })
+                .catch(error => {
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage("Sorry, I couldn't process your request. Please try again.", false, true);
+                    }, 500);
+                });
+            }
+        }
+
+        function addMessage(content, isUser, isError = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = isUser ? 'message user-message' : 'message ai-message';
+
+            if (isError) {
+                messageDiv.className = 'message ai-message error-message';
+                messageDiv.style.backgroundColor = 'var(--error-color)';
+                messageDiv.style.color = 'white';
+            }
+
+            const time = new Date();
+            const timeString = `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}`;
+
+            messageDiv.innerHTML = `
+                ${content}
+                <span class="message-time">${timeString}</span>
+            `;
+
+            chatMessages.insertBefore(messageDiv, typingIndicator);
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            return messageDiv;
+        }
+
+        function showTypingIndicator() {
+            typingIndicator.classList.add('visible');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            typingIndicator.classList.remove('visible');
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,359 @@
+﻿@model LogInViewModel
+@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
+
+@{
+    ViewData["Title"] = $"Login | {appSettings.Value.CompanyName}";
+    Layout = "_Auth";
+}
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .bg-glass-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.828zM11.03 0L7.372 3.657 8.787 5.07 13.857 0H11.03zm32.284 0L49.8 6.485 48.384 7.9l-7.9-7.9h2.83zM16.686 0L10.2 6.485 11.616 7.9l7.9-7.9h-2.83zm20.97 0l9.315 9.314-1.414 1.414L34.828 0h2.83zM22.344 0L13.03 9.314l1.414 1.414L25.172 0h-2.83zM32 0l12.142 12.142-1.414 1.414L30 .828 17.272 13.556l-1.414-1.414L28 0h4zM.284 0l28 28-1.414 1.414L0 2.544v2.83L26.272 32l-1.414 1.414-28-28V0h3.428zM60 0L45.414 14.586l-1.414-1.414L58.586 0H60zm0 5.542L32 33.542l-1.414-1.414L60 3.128v2.414zm0 5.657L35.414 42.586l-1.414-1.414L60 8.785v2.414zM60 17.9L40.414 37.5l-1.414-1.414L60 15.472V17.9zm0 2.829L43.04 41.314l-1.414-1.414L60 20.785v2.829zm0 2.828L45.656 45.142l-1.414-1.414L60 23.614v2.828zm0 2.828L48.272 48.97l-1.414-1.414L60 26.442v2.828zm0 2.828L50.9 52.812l-1.414-1.414L60 29.272v2.828zm0 2.828L53.514 56.656l-1.414-1.414L60 32.1v2.828zm0 2.828L56.142 60.484l-1.414-1.414L60 34.93v2.828zM0 51.43c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 51.33 1.508 50.888 1.4 50.428L0 51.43zm0-2.856c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 48.474 1.508 48.032 1.4 47.572L0 48.574zm0-2.857c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 45.617 1.508 45.175 1.4 44.715L0 45.717zm0-2.857c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 42.76 1.508 42.318 1.4 41.858L0 42.86zm0-2.857c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 39.902 1.508 39.46 1.4 39L0 40.002zm0-2.857c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 37.045 1.508 36.603 1.4 36.143L0 37.145zm0-2.857c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 34.188 1.508 33.746 1.4 33.286L0 34.288zm0-2.857c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 31.33 1.508 30.888 1.4 30.428L0 31.43zm0-2.857c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 28.474 1.508 28.032 1.4 27.572L0 28.574zm0-2.857c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 25.617 1.508 25.175 1.4 24.715L0 25.717zm0-2.857c0 .635.127 1.24.356 1.793l1.54-1.54C1.66 22.76 1.508 22.318 1.4 21.858L0 22.86z' fill='%23006699' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    }
+
+    .hero-gradient {
+        background: linear-gradient(125deg, rgba(0, 102, 153, 0.95) 0%, rgba(0, 51, 102, 0.9) 100%);
+    }
+
+    .form-control:focus, .form-check-input:focus {
+        border-color: rgba(0, 102, 153, 0.5);
+        box-shadow: 0 0 0 0.25rem rgba(0, 102, 153, 0.25);
+    }
+
+    .btn-glass {
+        background-color: #006699;
+        border: none;
+        position: relative;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+        .btn-glass:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .btn-glass:hover:before {
+            left: 100%;
+        }
+
+    .feature-card {
+        transition: all 0.3s ease;
+        transform: translateY(0);
+    }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .shimmer {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .shimmer::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient( to bottom right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100% );
+            transform: rotate(30deg);
+            animation: shimmer 3s infinite;
+        }
+    @@keyframes shimmer {
+        0%
+
+    {
+        transform: translateX(-100%) rotate(30deg);
+    }
+
+    100% {
+        transform: translateX(100%) rotate(30deg);
+    }
+
+    }
+</style>
+
+<div class="container-fluid vh-100 vw-100 d-flex bg-glass-pattern p-0">
+    <div class="d-none d-lg-flex flex-column hero-gradient text-white position-relative w-50 overflow-hidden">
+        <div class="shimmer position-absolute w-100 h-100"></div>
+
+        <div class="position-relative p-4 z-index-1">
+            <div class="d-flex align-items-center">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 4C12.954 4 4 12.954 4 24C4 35.046 12.954 44 24 44C35.046 44 44 35.046 44 24C44 12.954 35.046 4 24 4Z" fill="#ffffff" opacity="0.9" />
+                    <path d="M24 8C15.163 8 8 15.163 8 24C8 32.837 15.163 40 24 40C32.837 40 40 32.837 40 24C40 15.163 32.837 8 24 8Z" fill="#006699" />
+                    <path d="M24 12C17.373 12 12 17.373 12 24C12 30.627 17.373 36 24 36C30.627 36 36 30.627 36 24C36 17.373 30.627 12 24 12ZM24 32C19.582 32 16 28.418 16 24C16 19.582 19.582 16 24 16C28.418 16 32 19.582 32 24C32 28.418 28.418 32 24 32Z" fill="#ffffff" opacity="0.3" />
+                </svg>
+                <span class="ms-3 fw-bold fs-3">@appSettings.Value.CompanyName</span>
+            </div>
+        </div>
+
+        <div class="flex-grow-1 d-flex align-items-center justify-content-center position-relative z-index-1">
+            <div class="text-center p-5" style="max-width: 700px;">
+                <h1 class="display-3 fw-bold mb-4">Glass Manufacturing<br>Reimagined</h1>
+                <p class="lead mb-5 opacity-90">Comprehensive software platform for precision glass design, manufacturing, and inventory management. Built for industry professionals.</p>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-md-4">
+                        <div class="p-4 glass-effect rounded-4 feature-card">
+                            <i class="bi bi-pencil-square fs-1 mb-3"></i>
+                            <h5 class="fw-bold">Design Studio</h5>
+                            <p class="small mb-0">Advanced CAD tools for precision glass design</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4 glass-effect rounded-4 feature-card">
+                            <i class="bi bi-boxes fs-1 mb-3"></i>
+                            <h5 class="fw-bold">Inventory Control</h5>
+                            <p class="small mb-0">Real-time tracking with predictive analytics</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4 glass-effect rounded-4 feature-card">
+                            <i class="bi bi-graph-up-arrow fs-1 mb-3"></i>
+                            <h5 class="fw-bold">Smart Metrics</h5>
+                            <p class="small mb-0">Production insights and optimization tools</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="position-relative p-4 z-index-1">
+            <div class="d-flex justify-content-between">
+                <span class="small opacity-75">© 2025 @appSettings.Value.CompanyName. All rights reserved.</span>
+                <div>
+                    <a asp-controller="Home" asp-action="Privacy" class="text-white text-decoration-none small me-3 opacity-75">Privacy</a>
+                    <a asp-controller="Home" asp-action="Terms" class="text-white text-decoration-none small opacity-75">Terms</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Section: Login Form -->
+    <div class="bg-white d-flex flex-column justify-content-center align-items-center flex-grow-1 position-relative overflow-auto">
+        <div class="d-block d-lg-none position-absolute top-0 start-0 w-100 hero-gradient text-white p-4">
+            <div class="d-flex align-items-center">
+                <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 4C12.954 4 4 12.954 4 24C4 35.046 12.954 44 24 44C35.046 44 44 35.046 44 24C44 12.954 35.046 4 24 4Z" fill="#ffffff" opacity="0.9" />
+                    <path d="M24 8C15.163 8 8 15.163 8 24C8 32.837 15.163 40 24 40C32.837 40 40 32.837 40 24C40 15.163 32.837 8 24 8Z" fill="#006699" />
+                    <path d="M24 12C17.373 12 12 17.373 12 24C12 30.627 17.373 36 24 36C30.627 36 36 30.627 36 24C36 17.373 30.627 12 24 12ZM24 32C19.582 32 16 28.418 16 24C16 19.582 19.582 16 24 16C28.418 16 32 19.582 32 24C32 28.418 28.418 32 24 32Z" fill="#ffffff" opacity="0.3" />
+                </svg>
+                <span class="ms-2 fw-bold fs-4">@appSettings.Value.CompanyName</span>
+            </div>
+        </div>
+
+        <div class="w-100 px-4 px-md-5 py-5 mt-5 mt-lg-0" style="max-width: 500px;">
+            <!-- Login Form -->
+            <div class="mb-5">
+                <h2 class="fw-bold fs-1 mb-2">Welcome Back</h2>
+                <p class="text-muted mb-4">Sign in to access your glass manufacturing workspace</p>
+
+                <div asp-validation-summary="ModelOnly" id="error-alert" class="alert alert-danger alert-dismissible fade show rounded-3" role="alert" style="display:none;">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                @if (TempData["Error"] != null)
+                {
+                    <div id="error-alert" class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+                        <div class="d-flex">
+                            <i class="bi bi-exclamation-circle fs-5 me-2"></i>
+                            <div>@TempData["Error"]</div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                @if (TempData["Success"] != null)
+                {
+                    <div id="success-alert" class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+                        <div class="d-flex">
+                            <i class="bi bi-check-circle fs-5 me-2"></i>
+                            <div>@TempData["Success"]</div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <!-- SSO  -->
+                <div class="mb-4">
+                    <div class="row g-3">
+                        <div class="col-4">
+                            <button type="button" onclick="openPopup('@Url.Action("FacebookLogin", "Auth")')" class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2 py-3 rounded-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#4285F4" viewBox="0 0 16 16">
+                                    <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                                </svg>
+                                <span>Facebook</span>
+                            </button>
+                        </div>
+
+                        <div class="col-4">
+                            <button type="button" onclick="openPopup('@Url.Action("MicrosoftLogin", "Auth")')" class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2 py-3 rounded-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0072C6" viewBox="0 0 16 16">
+                                    <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
+                                </svg>
+                                <span>Microsoft</span>
+                            </button>
+                        </div>
+
+                        <div class="col-4">
+                            <button type="button" onclick="openPopup('@Url.Action("GoogleLogin", "Auth")')" class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2 py-3 rounded-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#DB4437" viewBox="0 0 16 16">
+                                    <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                                </svg>
+                                <span>Google</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-4">
+                    <hr class="flex-grow-1">
+                    <span class="mx-3 text-muted small">OR CONTINUE WITH EMAIL</span>
+                    <hr class="flex-grow-1">
+                </div>
+
+                <form asp-controller="Auth" asp-action="LogIn" method="POST" class="needs-validation" novalidate>
+                    @Html.AntiForgeryToken()
+                    <div class="mb-4">
+                        <label asp-for="Email" class="form-label fw-medium mb-2">Email Address</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="bi bi-envelope text-muted"></i>
+                            </span>
+                            <input asp-for="Email" class="form-control border-start-0 ps-0 rounded-end" placeholder="your.email@company.com" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small mt-2 d-block"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label asp-for="Password" class="form-label fw-medium mb-0">Password</label>
+                            <a asp-controller="Auth" asp-action="ForgotPassword" class="text-decoration-none small fw-medium" style="color: #006699;">Forgot Password?</a>
+                        </div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="bi bi-lock text-muted"></i>
+                            </span>
+                            <input asp-for="Password" type="password" id="passwordInput" class="form-control border-start-0 border-end-0 ps-0" placeholder="Enter your password" />
+                            <button type="button" id="togglePassword" class="input-group-text bg-light border-start-0 text-muted rounded-end" tabindex="-1">
+                                <i class="bi bi-eye" id="passwordIcon"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small mt-2 d-block"></span>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label class="form-check-label" asp-for="RememberMe">Keep me signed in</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-glass w-100 py-3 mb-3 fw-semibold text-white rounded-3 fs-5">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </button>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted mb-0">Need an account? <a asp-controller="Auth" asp-action="SignUp" class="text-decoration-none fw-semibold" style="color: #006699;">Request Access</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="text-center mt-4">
+                <p class="text-muted small mb-0">Technical support: <a href="mailto:support{@appSettings.Value.CompanyName}.com" class="text-decoration-none fw-medium" style="color: #006699;">support@glasswarepro.com</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="cookieConsentPopup" class="d-none position-fixed bottom-0 start-0 w-100 bg-light p-3 shadow-lg" style="z-index: 1050; display: none;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <p class="mb-0 small">
+                    We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.
+                    <a asp-controller="Home" asp-action="Privacy" class="text-decoration-none">Learn more</a>.
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <button id="declineCookies" class="btn btn-outline-secondary btn-sm me-2">Decline</button>
+                <button id="acceptCookies" class="btn btn-primary btn-sm">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('togglePassword')?.addEventListener('click', function () {
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordIcon = document.getElementById('passwordIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('bi-eye');
+                passwordIcon.classList.add('bi-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('bi-eye-slash');
+                passwordIcon.classList.add('bi-eye');
+            }
+        });
+    </script>
+    <script>
+        function openPopup(url) {
+            const width = 500;
+            const height = 600;
+            const left = (window.innerWidth - width) / 2;
+            const top = (window.innerHeight - height) / 2;
+            window.open(url, 'authPopup', `width=${width},height=${height},left=${left},top=${top}`);
+        }
+    </script>
+    <script>
+                document.addEventListener('DOMContentLoaded', function () {
+            const cookieConsentPopup = document.getElementById('cookieConsentPopup');
+            const acceptCookiesButton = document.getElementById('acceptCookies');
+            const declineCookiesButton = document.getElementById('declineCookies');
+
+            const hasConsented = localStorage.getItem('cookieConsent');
+
+            if (!hasConsented) {
+                cookieConsentPopup.style.display = 'block';
+            }
+
+            acceptCookiesButton.addEventListener('click', function () {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieConsentPopup.style.display = 'none';
+            });
+
+            declineCookiesButton.addEventListener('click', function () {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieConsentPopup.style.display = 'none';
+            });
+        });
+    </script>
+}

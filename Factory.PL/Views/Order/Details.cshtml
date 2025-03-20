@@ -1,0 +1,79 @@
+﻿@model Factory.PL.ViewModels.OrderList.OrderViewModel
+@{
+    ViewData["Title"] = "Delivery Invoice";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-8">
+                <h2 class="fw-bold">شركة الزجاج العالمية</h2>
+                <h2 class="fw-bold">Global Glass Factory</h2>
+            </div>
+            <div class="col-md-4 text-end">
+                <img src="~/assets/images/Login.png" alt="Global Glass Factory Logo" class="img-fluid" style="max-width: 120px;">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Customer Name:</strong> @Model.CustomerName</li>
+                <li class="list-group-item"><strong>Customer Reference:</strong> @Model.CustomerReference</li>
+                <li class="list-group-item"><strong>Project Name:</strong> @Model.ProjectName, @Model.Address</li>
+                <li class="list-group-item"><strong>Delivery Date:</strong> @(Model.FinishDate.ToString("yyyy-MM-dd") ?? "N/A")</li>
+            </ul>
+        </div>
+        <div class="col-md-6 mb-4">
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Date:</strong> @Model.Date.ToString("yyyy-MM-dd")</li>
+                <li class="list-group-item"><strong>Job No:</strong> @Model.JobNo</li>
+            </ul>
+        </div>
+    </div>
+
+
+        @if (Model.Items?.Any() == true)
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th>Glass Description</th>
+                            <th>Width</th>
+                            <th>Height</th>
+                            <th>Qty</th>
+                            <th>SQM</th>
+                            <th>Total SQM</th>
+                            <th>Customer Reference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                        <tr>
+                            <td>@(string.IsNullOrEmpty(item.Description) ? "N/A" : item.Description)</td>
+                            <td>@(string.IsNullOrEmpty(item.Width.ToString()) ? "0" : item.Width)</td>
+                            <td>@(string.IsNullOrEmpty(item.Height.ToString()) ? "0" : item.Height)</td>
+                            <td>@(string.IsNullOrEmpty(item.Quantity.ToString()) ? "0" : item.Quantity)</td>
+                            <td>@(string.IsNullOrEmpty(item.SQM.ToString()) ? "0.00" : item.SQM)</td>
+                            <td>@(string.IsNullOrEmpty(item.TotalLM.ToString()) ? "0.00" : item.TotalLM)</td>
+                            <td>@(string.IsNullOrEmpty(item.CustomerReference) ? "No Reference" : item.CustomerReference)</td>
+                        </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-center text-muted fst-italic">No items available for this order.</p>
+        }
+        <div class="card-footer text-center mt-2 d-print-none">
+            <button onclick="window.print()" class="btn btn-outline-success">Print</button>
+        </div>
+</div>

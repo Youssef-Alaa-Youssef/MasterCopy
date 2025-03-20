@@ -1,0 +1,809 @@
+﻿@model Factory.PL.ViewModels.OrderList.OrderViewModel
+@{
+    ViewData["Title"] = "Glass Cutting Optimization";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <div class="card-body">
+        <!-- Key Metrics Dashboard -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Total Sheets</h5>
+                        <h2 class="display-4 fw-bold text-primary" id="totalSheetsUsed">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Efficiency</h5>
+                        <h2 class="display-4 fw-bold text-success"><span id="utilizationEfficiency">0</span>%</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Items Placed</h5>
+                        <h2 class="display-4 fw-bold text-info" id="totalItemsPlaced">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Waste %</h5>
+                        <h2 class="display-4 fw-bold text-danger"><span id="wastePercentage">0</span>%</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optimization Summary -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-line"></i> Optimization Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><i class="fas fa-layer-group text-primary"></i> Total Sheets Used</td>
+                                        <td class="fw-bold" id="summaryTotalSheets">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-th text-warning"></i> Total Items Placed</td>
+                                        <td class="fw-bold" id="summaryTotalItems">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-vector-square text-success"></i> Total Sheet Area</td>
+                                        <td class="fw-bold" id="summaryTotalArea">0 m²</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-check-square text-info"></i> Total Used Area</td>
+                                        <td class="fw-bold" id="summaryUsedArea">0 m²</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-trash-alt text-danger"></i> Total Wasted Area</td>
+                                        <td class="fw-bold" id="summaryWastedArea">0 m²</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-percentage"></i> Utilization Rate</td>
+                                        <td class="fw-bold" id="summaryUtilization">0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-exclamation-triangle"></i> Waste Rate</td>
+                                        <td class="fw-bold" id="summaryWasteRate">0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sheet-by-Sheet Breakdown -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-list-alt"></i> Sheet-by-Sheet Breakdown</h5>
+                        <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#sheetBreakdown" aria-expanded="false">
+                            Toggle Details <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="collapse" id="sheetBreakdown">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover mb-0">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Sheet #</th>
+                                            <th>Items</th>
+                                            <th>Used Area</th>
+                                            <th>Wasted Area</th>
+                                            <th>Utilization</th>
+                                            <th>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="sheetDetailsTable">
+                                        <!-- Will be filled by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Action Buttons -->
+        <div class="card-footer text-center mt-4">
+            <button class="btn btn-lg btn-outline-primary  px-4" id="optimizeButton">
+                <i class="fas fa-calculator"></i> Calculate Optimal Layout
+            </button>
+            <button class="btn btn-lg btn-outline-secondary  px-4 ms-3" id="clearButton">
+                <i class="fas fa-eraser"></i> Clear Results
+            </button>
+            <button class="btn btn-lg btn-outline-success  px-4 ms-3" id="exportButton">
+                <i class="fas fa-file-excel"></i> Export Report
+            </button>
+            <button class="btn btn-lg btn-outline-info  px-4 ms-3" id="printButton">
+                <i class="fas fa-print"></i> Print
+            </button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize buttons
+            document.getElementById("optimizeButton").addEventListener("click", optimizeGlassCutting);
+            document.getElementById("clearButton").addEventListener("click", clearResults);
+            document.getElementById("exportButton").addEventListener("click", exportToExcel);
+            document.getElementById("printButton").addEventListener("click", printReport);
+
+            // Initialize collapse toggles
+            const collapseElementList = [].slice.call(document.querySelectorAll('.collapse'));
+            collapseElementList.map(function (collapseEl) {
+                collapseEl.addEventListener('show.bs.collapse', function () {
+                    collapseEl.previousElementSibling.querySelector('.fa-chevron-down').classList.replace('fa-chevron-down', 'fa-chevron-up');
+                });
+                collapseEl.addEventListener('hide.bs.collapse', function () {
+                    collapseEl.previousElementSibling.querySelector('.fa-chevron-up').classList.replace('fa-chevron-up', 'fa-chevron-down');
+                });
+            });
+        });
+
+        // Constants for the optimization
+        const SHEET_WIDTH = 2550; // Width of the glass sheet in mm
+        const SHEET_HEIGHT = 3210; // Height of the glass sheet in mm
+        const SHEET_AREA = SHEET_WIDTH * SHEET_HEIGHT; // Total area in mm²
+
+        // Strategy names for better readability
+        const STRATEGY_NAMES = [
+            "Area Descending",
+            "Height Descending",
+            "Width Descending",
+            "Longest Side Descending",
+            "Perimeter Descending"
+        ];
+
+        function optimizeGlassCutting() {
+            const glassPieces = @Html.Raw(Json.Serialize(Model.Items));
+
+            if (!glassPieces || glassPieces.length === 0) {
+                showErrorNotification("No glass pieces found! Please check your data.");
+                return;
+            }
+
+            // Group items by ID
+            const groupedItems = groupItemsById(glassPieces);
+
+            // Create array of all groups
+            const allGroups = [];
+            groupedItems.forEach(group => {
+                allGroups.push({
+                    id: group.id,
+                    width: parseInt(group.width),
+                    height: parseInt(group.height),
+                    area: parseInt(group.width) * parseInt(group.height),
+                    quantity: group.quantity,
+                    originalItem: group
+                });
+            });
+
+            // Define sorting strategies
+            const strategies = [
+                () => [...allGroups].sort((a, b) => b.area - a.area),
+                () => [...allGroups].sort((a, b) => b.height - a.height),
+                () => [...allGroups].sort((a, b) => b.width - a.width),
+                () => [...allGroups].sort((a, b) => Math.max(b.width, b.height) - Math.max(a.width, a.height)),
+                () => [...allGroups].sort((a, b) => (2*b.width + 2*b.height) - (2*a.width + 2*a.height))
+            ];
+
+            // Try each strategy and record results
+            let bestResult = null;
+            let bestWastePercentage = 100;
+            let bestStrategyIndex = -1;
+            const strategyResults = [];
+
+            // Show processing indicator
+            showProcessingIndicator(true);
+
+            // Use setTimeout to prevent UI freezing during calculation
+            setTimeout(() => {
+                strategies.forEach((sortStrategy, strategyIndex) => {
+                    const sortedGroups = sortStrategy();
+                    const result = packGlassGroups(sortedGroups, SHEET_WIDTH, SHEET_HEIGHT);
+
+                    const totalSheetArea = result.sheets.length * SHEET_AREA;
+                    const totalUsedArea = result.totalAreaUsed;
+                    const wastePercentage = 100 - ((totalUsedArea / totalSheetArea) * 100);
+
+                    // Record result for this strategy
+                    strategyResults.push({
+                        name: STRATEGY_NAMES[strategyIndex],
+                        sheets: result.sheets.length,
+                        wastePercentage: wastePercentage.toFixed(2),
+                        result: result
+                    });
+
+                    if (wastePercentage < bestWastePercentage) {
+                        bestWastePercentage = wastePercentage;
+                        bestResult = result;
+                        bestStrategyIndex = strategyIndex;
+                    }
+                });
+
+                // Create a performance score for each strategy relative to the best (100%)
+                const bestSheetCount = Math.min(...strategyResults.map(s => s.sheets));
+                strategyResults.forEach(s => {
+                    s.performance = ((bestSheetCount / s.sheets) * 100).toFixed(0);
+                });
+
+                // Sort strategy results by performance (best first)
+                strategyResults.sort((a, b) => b.performance - a.performance);
+
+                // Hide processing indicator
+                showProcessingIndicator(false);
+
+                // Update with the best result
+                if (bestResult) {
+                    updateDashboard(bestResult, SHEET_WIDTH, SHEET_HEIGHT, bestStrategyIndex);
+                    updateDetailedStatistics(bestResult, SHEET_WIDTH, SHEET_HEIGHT);
+                    updateSheetBreakdown(bestResult.sheets, SHEET_WIDTH, SHEET_HEIGHT);
+                    updateItemPlacement(bestResult.sheets);
+                    showSuccessNotification("Optimization complete! Using " + STRATEGY_NAMES[bestStrategyIndex] + " strategy.");
+                }
+            }, 50); // Short delay to allow UI update
+        }
+
+        // Group items by ID
+        function groupItemsById(items) {
+            const groupedItems = {};
+
+            items.forEach(item => {
+                if (!groupedItems[item.id]) {
+                    groupedItems[item.id] = {
+                        id: item.id,
+                        width: item.width,
+                        height: item.height,
+                        quantity: 0
+                    };
+                }
+                groupedItems[item.id].quantity += item.quantity;
+            });
+
+            return Object.values(groupedItems);
+        }
+
+        // Pack glass groups into sheets
+        function packGlassGroups(groups, sheetWidth, sheetHeight) {
+            const sheets = [{
+                id: 1,
+                width: sheetWidth,
+                height: sheetHeight,
+                freeRectangles: [{ x: 0, y: 0, width: sheetWidth, height: sheetHeight }],
+                placements: []
+            }];
+
+            let totalItemsPlaced = 0;
+            let totalAreaUsed = 0;
+
+            groups.forEach(group => {
+                let placed = false;
+
+                // Try to place on existing sheets
+                for (let sheetIndex = 0; sheetIndex < sheets.length; sheetIndex++) {
+                    const sheet = sheets[sheetIndex];
+
+                    // Find the best-fit rectangle using various heuristics
+                    let bestRect = null;
+                    let bestScore = Infinity;
+                    let bestRotation = false;
+
+                    // Try each free rectangle
+                    for (let rectIndex = 0; rectIndex < sheet.freeRectangles.length; rectIndex++) {
+                        const rect = sheet.freeRectangles[rectIndex];
+
+                        // Try normal orientation
+                        if (group.width <= rect.width && group.height <= rect.height) {
+                            // Best-fit heuristic: minimize wasted area
+                            const wastedArea = (rect.width - group.width) * (rect.height - group.height);
+
+                            // Alternative: Best Short Side Fit
+                            const shortSideFit = Math.min(rect.width - group.width, rect.height - group.height);
+
+                            // Combined score (lower is better)
+                            const score = wastedArea + (shortSideFit * 10);
+
+                            if (score < bestScore) {
+                                bestRect = rect;
+                                bestScore = score;
+                                bestRotation = false;
+                            }
+                        }
+
+                        // Try rotated orientation if dimensions are different
+                        if (group.width !== group.height && group.height <= rect.width && group.width <= rect.height) {
+                            const wastedArea = (rect.width - group.height) * (rect.height - group.width);
+                            const shortSideFit = Math.min(rect.width - group.height, rect.height - group.width);
+                            const score = wastedArea + (shortSideFit * 10);
+
+                            if (score < bestScore) {
+                                bestRect = rect;
+                                bestScore = score;
+                                bestRotation = true;
+                            }
+                        }
+                    }
+
+                    // If we found a rectangle where this group fits
+                    if (bestRect) {
+                        const actualWidth = bestRotation ? group.height : group.width;
+                        const actualHeight = bestRotation ? group.width : group.height;
+
+                        // Place the group
+                        sheet.placements.push({
+                            x: bestRect.x,
+                            y: bestRect.y,
+                            width: actualWidth,
+                            height: actualHeight,
+                            group: group,
+                            rotated: bestRotation
+                        });
+
+                        // Add to total area used
+                        totalAreaUsed += group.area * group.quantity;
+
+                        // Advanced guillotine split - using MAXRECT variant
+                        // Delete the rectangle we used
+                        sheet.freeRectangles = sheet.freeRectangles.filter(r => r !== bestRect);
+
+                        // Split the space into new free rectangles
+                        // Right split
+                        if (bestRect.width > actualWidth) {
+                            sheet.freeRectangles.push({
+                                x: bestRect.x + actualWidth,
+                                y: bestRect.y,
+                                width: bestRect.width - actualWidth,
+                                height: bestRect.height
+                            });
+                        }
+
+                        // Bottom split
+                        if (bestRect.height > actualHeight) {
+                            sheet.freeRectangles.push({
+                                x: bestRect.x,
+                                y: bestRect.y + actualHeight,
+                                width: bestRect.width,
+                                height: bestRect.height - actualHeight
+                            });
+                        }
+
+                        // Reduce overlap between free rectangles - MAXRECTS approach
+                        pruneFreeRectangles(sheet.freeRectangles);
+
+                        totalItemsPlaced += group.quantity;
+                        placed = true;
+                        break;
+                    }
+                }
+
+                // If not placed in any existing sheet, create a new sheet
+                if (!placed) {
+                    const actualWidth = group.width;
+                    const actualHeight = group.height;
+
+                    const newSheet = {
+                        id: sheets.length + 1,
+                        width: sheetWidth,
+                        height: sheetHeight,
+                        freeRectangles: [
+                            // Right area
+                            {
+                                x: actualWidth,
+                                y: 0,
+                                width: sheetWidth - actualWidth,
+                                height: actualHeight
+                            },
+                            // Bottom area
+                            {
+                                x: 0,
+                                y: actualHeight,
+                                width: sheetWidth,
+                                height: sheetHeight - actualHeight
+                            }
+                        ],
+                        placements: [{
+                            x: 0,
+                            y: 0,
+                            width: actualWidth,
+                            height: actualHeight,
+                            group: group,
+                            rotated: false
+                        }]
+                    };
+
+                    sheets.push(newSheet);
+                    totalAreaUsed += group.area * group.quantity;
+                    totalItemsPlaced += group.quantity;
+                }
+            });
+
+            return {
+                sheets,
+                totalItemsPlaced,
+                totalAreaUsed
+            };
+        }
+
+        // Improved rectangle pruning to reduce wasted space
+        function pruneFreeRectangles(rectangles) {
+            // Remove contained rectangles
+            for (let i = 0; i < rectangles.length; i++) {
+                for (let j = i + 1; j < rectangles.length; j++) {
+                    const r1 = rectangles[i];
+                    const r2 = rectangles[j];
+
+                    // Check if r1 contains r2
+                    if (r1.x <= r2.x && r1.y <= r2.y &&
+                        r1.x + r1.width >= r2.x + r2.width &&
+                        r1.y + r1.height >= r2.y + r2.height) {
+                        rectangles.splice(j, 1);
+                        j--;
+                        continue;
+                    }
+
+                    // Check if r2 contains r1
+                    if (r2.x <= r1.x && r2.y <= r1.y &&
+                        r2.x + r2.width >= r1.x + r1.width &&
+                        r2.y + r2.height >= r1.y + r1.height) {
+                        rectangles.splice(i, 1);
+                        i--;
+                        break;
+                    }
+                }
+            }
+
+            // Split overlapping rectangles - MAXRECTS improvement
+            for (let i = 0; i < rectangles.length; i++) {
+                for (let j = i + 1; j < rectangles.length; j++) {
+                    const r1 = rectangles[i];
+                    const r2 = rectangles[j];
+
+                    // Find intersection
+                    const overlapX = Math.max(0, Math.min(r1.x + r1.width, r2.x + r2.width) - Math.max(r1.x, r2.x));
+                    const overlapY = Math.max(0, Math.min(r1.y + r1.height, r2.y + r2.height) - Math.max(r1.y, r2.y));
+
+                    // If there's overlap
+                    if (overlapX > 0 && overlapY > 0) {
+                        // Calculate intersection area
+                        const intersectionArea = overlapX * overlapY;
+                        const r1Area = r1.width * r1.height;
+                        const r2Area = r2.width * r2.height;
+
+                        // Decide which rectangle to split based on resulting area
+                        if (r1Area > r2Area) {
+                            splitRectangle(rectangles, j, r1);
+                        } else {
+                            splitRectangle(rectangles, i, r2);
+                            i--; // Reprocess this index
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Split a rectangle to avoid overlap
+        function splitRectangle(rectangles, index, other) {
+            const rect = rectangles[index];
+            rectangles.splice(index, 1); // Remove the original
+
+            // Calculate overlap region
+            const overlapLeft = Math.max(rect.x, other.x);
+            const overlapTop = Math.max(rect.y, other.y);
+            const overlapRight = Math.min(rect.x + rect.width, other.x + other.width);
+            const overlapBottom = Math.min(rect.y + rect.height, other.y + other.height);
+
+            // Create non-overlapping regions
+            // Left segment
+            if (rect.x < overlapLeft) {
+                rectangles.push({
+                    x: rect.x,
+                    y: rect.y,
+                    width: overlapLeft - rect.x,
+                    height: rect.height
+                });
+            }
+
+            // Right segment
+            if (rect.x + rect.width > overlapRight) {
+                rectangles.push({
+                    x: overlapRight,
+                    y: rect.y,
+                    width: (rect.x + rect.width) - overlapRight,
+                    height: rect.height
+                });
+            }
+
+            // Top segment
+            if (rect.y < overlapTop) {
+                rectangles.push({
+                    x: rect.x,
+                    y: rect.y,
+                    width: rect.width,
+                    height: overlapTop - rect.y
+                });
+            }
+
+            // Bottom segment
+            if (rect.y + rect.height > overlapBottom) {
+                rectangles.push({
+                    x: rect.x,
+                    y: overlapBottom,
+                    width: rect.width,
+                    height: (rect.y + rect.height) - overlapBottom
+                });
+            }
+        }
+
+        // Update the main dashboard with key metrics
+        function updateDashboard(result, sheetWidth, sheetHeight) {
+            const totalSheetsUsed = result.sheets.length;
+            const totalItemsPlaced = result.totalItemsPlaced;
+            const totalSheetArea = totalSheetsUsed * sheetWidth * sheetHeight;
+            const totalUsedArea = result.totalAreaUsed;
+            const utilizationEfficiency = ((totalUsedArea / totalSheetArea) * 100).toFixed(2);
+            const wastePercentage = (100 - utilizationEfficiency).toFixed(2);
+
+            // Update dashboard cards
+            document.getElementById("totalSheetsUsed").innerText = totalSheetsUsed;
+            document.getElementById("totalItemsPlaced").innerText = totalItemsPlaced;
+            document.getElementById("utilizationEfficiency").innerText = utilizationEfficiency;
+            document.getElementById("wastePercentage").innerText = wastePercentage;
+        }
+
+        // Update the detailed statistics section
+        function updateDetailedStatistics(result, sheetWidth, sheetHeight) {
+            const totalSheetsUsed = result.sheets.length;
+            const totalItemsPlaced = result.totalItemsPlaced;
+            const totalSheetArea = totalSheetsUsed * sheetWidth * sheetHeight;
+            const totalUsedArea = result.totalAreaUsed;
+            const totalGlassLost = totalSheetArea - totalUsedArea;
+            const utilizationEfficiency = ((totalUsedArea / totalSheetArea) * 100).toFixed(2);
+            const wastePercentage = (100 - utilizationEfficiency).toFixed(2);
+
+            // Format areas in square meters for readability
+            const totalAreaSqM = (totalSheetArea / 1000000).toFixed(2);
+            const usedAreaSqM = (totalUsedArea / 1000000).toFixed(2);
+            const wastedAreaSqM = (totalGlassLost / 1000000).toFixed(2);
+
+            // Update summary table
+            document.getElementById("summaryTotalSheets").innerText = totalSheetsUsed;
+            document.getElementById("summaryTotalItems").innerText = totalItemsPlaced;
+            document.getElementById("summaryTotalArea").innerText = `${totalAreaSqM} m²`;
+            document.getElementById("summaryUsedArea").innerText = `${usedAreaSqM} m²`;
+            document.getElementById("summaryWastedArea").innerText = `${wastedAreaSqM} m²`;
+            document.getElementById("summaryUtilization").innerText = `${utilizationEfficiency}%`;
+            document.getElementById("summaryWasteRate").innerText = `${wastePercentage}%`;
+
+            // Apply color coding based on efficiency
+            const summaryUtilizationElement = document.getElementById("summaryUtilization");
+            summaryUtilizationElement.className = "fw-bold";
+
+            if (parseFloat(utilizationEfficiency) >= 85) {
+                summaryUtilizationElement.classList.add("text-success");
+            } else if (parseFloat(utilizationEfficiency) >= 70) {
+                summaryUtilizationElement.classList.add("text-warning");
+            } else {
+                summaryUtilizationElement.classList.add("text-danger");
+            }
+        }
+
+        // Update the sheet-by-sheet breakdown table
+        function updateSheetBreakdown(sheets, sheetWidth, sheetHeight) {
+            const table = document.getElementById("sheetDetailsTable");
+            table.innerHTML = "";
+
+            sheets.forEach((sheet, index) => {
+                const sheetArea = sheetWidth * sheetHeight;
+                const usedArea = sheet.placements.reduce((sum, placement) => sum + (placement.width * placement.height * placement.group.quantity), 0);
+                const wastedArea = sheetArea - usedArea;
+                const utilization = ((usedArea / sheetArea) * 100).toFixed(2);
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${sheet.placements.reduce((sum, placement) => sum + placement.group.quantity, 0)}</td>
+                    <td>${(usedArea / 1000000).toFixed(2)} m²</td>
+                    <td>${(wastedArea / 1000000).toFixed(2)} m²</td>
+                    <td>${utilization}%</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="showSheetDetails(${index})">
+                            <i class="fas fa-info-circle"></i> View
+                        </button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        // Show detailed view of a specific sheet
+        function showSheetDetails(sheetIndex) {
+            const sheet = result.sheets[sheetIndex];
+            const sheetArea = SHEET_WIDTH * SHEET_HEIGHT;
+            const usedArea = sheet.placements.reduce((sum, placement) => sum + (placement.width * placement.height * placement.group.quantity), 0);
+            const wastedArea = sheetArea - usedArea;
+            const utilization = ((usedArea / sheetArea) * 100).toFixed(2);
+
+            const modalContent = `
+                <div class="modal-header">
+                    <h5 class="modal-title">Sheet #${sheetIndex + 1} Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Summary</h6>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Total Area
+                                    <span>${(sheetArea / 1000000).toFixed(2)} m²</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Used Area
+                                    <span>${(usedArea / 1000000).toFixed(2)} m²</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Wasted Area
+                                    <span>${(wastedArea / 1000000).toFixed(2)} m²</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Utilization
+                                    <span>${utilization}%</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Placements</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Position</th>
+                                            <th>Dimensions</th>
+                                            <th>Rotated</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${sheet.placements.map(placement => `
+                                            <tr>
+                                                <td>${placement.group.id}</td>
+                                                <td>(${placement.x}, ${placement.y})</td>
+                                                <td>${placement.width} x ${placement.height} mm</td>
+                                                <td>${placement.rotated ? 'Yes' : 'No'}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            `;
+
+            const modal = new bootstrap.Modal(document.createElement('div'));
+            modal._element.classList.add('modal', 'fade');
+            modal._element.innerHTML = modalContent;
+            document.body.appendChild(modal._element);
+            modal.show();
+
+            modal._element.addEventListener('hidden.bs.modal', () => {
+                document.body.removeChild(modal._element);
+            });
+        }
+
+        // Clear all results and reset the UI
+        function clearResults() {
+            document.getElementById("totalSheetsUsed").innerText = "0";
+            document.getElementById("totalItemsPlaced").innerText = "0";
+            document.getElementById("utilizationEfficiency").innerText = "0";
+            document.getElementById("wastePercentage").innerText = "0";
+
+            document.getElementById("summaryTotalSheets").innerText = "0";
+            document.getElementById("summaryTotalItems").innerText = "0";
+            document.getElementById("summaryTotalArea").innerText = "0 m²";
+            document.getElementById("summaryUsedArea").innerText = "0 m²";
+            document.getElementById("summaryWastedArea").innerText = "0 m²";
+            document.getElementById("summaryUtilization").innerText = "0%";
+            document.getElementById("summaryWasteRate").innerText = "0%";
+
+            document.getElementById("algorithmPerformanceTable").innerHTML = "";
+            document.getElementById("sheetDetailsTable").innerHTML = "";
+            document.getElementById("itemDetailsTable").innerHTML = "";
+
+            document.getElementById("strategyProgress").style.width = "0%";
+            document.getElementById("strategyName").innerText = "Not optimized";
+
+            showSuccessNotification("Results cleared successfully.");
+        }
+
+        // Export the results to Excel
+        function exportToExcel() {
+            // Implement export logic using a library like SheetJS
+            showInfoNotification("Export to Excel feature is under development.");
+        }
+
+        // Print the report
+        function printReport() {
+            window.print();
+        }
+
+        // Show a processing indicator
+        function showProcessingIndicator(show) {
+            const optimizeButton = document.getElementById("optimizeButton");
+            if (show) {
+                optimizeButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Calculating...`;
+                optimizeButton.disabled = true;
+            } else {
+                optimizeButton.innerHTML = `<i class="fas fa-calculator"></i> Calculate Optimal Layout`;
+                optimizeButton.disabled = false;
+            }
+        }
+
+        // Show success notification
+        function showSuccessNotification(message) {
+            toastr.success(message, "Success", {
+                closeButton: true,
+                progressBar: true,
+                positionClass: "toast-top-right",
+                timeOut: 5000
+            });
+        }
+
+        // Show error notification
+        function showErrorNotification(message) {
+            toastr.error(message, "Error", {
+                closeButton: true,
+                progressBar: true,
+                positionClass: "toast-top-right",
+                timeOut: 5000
+            });
+        }
+
+        // Show info notification
+        function showInfoNotification(message) {
+            toastr.info(message, "Info", {
+                closeButton: true,
+                progressBar: true,
+                positionClass: "toast-top-right",
+                timeOut: 5000
+            });
+        }
+    </script>
+}

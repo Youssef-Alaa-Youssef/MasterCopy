@@ -1,0 +1,311 @@
+﻿@model Factory.PL.ViewModels.OrderList.OrderViewModel
+@{
+    ViewData["Title"] = "Delivery Invoice";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+    @await Html.PartialAsync("_Header")
+
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                bool showAlert = Model.SelectedMachines.Any(m => m.ToString().Contains("Cutting"));
+            }
+
+            @if (showAlert)
+            {
+                <div class="alert alert-warning" role="alert">
+                    <strong>Attention:</strong> A Cutting machine has been detected.
+                    <a class="btn btn-sm btn-outline-warning ms-2" data-bs-toggle="collapse" href="#cuttingMachineDetails" role="button" aria-expanded="false" aria-controls="cuttingMachineDetails">
+                        View Details
+                    </a>
+                </div>
+
+                <div class="collapse mb-4" id="cuttingMachineDetails">
+                    <div class="card card-body border-warning">
+                        <ul class="mb-0">
+                            <li><strong>System Update:</strong> The system automatically renames 'Cutting' machines to 'Allowance' for consistency.</li>
+                            <li><strong>Safety Precautions:</strong> Ensure proper handling procedures and follow safety measures.</li>
+                            <li><strong>Compliance:</strong> Verify that all necessary approvals are in place for machines labeled as 'Allowance'.</li>
+                            <li><strong>Maintenance:</strong> Regular maintenance checks are recommended to prevent operational hazards.</li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-user me-2"></i>Customer Information</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Customer Name:</span>
+                            <span>@Model.CustomerName</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Customer Reference:</span>
+                            <span>@Model.CustomerReference</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Project Name & Location:</span>
+                            <span>@Model.ProjectName, @Model.Address</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Delivery Date:</span>
+                            <span>@(Model.FinishDate.ToString("yyyy-MM-dd") ?? "N/A")</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-file-invoice me-2"></i>Invoice Details</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Invoice Date:</span>
+                            <span>@Model.Date.ToString("yyyy-MM-dd")</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Job Number:</span>
+                            <span>@Model.JobNo</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Payment Status:</span>
+                            <span>Pending Payment</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Invoice Number:</span>
+                            <span>INV-@Model.JobNo</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Items?.Any() == true)
+    {
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-table me-2"></i>Order Details</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Glass Description</th>
+                                <th>Width (mm)</th>
+                                <th>Height (mm)</th>
+                                <th>Qty</th>
+                                <th>SQM</th>
+                                <th>Total SQM</th>
+                                <th>Customer Reference</th>
+                                <th>Delivered</th>
+                                @* <th>Delivery Date</th> *@
+                                <th>Delivered By</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int counter = 1;
+                            }
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr data-item-id="@item.Id" class="@(item.IsDelivered ? "" : "d-print-none")">
+                                    <td>@counter</td>
+                                    <td>@(string.IsNullOrEmpty(item.Description) ? "N/A" : item.Description)</td>
+                                    <td>@(item.Width == 0 ? "0" : item.Width)</td>
+                                    <td>@(item.Height == 0 ? "0" : item.Height)</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.SQM</td>
+                                    <td>@item.TotalLM</td>
+                                    <td>@(string.IsNullOrEmpty(item.CustomerReference) ? "No Reference" : item.CustomerReference)</td>
+                                    <td class="text-center">
+                                        <div class="form-check">
+                                            <input class="form-check-input delivery-checkbox" type="checkbox" data-item-id="@item.Id" @(item.IsDelivered ? "checked" : "") />
+                                        </div>
+                                    </td>
+                                    @* <td class="d-print-none"> *@
+                                    @*     <input class="form-control delivery-date" type="date" data-item-id="@item.Id" value="@(item.DeliveryDate?.ToString("yyyy-MM-dd") ?? "")" @(item.DeliveryDate == null ? "disabled" : "") /> *@
+                                    @* </td> *@
+                                    <td class="d-print-none">
+                                        <input class="form-control delivered-by" type="text" placeholder="Enter name" data-item-id="@item.Id" value="@item.DeliveredBy" @(string.IsNullOrWhiteSpace(item.DeliveredBy) ? "disabled" : "") />
+                                    </td>
+                                    <td class="d-print-none">
+                                        <button type="button" class="btn btn-sm btn-outline-success save-delivery-btn" @(item.IsDelivered ? "disabled" : "") data-item-id="@item.Id">
+                                            <i class="bi bi-save"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <h4 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>No Items Available</h4>
+            <p class="mb-0">There are no items available for this order. Please contact support if you believe this is an error.</p>
+        </div>
+    }
+
+    <div class="card-footer text-center mt-4 d-print-none">
+        <button onclick="window.print()" class="btn btn-outline-secondary me-2">
+            <i class="fas fa-print me-1"></i> Print Invoice
+        </button>
+        <a href="@Url.Action("Index", "Accountant")" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left me-1"></i> Back to Orders
+        </a>
+        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#shareInvoiceModal">
+            <i class="fas fa-share-alt me-1"></i> Share
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" id="statusUpdateModal" tabindex="-1" aria-labelledby="statusUpdateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="statusUpdateModalLabel">Delivery Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="statusUpdateMessage"></p> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shareInvoiceModal" tabindex="-1" aria-labelledby="shareInvoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shareInvoiceModalLabel">Share Invoice</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="recipientEmail" class="form-label">Recipient Email</label>
+                    <input type="email" class="form-control" id="recipientEmail" placeholder="customer@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="emailSubject" class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="emailSubject" value="Invoice #@Model.JobNo from Global Glass Factory">
+                </div>
+                <div class="mb-3">
+                    <label for="emailMessage" class="form-label">Message (Optional)</label>
+                    <textarea class="form-control" id="emailMessage" rows="3" placeholder="Add a personalized message..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-primary" id="sendInvoiceButton">Send Invoice</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deliveryCheckboxes = document.querySelectorAll('.delivery-checkbox');
+            const saveButtons = document.querySelectorAll('.save-delivery-btn');
+            function showStatusModal(message, type = 'success') {
+            const statusUpdateModal = new bootstrap.Modal(document.getElementById('statusUpdateModal'));
+            const statusUpdateMessage = document.getElementById('statusUpdateMessage');
+
+            statusUpdateMessage.textContent = message;
+
+            const modalContent = document.querySelector('#statusUpdateModal .modal-content');
+            modalContent.classList.remove('border-success', 'border-danger');
+            if (type === 'success') {
+                modalContent.classList.add('border-success');
+            } else if (type === 'error') {
+                modalContent.classList.add('border-danger');
+            }
+            statusUpdateModal.show();
+            setTimeout(() => {
+                statusUpdateModal.hide();
+            }, 5000);
+            }
+            deliveryCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const row = this.closest('tr');
+                    const deliveredByInput = row.querySelector('.delivered-by');
+
+                    if (this.checked) {
+                        deliveredByInput.removeAttribute('disabled');
+                    } else {
+                        deliveredByInput.setAttribute('disabled', 'disabled');
+                    }
+                });
+            });
+            saveButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const itemId = this.dataset.itemId;
+                    const row = this.closest('tr');
+                    const isDelivered = row.querySelector('.delivery-checkbox').checked;
+                    const deliveredBy = row.querySelector('.delivered-by').value;
+
+                    const data = {
+                        ItemId: parseInt(itemId),
+                        IsDelivered: isDelivered,
+                        DeliveryDate: new Date().toISOString(),
+                        DeliveredBy: deliveredBy
+                    };
+
+                    updateDeliveryStatus(data);
+                });
+            });
+            function updateDeliveryStatus(data) {
+                fetch('/Accountant/UpdateDeliveryStatus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('input[name="__RequestVerificationToken"]')?.value
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        showStatusModal('Delivery status updated successfully!', 'success');
+                    } else {
+                        throw new Error(data.message || 'Failed to update delivery status.');
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+            }
+        });
+    </script>
+}

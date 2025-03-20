@@ -1,0 +1,61 @@
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+@{
+    var modelState = ViewData.ModelState;
+    var culture = System.Globalization.CultureInfo.CurrentCulture; 
+}
+@section Scripts {
+ <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            toastr.options = {
+                positionClass: '@(culture.TextInfo.IsRightToLeft ? "toast-top-left" : "toast-top-right")', // Position based on culture
+                closeButton: true, 
+                timeOut: 3000, 
+                extendedTimeOut: 1000, 
+                preventDuplicates: true, 
+                progressBar: true, 
+                newestOnTop: true, 
+                showEasing: 'swing', 
+                hideEasing: 'linear', 
+                showMethod: 'fadeIn', 
+                hideMethod: 'fadeOut', 
+                tapToDismiss: true, 
+                rtl: @(culture.TextInfo.IsRightToLeft ? "true" : "false"), 
+            };
+
+            function showToast(message, type) {
+                toastr[type](message);
+            }
+
+        @if (modelState != null && !modelState.IsValid)
+        {
+            var errorMessages = string.Join("<br/>", modelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            if (!string.IsNullOrEmpty(errorMessages))
+            {
+                <text>showToast('@Html.Raw(errorMessages)', 'error');</text>
+            }
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <text>showToast('@TempData["Error"]', 'error');</text>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <text>showToast('@TempData["Success"]', 'success');</text>
+        }
+
+        @if (TempData["Info"] != null)
+        {
+            <text>showToast('@TempData["Info"]', 'info');</text>
+        }
+
+        @if (TempData["Warning"] != null)
+        {
+            <text>showToast('@TempData["Warning"]', 'warning');</text>
+        }
+        });
+    </script>
+}

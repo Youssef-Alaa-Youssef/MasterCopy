@@ -1,0 +1,53 @@
+﻿@model Factory.DAL.Models.Documentation.Documentation
+
+@{
+    ViewData["Title"] = "Documentation Details";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+
+    @await Html.PartialAsync("_PageTitle")
+
+    <p class="lead text-muted">
+        <i class="bi bi-card-text me-2"></i> @Model.Description
+    </p>
+
+    <div class="mb-4">
+        <h4 class="text-secondary">
+            <i class="bi bi-file-text me-2"></i> Content
+        </h4>
+        <p class="text-dark">@Model.Content</p>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.VideoUrl))
+    {
+        <div class="mb-4">
+            <h4 class="text-secondary">
+                <i class="bi bi-youtube me-2"></i> YouTube Video
+            </h4>
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="@Model.VideoUrl.Replace("watch?v=", "embed/")" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="card-footer text-center mt-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">
+            <i class="bi bi-pencil-square me-2"></i> Edit
+        </a>
+
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left-circle me-2"></i> Back to List
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

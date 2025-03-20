@@ -1,0 +1,503 @@
+﻿@using System.Security.Claims
+@using System.Globalization
+@using Factory.DAL.Enums
+@using Factory.PL.Helper
+@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
+@inject Factory.PL.Services.Permssions.IModuleService ModuleService
+@{
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    var modules = await ModuleService.GetModulesForUserAsync(userId);
+}
+<!DOCTYPE html>
+<html lang="@System.Globalization.CultureInfo.CurrentCulture.Name" dir="@(System.Globalization.CultureInfo.CurrentCulture.Name == "ar-SA" ? "rtl" : "ltr")" data-bs-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Dashboard - @ViewData["Title"]</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <link rel="icon" href="~/assets/images/icons/map-marker-2.png" type="image/x-icon">
+    @if (System.Globalization.CultureInfo.CurrentCulture.Name == "ar-SA")
+    {
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    }
+    else
+    {
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/css/Dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/assets/css/ChatStyles.css" />
+</head>
+
+<body data-bs-theme="light">
+    <div id="loader" class="spinner-container">
+        @await Html.PartialAsync("_Loader")
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top d-print-none">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                <img src="~/assets/images/Login.png" alt="@appSettings.Value.CompanyName" class="logo-image me-2" style="height: 40px;" />
+                <span class="font-weight-bold">@appSettings.Value.CompanyName</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" id="sidebarToggler">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Documentation" asp-action="Index" id="documentationLink">
+                            Documentation
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Documentation" asp-action="Help" id="documentationLink">
+                            Help
+                        </a>
+                    </li>
+                    @if (User.IsInRole(UserRole.SuperAdmin.ToString()) ||
+                    User.IsInRole(UserRole.GM.ToString()) ||
+                    User.IsInRole(UserRole.Owner.ToString()))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Notification" asp-action="Index" id="documentationLink">
+                                Notification
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <div class="dropdown me-2">
+                        <a href="#" id="notificationDropdownToggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i id="notificationIcon" class="bi bi-bell fs-5 p-2 rounded position-relative">
+                                <span id="notificationBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">
+                                    0 <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdownToggle">
+                            <li>
+                                <h6 class="dropdown-header">Notifications</h6>
+                            </li>
+
+                            <div id="notificationItems">
+
+                            </div>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-center text-secondary" href="/Notification/AllNotifications">
+                                    View All Notifications
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dropdown me-2">
+                        <a href="#" id="themeDropdownToggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i id="themeIcon" class="bi bi-sun me-2 fs-5 p-2 rounded"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li id="themeOption">
+                                <a class="dropdown-item d-flex align-items-center" href="#" onclick="toggleDarkMode()">
+                                    <i id="themeOptionIcon" class="bi bi-moon me-2"></i>
+                                    <span id="themeOptionText">Dark Mode</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dropdown me-2">
+                        <a href="#" id="languageDropdownToggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-translate me-2 fs-5 p-2 rounded"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            @{
+                                var currentCulture = System.Globalization.CultureInfo.CurrentCulture.Name;
+                            }
+
+                            @if (currentCulture == "ar-SA")
+                            {
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Language"
+                                       asp-action="ChangeLanguage"
+                                       asp-route-culture="en-US"
+                                       asp-route-returnUrl="@Context.Request.Path">
+                                        English (En)
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Language"
+                                       asp-action="ChangeLanguage"
+                                       asp-route-culture="ar-SA"
+                                       asp-route-returnUrl="@Context.Request.Path">
+                                        العربية (Ar)
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="dropdown me-2">
+                        <a href="#" id="settingsDropdownToggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i id="settingsIcon" class="bi bi-gear me-2 fs-5 p-2 rounded"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" asp-controller="Settings" asp-action="index">
+                                    <i class="bi bi-gear fs-4 me-2"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dropdown me-2">
+                        <a href="#" id="RolesDropdownToggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i id="settingsIcon" class="bi bi-shield me-2 fs-5 p-2 rounded"></i>
+                        </a>
+                        @{
+                            var currentRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+                            var uniqueRoles = User.Claims
+                            .Where(c => c.Type == ClaimTypes.Role)
+                            .Select(c => c.Value)
+                            .Distinct(); 
+                        }
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            @foreach (var role in uniqueRoles)
+                            {
+                                <li>
+                                    <a class="dropdown-item" href="#" onclick="selectRole('@role')">
+                                        <span>@role</span>
+                                        @if (role == currentRole)
+                                        {
+                                            <i class="bi bi-check2 ms-2 text-success"></i>
+                                        }
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                        @Html.AntiForgeryToken()
+                        <script>
+                            function selectRole(role) {
+                                fetch('/Auth/UpdateRole', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                                    },
+                                    body: JSON.stringify({ role: role })
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        window.location.reload();
+                                    } else {
+                                        alert('Failed to switch role.');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                            }
+                        </script>
+                    </div>
+
+                    <div class="dropdown">
+                        <a href="#" id="profileDropdownToggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-2 fs-5 p-2 rounded"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item">@User.Identity?.Name</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Auth" asp-action="Profile">
+                                    <i class="bi bi-person-circle fs-4 me-2"></i> Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Auth" asp-action="ChangePassword">
+                                    <i class="bi bi-lock fs-4 me-2"></i> Change Password
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                    <i class="bi bi-box-arrow-right fs-4 me-2"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar border-end mt-2 " id="sidebar">
+            @if (modules.Any())
+            {
+                <ul class="nav flex-column p-3">
+                    @foreach (var module in modules)
+                    {
+                        <li class="nav-item mb-1">
+                            <div class="module d-flex justify-content-between align-items-center p-2 rounded cursor-pointer shadow-sm"
+                                 data-bs-toggle="collapse" href="#@($"menu{module.Id}")" aria-expanded="false" aria-controls="@($"menu{module.Id}")">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi @module.IconClass fs-5 me-2"></i>
+                                    <span class="fw-semibold">@module.Name</span>
+                                </div>
+                                <i class="bi bi-chevron-down fs-6 transition-rotate text-muted"></i>
+                            </div>
+
+                            <!-- Submodules -->
+                            <ul class="collapse nav flex-column mt-2 ps-3" id="@($"menu{module.Id}")">
+                                @foreach (var subModule in module.SubModules)
+                                {
+                                    <li class="nav-item mb-2">
+                                        <!-- Submodule Header -->
+                                        <div class="submodule d-flex justify-content-between align-items-center p-2 rounded cursor-pointer shadow-sm"
+                                             data-bs-toggle="collapse" href="#@($"submenu{subModule.Id}")" aria-expanded="false" aria-controls="@($"submenu{subModule.Id}")">
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi @subModule.IconClass fs-4 me-2"></i>
+                                                <span class="fw-medium">@subModule.Name</span>
+                                            </div>
+                                            <i class="bi bi-chevron-down fs-6 transition-rotate text-muted"></i>
+                                        </div>
+
+                                        <!-- Pages -->
+                                        <ul class="collapse nav flex-column mt-1 ps-2" id="@($"submenu{subModule.Id}")">
+                                            @foreach (var pages in subModule.Pages)
+                                            {
+                                                <li class="nav-item d-flex align-items-center mb-1">
+                                                    <a href="@UrlHelper.GetSecureUrl(pages)" class="nav-link submodule text-decoration-none" title="@pages.Name">
+                                                        <i class="bi bi-dash fs-6 me-2 text-muted"></i>
+                                                        @pages.Name
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="p-3 text-muted">
+                    <i class="bi bi-exclamation-circle me-2"></i> No permissions available.
+                </div>
+            }
+        </div>
+    </nav>
+    <div class="text-center p-3 fixed-bottom">
+        <small class="text-muted">&copy; @DateTime.Now.Year @appSettings.Value.CompanyName. All rights reserved.</small>
+    </div>
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-semibold" id="logoutModalLabel">
+                        <i class="bi bi-box-arrow-right text-danger me-2"></i> Confirm Logout
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body text-center">
+                    <p class="text-muted small mb-3">Are you sure you want to log out? Your session will be securely closed.</p>
+                </div>
+
+                <div class="modal-footer border-0 justify-content-center">
+                    <form asp-controller="Auth" asp-action="ActualLogOut" method="post">
+                        <button type="submit" class="btn btn-outline-danger px-4">
+                            <i class="bi bi-box-arrow-right me-2"></i> Log Out
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-2"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay"></div>
+
+ 
+    <main class="main-content" id="mainContent">
+        @RenderBody()
+    </main>
+
+    @if (appSettings.Value.ChatBot){
+        @await Html.PartialAsync("_ChatWidget")
+    }
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const mainContent = document.getElementById("mainContent");
+        const sidebarToggler = document.getElementById("sidebarToggler");
+
+        if (sidebarToggler) {
+            sidebarToggler.addEventListener("click", function (e) {
+                e.preventDefault(); // Prevent default navbar collapse behavior
+                sidebar.classList.toggle("active");
+                overlay.classList.toggle("active");
+                mainContent.classList.toggle("sidebar-active");
+            });
+        }
+
+        if (overlay) {
+            overlay.addEventListener("click", function () {
+                sidebar.classList.remove("active");
+                overlay.classList.remove("active");
+                mainContent.classList.remove("sidebar-active");
+            });
+        }
+
+        function toggleDarkMode() {
+            const body = document.body;
+            const themeIcon = document.getElementById("themeIcon");
+            const themeOptionIcon = document.getElementById("themeOptionIcon");
+            const themeOptionText = document.getElementById("themeOptionText");
+
+            console.log("Current theme:", body.getAttribute("data-bs-theme")); // Debugging
+
+            if (body.getAttribute("data-bs-theme") === "light") {
+                body.setAttribute("data-bs-theme", "dark");
+                themeIcon.classList.remove("bi-sun");
+                themeIcon.classList.add("bi-moon");
+                themeOptionIcon.classList.remove("bi-moon");
+                themeOptionIcon.classList.add("bi-sun");
+                themeOptionText.textContent = "Light Mode";
+                localStorage.setItem("theme", "dark"); // Save theme preference
+                console.log("Switched to dark mode"); // Debugging
+            } else {
+                body.setAttribute("data-bs-theme", "light");
+                themeIcon.classList.remove("bi-moon");
+                themeIcon.classList.add("bi-sun");
+                themeOptionIcon.classList.remove("bi-sun");
+                themeOptionIcon.classList.add("bi-moon");
+                themeOptionText.textContent = "Dark Mode";
+                localStorage.setItem("theme", "light"); // Save theme preference
+                console.log("Switched to light mode"); // Debugging
+            }
+        }
+
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem("theme");
+            const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+            if (savedTheme === "dark" || (!savedTheme && prefersDarkMode)) {
+                document.body.setAttribute("data-bs-theme", "dark");
+                document.getElementById("themeIcon").classList.remove("bi-sun");
+                document.getElementById("themeIcon").classList.add("bi-moon");
+                document.getElementById("themeOptionIcon").classList.remove("bi-sun");
+                document.getElementById("themeOptionIcon").classList.add("bi-moon");
+                document.getElementById("themeOptionText").textContent = "Light Mode";
+            } else {
+                document.body.setAttribute("data-bs-theme", "light");
+                document.getElementById("themeIcon").classList.remove("bi-moon");
+                document.getElementById("themeIcon").classList.add("bi-sun");
+                document.getElementById("themeOptionIcon").classList.remove("bi-moon");
+                document.getElementById("themeOptionIcon").classList.add("bi-sun");
+                document.getElementById("themeOptionText").textContent = "Dark Mode";
+            }
+        }
+
+        initializeTheme();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const notificationBadge = document.getElementById('notificationBadge');
+            const notificationItems = document.getElementById('notificationItems');
+
+            function addNotificationToDropdown(notification) {
+                const notificationItem = document.createElement('li');
+                notificationItem.innerHTML = `
+                    <a class="dropdown-item d-flex align-items-center notification-item" href="#" data-id="${notification.id}">
+                        <i class="${notification.iconClass} fs-4 me-2 text-${notification.type}"></i>
+                        <div>
+                            <span class="d-block">${notification.message}</span>
+                            <small class="text-muted">${new Date(notification.createdAt).toLocaleString()}</small>
+                        </div>
+                    </a>
+                `;
+                notificationItems.prepend(notificationItem);
+
+                notificationItem.querySelector('.notification-item').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const notificationId = this.getAttribute('data-id');
+
+                    window.location.href = `/Notification/Details/${notificationId}`;
+                });
+            }
+
+            fetch('/api/notification/unread')
+                .then(response => response.json())
+                .then(data => {
+                    notificationBadge.textContent = data.length;
+
+                    if (data.length > 0) {
+                        notificationBadge.style.display = 'inline-block'; // Show the badge
+                    } else {
+                        notificationBadge.style.display = 'none'; // Hide the badge
+                    }
+
+                    notificationItems.innerHTML = '';
+
+                    const latestNotifications = data.slice(0, 5);
+                    latestNotifications.forEach(notification => {
+                        addNotificationToDropdown(notification);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading notifications:', error);
+                });
+
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/notificationHub")
+                .build();
+
+            connection.start()
+                .then(() => console.log("SignalR connection established."))
+                .catch(err => console.error("SignalR connection error:", err));
+
+            connection.on("ReceiveNotification", function (notification) {
+                const currentCount = parseInt(notificationBadge.textContent, 10);
+                notificationBadge.textContent = currentCount + 1;
+
+                if (notificationBadge.style.display === 'none') {
+                    notificationBadge.style.display = 'inline-block';
+                }
+
+                addNotificationToDropdown(notification);
+
+                const allNotifications = Array.from(notificationItems.querySelectorAll('li'));
+                if (allNotifications.length > 5) {
+                    allNotifications.slice(5).forEach(item => item.remove());
+                }
+            });
+        });
+    </script>
+    <style>
+        #notificationItems {
+            max-height: 300px; 
+            overflow-y: auto;
+        }
+    </style>   
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

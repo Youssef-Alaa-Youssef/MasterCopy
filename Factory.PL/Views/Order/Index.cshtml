@@ -1,0 +1,125 @@
+﻿@model List<Factory.PL.ViewModels.OrderList.OrderViewModel>
+@using static Factory.DAL.Enums.UserRole
+@{
+    // var authorizationResult = await AuthorizationService.AuthorizeAsync(User, "Orders_Delete");
+    // var authorizationAcc = await AuthorizationService.AuthorizeAsync(User, "Orders_Read");
+}
+
+
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+        <div class="d-flex flex-wrap gap-2">
+            <a asp-action="Create" class="btn btn-outline-success">+ Create Order</a>
+            <button id="exportExcelBtn" class="btn btn-outline-primary">📥 Export to Excel</button>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="🔍 Search by Customer Name...">
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped text-center align-middle" id="orderTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Customer Name</th>
+                    <th>Customer Ref</th>
+                    <th>Project Name</th>
+                    <th>Date</th>
+                    <th>Job No</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+                            <td>@order.CustomerName</td>
+                            <td>@order.CustomerReference</td>
+                            <td>@order.ProjectName</td>
+                            <td>@order.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@order.JobNo</td>
+                            <td>
+                                <span class="badge @(order.Priority == "High" ? "bg-danger" : "bg-warning")">
+                                    @order.Priority
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge @(order.IsAccepted ? "bg-success" : "bg-secondary")">
+                                    @(order.IsAccepted ? "Accepted" : "Pending")
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                    
+                                    <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-outline-info btn-sm w-100 w-md-auto">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                    <a asp-action="Optimization" asp-route-id="@order.Id" class="btn btn-outline-secondary btn-sm w-100 w-md-auto">
+                                        <i class="bi bi-pencil-square"></i> Optimized
+                                    </a>
+                                    <a asp-action="GlassLabel" asp-route-id="@order.Id"
+                                       class="btn btn-outline-success btn-sm d-flex align-items-center justify-content-center w-100 w-md-auto">
+                                        <i class="bi bi-tags me-1"></i> Labels
+                                    </a>
+
+                                    @* @if (authorizationResult.Succeeded) *@
+                                    @* { *@
+                                        <a asp-action="Delete" asp-route-id="@order.Id" class="btn btn-outline-danger btn-sm w-100 w-md-auto">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </a>
+                                    @* } *@
+                                    @* @if (authorizationAcc.Succeeded && User.IsInRole(nameof(Accountant))) *@
+                                    @* { *@
+                                        <a asp-action="Index" asp-controller="Accountant" class="btn btn-outline-success btn-sm w-100 w-md-auto">
+                                            <i class="bi bi-cash-stack"></i> Finance
+                                        </a>
+                                    @* } *@
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9" class="text-center text-muted">No orders found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#tableBody tr");
+
+        rows.forEach(row => {
+            let text = row.children[1].textContent.toLowerCase();
+            row.style.display = text.includes(filter) ? "" : "none";
+        });
+    });
+
+    document.getElementById("exportExcelBtn").addEventListener("click", function () {
+        let table = document.getElementById("orderTable");
+        let workbook = XLSX.utils.table_to_book(table, { sheet: "Orders" });
+        XLSX.writeFile(workbook, "Orders.xlsx");
+    });
+</script>

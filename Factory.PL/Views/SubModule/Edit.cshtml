@@ -1,0 +1,72 @@
+﻿@model Factory.PL.ViewModels.Permission.SubModulesViewModel
+
+@{
+    ViewData["Title"] = "Edit Sub Module";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Controller" class="control-label"></label>
+                    <input asp-for="Controller" class="form-control" />
+                    <span asp-validation-for="Controller" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Action" class="control-label"></label>
+                    <input asp-for="Action" class="form-control" />
+                    <span asp-validation-for="Action" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="ModuleId" class="control-label"></label>
+                    <select asp-for="ModuleId" class="form-control" asp-items="Model.Modules">
+                        <option value="">-- Select Module --</option>
+                    </select>
+                    <span asp-validation-for="ModuleId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        @await Html.PartialAsync("_IconSelectorPartial", Model.IconClass)
+
+        <div class="card-footer text-center mt-2">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
