@@ -1,0 +1,142 @@
+﻿@model Factory.DAL.Models.HR.Offboarding
+@{
+    ViewData["Title"] = Localizer["DetailsTitle"];
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("_PageTitle")
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["Employee"]</label>
+                <p class="form-control-static">@Model.EmployeeId</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["Supervisor"]</label>
+                <p class="form-control-static">@Model.SupervisorId</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-2">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["LastWorkingDate"]</label>
+                <p class="form-control-static">@Model.LastWorkingDate.ToShortDateString()</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["ExitInterviewDate"]</label>
+                <p class="form-control-static">@Model.ExitInterviewDate?.ToShortDateString()</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-2">
+        <div class="col-md-12">
+            <div class="form-group">
+                    <label class="control-label">@Localizer["TerminationReason"]</label>
+                    <p class="form-control-static">@Model.TerminationReason</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-2">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["Status"]</label>
+                <p class="form-control-static">@Model.Status</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["NoticeGivenDate"]</label>
+                <p class="form-control-static">@Model.NoticeGivenDate?.ToShortDateString()</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-2">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["ReturnOfCompanyPropertyCompleted"]</label>
+                <p class="form-control-static">@Model.ReturnOfCompanyPropertyCompleted ? Localizer["Yes"] : Localizer["No"]</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["AccessRevocationCompleted"]</label>
+                <p class="form-control-static">@Model.AccessRevocationCompleted ? Localizer["Yes"] : Localizer["No"]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-2">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["KnowledgeTransferCompleted"]</label>
+                <p class="form-control-static">@Model.KnowledgeTransferCompleted ? Localizer["Yes"] : Localizer["No"]</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["ExitInterviewCompleted"]</label>
+                <p class="form-control-static">@Model.ExitInterviewCompleted ? Localizer["Yes"] : Localizer["No"]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-2">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["FinalPaymentCompleted"]</label>
+                <p class="form-control-static">@Model.FinalPaymentCompleted ? Localizer["Yes"] : Localizer["No"]</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["BenefitsTerminationCompleted"]</label>
+                <p class="form-control-static">@Model.BenefitsTerminationCompleted ? Localizer["Yes"] : Localizer["No"]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-2">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["ReferenceArrangementCompleted"]</label>
+                <p class="form-control-static">@Model.ReferenceArrangementCompleted ? Localizer["Yes"] : Localizer["No"]</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["FarewellEventCompleted"]</label>
+                <p class="form-control-static">@Model.FarewellEventCompleted ? Localizer["Yes"] : Localizer["No"]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-2">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["FeedbackProvided"]</label>
+                <p class="form-control-static">@Model.FeedbackProvided ? Localizer["Yes"] : Localizer["No"]</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">@Localizer["Notes"]</label>
+                <p class="form-control-static">@Model.Notes</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["BackToList"]</a>
+    </div>
+</div>

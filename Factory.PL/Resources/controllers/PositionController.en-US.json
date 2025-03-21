@@ -1,0 +1,22 @@
+{
+  "CreateTitle": "Create Position",
+  "EditTitle": "Edit Position",
+  "DeleteTitle": "Delete Position",
+  "DetailsTitle": "Position Details",
+  "Positions": "Jobs",
+  "Title": "Title",
+  "TitleEn": "English Title",
+  "Code": "Code",
+  "Description": "Description",
+  "Department": "Department",
+  "Save": "Save",
+  "BackToList": "Back to List",
+  "DeleteConfirmation": "Are you sure you want to delete this position?",
+  "PositionCreatedSuccessfully": "Position created successfully!",
+  "PositionCreationError": "An error occurred while creating the position. Error: {0}",
+  "PositionUpdatedSuccessfully": "Position updated successfully!",
+  "PositionUpdateError": "An error occurred while updating the position. Error: {0}",
+  "PositionDeletedSuccessfully": "Position deleted successfully!",
+  "PositionDeletionError": "An error occurred while deleting the position. Error: {0}",
+  "PositionNotFound": "Position not found."
+}

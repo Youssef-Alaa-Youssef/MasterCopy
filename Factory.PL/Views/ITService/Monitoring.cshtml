@@ -1,0 +1,131 @@
+﻿@model Factory.DAL.Models.SystemMetrics
+
+@{
+    ViewData["Title"] = "System Monitoring";
+    Layout = "_LogedUser";
+
+    // Define thresholds for dangerous levels
+    const float cpuDangerThreshold = 90.0f;
+    const float memoryDangerThreshold = 85.0f;
+    const float diskDangerThreshold = 80.0f;
+
+    // Check if metrics are in dangerous ranges
+    bool isCpuDanger = Model.CpuUsage >= cpuDangerThreshold;
+    bool isMemoryDanger = Model.MemoryUsage >= memoryDangerThreshold;
+    bool isDiskDanger = Model.DiskUsage >= diskDangerThreshold;
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <!-- Display alerts for dangerous metrics -->
+    @if (isCpuDanger || isMemoryDanger || isDiskDanger)
+    {
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Warning!</h4>
+            <p>The following metrics are in dangerous ranges:</p>
+            <ul>
+                @if (isCpuDanger)
+                {
+                    <li><strong>CPU Usage</strong> is high (@Model.CpuUsage.ToString("0.00") %).</li>
+                }
+                @if (isMemoryDanger)
+                {
+                    <li><strong>Memory Usage</strong> is high (@Model.MemoryUsage.ToString("0.00") %).</li>
+                }
+                @if (isDiskDanger)
+                {
+                    <li><strong>Disk Usage</strong> is high (@Model.DiskUsage.ToString("0.00") %).</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Current Metrics</h3>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="@(isCpuDanger ? "table-danger" : "")">
+                        <td>CPU Usage</td>
+                        <td><strong>@Model.CpuUsage.ToString("0.00") %</strong></td>
+                    </tr>
+                    <tr class="@(isMemoryDanger ? "table-danger" : "")">
+                        <td>Memory Usage</td>
+                        <td><strong>@Model.MemoryUsage.ToString("0.00") %</strong></td>
+                    </tr>
+                    <tr class="@(isDiskDanger ? "table-danger" : "")">
+                        <td>Disk Usage</td>
+                        <td><strong>@Model.DiskUsage.ToString("0.00") %</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Timestamp</td>
+                        <td>@Model.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h3>Performance Charts</h3>
+            <canvas id="systemMetricsChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/chart.js/chart.min.js"></script>
+    <script>
+        const metricsData = {
+            labels: ["CPU Usage", "Memory Usage", "Disk Usage"],
+            datasets: [{
+                label: 'Usage (%)',
+                data: [@Model.CpuUsage.ToString("0.00"), @Model.MemoryUsage.ToString("0.00"), @Model.DiskUsage.ToString("0.00")],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)', // Red for CPU
+                    'rgba(54, 162, 235, 0.2)', // Blue for Memory
+                    'rgba(75, 192, 192, 0.2)' // Green for Disk
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: metricsData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Usage (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        };
+
+        const systemMetricsChart = new Chart(
+            document.getElementById('systemMetricsChart'),
+            config
+        );
+    </script>
+}

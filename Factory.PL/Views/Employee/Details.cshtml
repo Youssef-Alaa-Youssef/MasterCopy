@@ -1,0 +1,42 @@
+﻿@model Factory.DAL.Models.HR.Employee
+
+@{
+    ViewData["Title"] = "تفاصيل الموظف";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">الاسم الكامل:</dt>
+                <dd class="col-sm-8">@($"{Model.FirstName} {Model.LastName}")</dd>
+
+                <dt class="col-sm-4">البريد الإلكتروني:</dt>
+                <dd class="col-sm-8">@Model.Email</dd>
+
+                <dt class="col-sm-4">الهاتف:</dt>
+                <dd class="col-sm-8">@Model.Phone</dd>
+
+                <dt class="col-sm-4">القسم:</dt>
+                <dd class="col-sm-8">@Model.Department.Name</dd>
+
+                <dt class="col-sm-4">الوظيفة:</dt>
+                <dd class="col-sm-8">@Model.Position.Title</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <img src="@Model.ImagePath" alt="Employee Image" class="img-thumbnail" style="max-width: 200px;" />
+            }
+        </div>
+    </div>
+
+    <div class="card-footer text-center mt-2">
+        <a asp-action="Index" class="btn btn-secondary">العودة إلى القائمة</a>
+    </div>
+</div>

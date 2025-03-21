@@ -123,7 +123,6 @@ namespace Factory.Controllers
             }
         }
 
-        [HttpGet("GetCategories")]
         public IActionResult GetCategories(int id)
         {
             try

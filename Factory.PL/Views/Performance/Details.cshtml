@@ -1,0 +1,43 @@
+﻿@model Factory.DAL.Models.HR.Performance
+
+@{
+    ViewData["Title"] = "Performance Details";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Employee</dt>
+        <dd class="col-sm-10">@Model.EmployeeId</dd>
+
+        <dt class="col-sm-2">Review Date</dt>
+        <dd class="col-sm-10">@Model.ReviewDate.ToShortDateString()</dd>
+
+        <dt class="col-sm-2">Overall Score</dt>
+        <dd class="col-sm-10">@Model.OverallScore</dd>
+
+        <dt class="col-sm-2">Review Status</dt>
+        <dd class="col-sm-10">@Model.ReviewStatus</dd>
+
+        <dt class="col-sm-2">Manager Feedback</dt>
+        <dd class="col-sm-10">@Model.ManagerFeedback</dd>
+
+        <dt class="col-sm-2">Employee Feedback</dt>
+        <dd class="col-sm-10">@Model.EmployeeFeedback</dd>
+
+        <dt class="col-sm-2">Goals for Next Period</dt>
+        <dd class="col-sm-10">@Model.GoalsForNextPeriod</dd>
+
+        <dt class="col-sm-2">Development Plan</dt>
+        <dd class="col-sm-10">@Model.DevelopmentPlan</dd>
+    </dl>
+</div>
+    <div class="card-footer text-center mt-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a> |
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+</div>
+</div>

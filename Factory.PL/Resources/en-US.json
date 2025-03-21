@@ -1,4 +1,20 @@
 ﻿{
-  "WelcomeMessage": "Welcome english page",
-  "Description": "This is the home page."
+  "CreateTitle": "Create Department",
+  "EditTitle": "Edit Department",
+  "DeleteTitle": "Delete Department",
+  "DetailsTitle": "Department Details",
+  "Name": "Name",
+  "NameEn": "English Name",
+  "Code": "Code",
+  "Description": "Description",
+  "Save": "Save",
+  "BackToList": "Back to List",
+  "DeleteConfirmation": "Are you sure you want to delete this department?",
+  "DepartmentCreatedSuccessfully": "Department created successfully!",
+  "DepartmentCreationError": "An error occurred while creating the department. Error: {0}",
+  "DepartmentUpdatedSuccessfully": "Department updated successfully!",
+  "DepartmentUpdateError": "An error occurred while updating the department. Error: {0}",
+  "DepartmentDeletedSuccessfully": "Department deleted successfully!",
+  "DepartmentDeletionError": "An error occurred while deleting the department. Error: {0}",
+  "DepartmentNotFound": "Department not found."
 }

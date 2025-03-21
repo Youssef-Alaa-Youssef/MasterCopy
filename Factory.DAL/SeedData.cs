@@ -22,7 +22,8 @@ namespace Factory.DAL
                 new Module { Id = 6, Name = "System Management", IconClass = "bi-speedometer", IsActive = true },
                 new Module { Id = 7, Name = "Support Management", IconClass = "bi-headset", IsActive = true },
                 new Module { Id = 8, Name = "Reports", IconClass = "bi-file-earmark-bar-graph", IsActive = true },
-                new Module { Id = 9, Name = "Settings", IconClass = "bi-gear", IsActive = true }
+                new Module { Id = 9, Name = "Settings", IconClass = "bi-gear", IsActive = true },
+                new Module { Id = 10, Name = "HR", IconClass = "bi-people", IsActive = true }
             );
         }
 
@@ -46,7 +47,14 @@ namespace Factory.DAL
                 new SubModule { Id = 15, Name = "Reports", IconClass = "bi-file-earmark-bar-graph", ModuleId = 8 },
                 new SubModule { Id = 16, Name = "Dashboards", IconClass = "bi-speedometer2", ModuleId = 8 },
                 new SubModule { Id = 17, Name = "General Settings", IconClass = "bi-gear", ModuleId = 9 },
-                new SubModule { Id = 18, Name = "Security", IconClass = "bi-shield", ModuleId = 9 }
+                new SubModule { Id = 18, Name = "Security", IconClass = "bi-shield", ModuleId = 9 },
+                new SubModule { Id = 19, Name = "Onboarding", IconClass = "bi-person-plus", ModuleId = 10 },
+                new SubModule { Id = 20, Name = "Offboarding", IconClass = "bi-person-dash", ModuleId = 10 },
+                new SubModule { Id = 21, Name = "Performance", IconClass = "bi-bar-chart-line", ModuleId = 10 },
+                new SubModule { Id = 22, Name = "Supervisor", IconClass = "bi-person-badge", ModuleId = 10 },
+                new SubModule { Id = 23, Name = "Employee Position", IconClass = "bi-briefcase", ModuleId = 10 },
+                new SubModule { Id = 24, Name = "Department", IconClass = "bi-building", ModuleId = 10 },
+                new SubModule { Id = 25, Name = "Leave Request", IconClass = "bi-calendar-check", ModuleId = 10 }
             );
         }
 
@@ -60,7 +68,7 @@ namespace Factory.DAL
                 new Page { Id = 5, Name = "Submodule List", Action = "Index", Controller = "SubModule", IsActive = true, SubmoduleId = 4, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 6, Name = "Add Submodule", Action = "Create", Controller = "SubModule", IsActive = true, SubmoduleId = 4, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 7, Name = "User List", Action = "Index", Controller = "Auth", IsActive = true, SubmoduleId = 1, SecureUrlKey = GenerateSecureKey() },
-                new Page { Id = 8, Name = "Add User", Action = "Create", Controller = "Auth", IsActive = true, SubmoduleId = 1, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 8, Name = "Add User", Action = "Add", Controller = "Auth", IsActive = true, SubmoduleId = 1, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 9, Name = "Role List", Action = "Index", Controller = "Role", IsActive = true, SubmoduleId = 3, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 10, Name = "Add Role", Action = "Create", Controller = "Role", IsActive = true, SubmoduleId = 3, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 11, Name = "Warehouse List", Action = "Index", Controller = "Warehouse", IsActive = true, SubmoduleId = 5, SecureUrlKey = GenerateSecureKey() },
@@ -111,7 +119,21 @@ namespace Factory.DAL
                 new Page { Id = 56, Name = "Order Dashboard", Action = "Index", Controller = "OrderReport", IsActive = true, SubmoduleId = 16, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 57, Name = "Stores", Action = "WarehouseReport", Controller = "warehouse", IsActive = true, SubmoduleId = 15, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 58, Name = "Countries", Action = "Index", Controller = "Country", IsActive = true, SubmoduleId = 17, SecureUrlKey = GenerateSecureKey() },
-                new Page { Id = 59, Name = "Countries and Their Items", Action = "countries", Controller = "items", IsActive = true, SubmoduleId = 15, SecureUrlKey = GenerateSecureKey() }
+                new Page { Id = 59, Name = "Countries and Their Items", Action = "countries", Controller = "items", IsActive = true, SubmoduleId = 15, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 60, Name = "Onboarding List", Action = "Index", Controller = "Onboarding", IsActive = true, SubmoduleId = 19, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 61, Name = "Create Onboarding", Action = "Create", Controller = "Onboarding", IsActive = true, SubmoduleId = 19, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 62, Name = "Offboarding List", Action = "Index", Controller = "Offboarding", IsActive = true, SubmoduleId = 20, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 63, Name = "Create Offboarding", Action = "Create", Controller = "Offboarding", IsActive = true, SubmoduleId = 20, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 64, Name = "Performance Reviews", Action = "Index", Controller = "Performance", IsActive = true, SubmoduleId = 21, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 65, Name = "Add Performance Review", Action = "Create", Controller = "Performance", IsActive = true, SubmoduleId = 21, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 66, Name = "Supervisors List", Action = "Index", Controller = "Supervisor", IsActive = true, SubmoduleId = 22, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 67, Name = "Add Supervisor", Action = "Create", Controller = "Supervisor", IsActive = true, SubmoduleId = 22, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 68, Name = "Employee Positions", Action = "Index", Controller = "EmployeePosition", IsActive = true, SubmoduleId = 23, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 69, Name = "Create Employee Position", Action = "Create", Controller = "EmployeePosition", IsActive = true, SubmoduleId = 23, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 70, Name = "Departments List", Action = "Index", Controller = "Department", IsActive = true, SubmoduleId = 24, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 71, Name = "Add Department", Action = "Create", Controller = "Department", IsActive = true, SubmoduleId = 24, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 72, Name = "Leave Requests", Action = "Index", Controller = "LeaveRequest", IsActive = true, SubmoduleId = 25, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 73, Name = "Submit Leave Request", Action = "Create", Controller = "LeaveRequest", IsActive = true, SubmoduleId = 25, SecureUrlKey = GenerateSecureKey() }
             );
         }
         private static string GenerateSecureKey()

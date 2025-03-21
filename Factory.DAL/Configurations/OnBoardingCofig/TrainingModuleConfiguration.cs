@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Factory.DAL.Configurations.Onboarding
+namespace Factory.DAL.Configurations.OnBoardingCofig
 {
     public class TrainingModuleConfiguration : IEntityTypeConfiguration<TrainingModule>
     {

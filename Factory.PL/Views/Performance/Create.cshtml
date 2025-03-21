@@ -1,0 +1,121 @@
+﻿@model Factory.PL.ViewModels.HR.PerformanceViewModel
+
+@{
+    ViewData["Title"] = "Create Performance Review";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    @if (ViewBag.Employees != null && (ViewBag.Employees as IEnumerable<SelectListItem>).Any())
+    {
+        <form asp-action="Create">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="EmployeeId" class="control-label">Employee</label>
+                        <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.Employees">
+                            <option value="">-- Select Employee --</option>
+                        </select>
+                        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ReviewDate" class="control-label">Review Date</label>
+                        <input asp-for="ReviewDate" class="form-control" />
+                        <span asp-validation-for="ReviewDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ReviewPeriodStart" class="control-label">Review Period Start</label>
+                        <input asp-for="ReviewPeriodStart" class="form-control" />
+                        <span asp-validation-for="ReviewPeriodStart" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ReviewPeriodEnd" class="control-label">Review Period End</label>
+                        <input asp-for="ReviewPeriodEnd" class="form-control" />
+                        <span asp-validation-for="ReviewPeriodEnd" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="ProductivityScore" class="control-label">Productivity Score</label>
+                        <input asp-for="ProductivityScore" class="form-control" />
+                        <span asp-validation-for="ProductivityScore" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="QualityScore" class="control-label">Quality Score</label>
+                        <input asp-for="QualityScore" class="form-control" />
+                        <span asp-validation-for="QualityScore" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="TeamworkScore" class="control-label">Teamwork Score</label>
+                        <input asp-for="TeamworkScore" class="form-control" />
+                        <span asp-validation-for="TeamworkScore" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ManagerFeedback" class="control-label">Manager Feedback</label>
+                <textarea asp-for="ManagerFeedback" class="form-control"></textarea>
+                <span asp-validation-for="ManagerFeedback" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmployeeFeedback" class="control-label">Employee Feedback</label>
+                <textarea asp-for="EmployeeFeedback" class="form-control"></textarea>
+                <span asp-validation-for="EmployeeFeedback" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GoalsForNextPeriod" class="control-label">Goals for Next Period</label>
+                <textarea asp-for="GoalsForNextPeriod" class="form-control"></textarea>
+                <span asp-validation-for="GoalsForNextPeriod" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DevelopmentPlan" class="control-label">Development Plan</label>
+                <textarea asp-for="DevelopmentPlan" class="form-control"></textarea>
+                <span asp-validation-for="DevelopmentPlan" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReviewStatus" class="control-label">Review Status</label>
+                <select asp-for="ReviewStatus" class="form-control" asp-items="ViewBag.ReviewStatuses"></select>
+                <span asp-validation-for="ReviewStatus" class="text-danger"></span>
+            </div>
+
+            <div class="card-footer text-center mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <strong>No Employees Found!</strong> Please <a asp-controller="Employee" asp-action="Create" class="alert-link">add a new employee</a> first.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

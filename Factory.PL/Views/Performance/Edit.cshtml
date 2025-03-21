@@ -1,0 +1,110 @@
+﻿@model Factory.PL.ViewModels.HR.PerformanceViewModel
+
+@{
+    ViewData["Title"] = "Edit Performance Review";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="EmployeeId" class="control-label"></label>
+        <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.Employees"></select>
+        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReviewDate" class="control-label"></label>
+        <input asp-for="ReviewDate" class="form-control" />
+        <span asp-validation-for="ReviewDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReviewPeriodStart" class="control-label"></label>
+        <input asp-for="ReviewPeriodStart" class="form-control" />
+        <span asp-validation-for="ReviewPeriodStart" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReviewPeriodEnd" class="control-label"></label>
+        <input asp-for="ReviewPeriodEnd" class="form-control" />
+        <span asp-validation-for="ReviewPeriodEnd" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProductivityScore" class="control-label"></label>
+        <input asp-for="ProductivityScore" class="form-control" />
+        <span asp-validation-for="ProductivityScore" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="QualityScore" class="control-label"></label>
+        <input asp-for="QualityScore" class="form-control" />
+        <span asp-validation-for="QualityScore" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TeamworkScore" class="control-label"></label>
+        <input asp-for="TeamworkScore" class="form-control" />
+        <span asp-validation-for="TeamworkScore" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CommunicationScore" class="control-label"></label>
+        <input asp-for="CommunicationScore" class="form-control" />
+        <span asp-validation-for="CommunicationScore" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="InitiativeScore" class="control-label"></label>
+        <input asp-for="InitiativeScore" class="form-control" />
+        <span asp-validation-for="InitiativeScore" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ManagerFeedback" class="control-label"></label>
+        <textarea asp-for="ManagerFeedback" class="form-control"></textarea>
+        <span asp-validation-for="ManagerFeedback" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmployeeFeedback" class="control-label"></label>
+        <textarea asp-for="EmployeeFeedback" class="form-control"></textarea>
+        <span asp-validation-for="EmployeeFeedback" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GoalsForNextPeriod" class="control-label"></label>
+        <textarea asp-for="GoalsForNextPeriod" class="form-control"></textarea>
+        <span asp-validation-for="GoalsForNextPeriod" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DevelopmentPlan" class="control-label"></label>
+        <textarea asp-for="DevelopmentPlan" class="form-control"></textarea>
+        <span asp-validation-for="DevelopmentPlan" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReviewStatus" class="control-label"></label>
+        <select asp-for="ReviewStatus" class="form-control" asp-items="ViewBag.ReviewStatuses"></select>
+        <span asp-validation-for="ReviewStatus" class="text-danger"></span>
+    </div>
+
+        <div class="card-footer text-center mt-2">
+            <input type="submit" value="Save" class="btn btn-outline-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

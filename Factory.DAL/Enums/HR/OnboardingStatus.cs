@@ -1,5 +1,4 @@
-﻿
-namespace Factory.DAL.Enums
+﻿namespace Factory.DAL.Enums.HR
 {
     public enum OnboardingStatus
     {

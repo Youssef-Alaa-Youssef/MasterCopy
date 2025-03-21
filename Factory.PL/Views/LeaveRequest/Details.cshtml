@@ -1,0 +1,50 @@
+﻿@model Factory.DAL.Models.HR.LeaveRequest
+@{
+    ViewData["Title"] = Localizer["LeaveRequestDetails"];
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">@Localizer["Employee"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Employee.FirstName)</dd>
+
+                <dt class="col-sm-4">@Localizer["StartDate"]:</dt>
+                <dd class="col-sm-8">@Model.StartDate.ToString("yyyy-MM-dd")</dd>
+
+                <dt class="col-sm-4">@Localizer["EndDate"]:</dt>
+                <dd class="col-sm-8">@Model.EndDate.ToString("yyyy-MM-dd")</dd>
+
+                <dt class="col-sm-4">@Localizer["TotalDays"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.TotalDays)</dd>
+
+                <dt class="col-sm-4">@Localizer["Type"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Type)</dd>
+
+                <dt class="col-sm-4">@Localizer["Status"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Status)</dd>
+
+                <dt class="col-sm-4">@Localizer["Reason"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Reason)</dd>
+
+                <dt class="col-sm-4">@Localizer["ApprovedBy"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.ApprovedById)</dd>
+
+                <dt class="col-sm-4">@Localizer["ApprovedDate"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.ApprovedDate)</dd>
+
+                <dt class="col-sm-4">@Localizer["RejectionReason"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.RejectionReason)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card-footer text-center mt-2">
+        <a asp-action="Index" class="btn btn-secondary">@Localizer["BackToList"]</a>
+    </div>
+</div>

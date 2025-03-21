@@ -1,4 +1,20 @@
 ﻿{
-	"WelcomeMessage": "مرحباً",
-	"Description": "هذه هي الصفحة الرئيسية."
+	"CreateTitle": "إنشاء قسم",
+	"EditTitle": "تعديل قسم",
+	"DeleteTitle": "حذف قسم",
+	"DetailsTitle": "تفاصيل القسم",
+	"Name": "الاسم",
+	"NameEn": "الاسم بالإنجليزية",
+	"Code": "الكود",
+	"Description": "الوصف",
+	"Save": "حفظ",
+	"BackToList": "العودة إلى القائمة",
+	"DeleteConfirmation": "هل أنت متأكد من حذف هذا القسم؟",
+	"DepartmentCreatedSuccessfully": "تم إضافة القسم بنجاح!",
+	"DepartmentCreationError": "حدث خطأ أثناء إضافة القسم. الخطأ: {0}",
+	"DepartmentUpdatedSuccessfully": "تم تحديث بيانات القسم بنجاح!",
+	"DepartmentUpdateError": "حدث خطأ أثناء تحديث بيانات القسم. الخطأ: {0}",
+	"DepartmentDeletedSuccessfully": "تم حذف القسم بنجاح!",
+	"DepartmentDeletionError": "حدث خطأ أثناء حذف القسم. الخطأ: {0}",
+	"DepartmentNotFound": "القسم غير موجود."
 }

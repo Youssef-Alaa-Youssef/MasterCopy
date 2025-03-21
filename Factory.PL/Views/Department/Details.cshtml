@@ -1,0 +1,32 @@
+﻿@model Factory.DAL.Models.HR.Department
+@{
+    ViewData["Title"] = Localizer["DepartmentDetails"];
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">@Localizer["Name"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
+
+                <dt class="col-sm-4">@Localizer["NameEn"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.NameEn)</dd>
+
+                <dt class="col-sm-4">@Localizer["Code"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Code)</dd>
+
+                <dt class="col-sm-4">@Localizer["Description"]:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Description)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card-footer text-center mt-2">
+        <a asp-action="Index" class="btn btn-secondary">@Localizer["BackToList"]</a>
+    </div>
+</div>

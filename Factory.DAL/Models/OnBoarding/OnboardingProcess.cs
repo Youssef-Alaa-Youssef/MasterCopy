@@ -1,4 +1,4 @@
-﻿using Factory.DAL.Enums;
+﻿using Factory.DAL.Enums.HR;
 using System.ComponentModel.DataAnnotations;
 
 namespace Factory.DAL.Models.OnBoarding

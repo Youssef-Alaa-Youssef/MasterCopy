@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Factory.DAL.Models.HR.Performance>
+
+@{
+    ViewData["Title"] = "Performance Reviews";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <div class="md-col-3 mb-2">
+        <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+    </div>
+
+    <div class="chart-container mb-4" style="width: 80%; margin: auto;">
+        <canvas id="performanceChart"></canvas>
+    </div>
+    <div class="table-responsive">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Review Date</th>
+                <th>Overall Score</th>
+                <th>Review Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.EmployeeId</td>
+                        <td>@item.ReviewDate.ToShortDateString()</td>
+                        <td>@item.OverallScore</td>
+                        <td>@item.ReviewStatus</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No performance reviews found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('performanceChart').getContext('2d');
+        var performanceChart = new Chart(ctx, {
+            type: 'bar', 
+            data: {
+                labels: @Html.Raw(Json.Serialize(ViewBag.Scores)), 
+                datasets: [{
+                    label: 'Number of Reviews',
+                    data: @Html.Raw(Json.Serialize(ViewBag.ScoreCounts)), 
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', 
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Reviews'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Overall Score'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    });
+</script>

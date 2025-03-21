@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Factory.DAL.Models.HR.Offboarding>
+
+@{
+    ViewData["Title"] = Localizer["OffboardingList"];
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+    <div class="col-md-3 mb-2">
+        <a asp-action="Create" class="btn btn-outline-primary">@Localizer["CreateNew"]</a>
+    </div>
+
+    <div class="chart-container mb-4" style="width: 50%; margin: auto;">
+        <canvas id="offboardingChart"></canvas>
+    </div>
+    <div class="Table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Localizer["Employee"]</th>
+                <th>@Localizer["LastWorkingDate"]</th>
+                <th>@Localizer["ExitInterviewDate"]</th>
+                <th>@Localizer["TerminationReason"]</th>
+                <th>@Localizer["Actions"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.EmployeeId</td>
+                        <td>@item.LastWorkingDate.ToShortDateString()</td>
+                        <td>@item.ExitInterviewDate?.ToShortDateString()</td>
+                        <td>@item.TerminationReason</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">@Localizer["Details"]</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">@Localizer["Edit"]</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">@Localizer["Delete"]</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">@Localizer["NoOffboardingsFound"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</div>
+<script src="~/lib/chart.js/chart.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('offboardingChart').getContext('2d');
+        var offboardingChart = new Chart(ctx, {
+            type: 'pie', 
+            data: {
+                labels: @Html.Raw(Json.Serialize(ViewBag.TerminationReasons)), 
+                datasets: [{
+                    label: '@Localizer["NumberOfOffboardings"]',
+                    data: @Html.Raw(Json.Serialize(ViewBag.TerminationCounts)), 
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', 
+                        'rgba(54, 162, 235, 0.2)', 
+                        'rgba(255, 206, 86, 0.2)', 
+                        'rgba(75, 192, 192, 0.2)', 
+                        'rgba(153, 102, 255, 0.2)' 
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    });
+</script>

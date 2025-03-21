@@ -1,0 +1,91 @@
+﻿@model Factory.PL.ViewModels.HR.LeaveRequestViewModel
+@{
+    ViewData["Title"] = Localizer["EditLeaveRequest"];
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="EmployeeId" class="control-label">@Localizer["Employee"]</label>
+                    <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.Employees">
+                        <option value="">-- @Localizer["SelectEmployee"] --</option>
+                    </select>
+                    <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label">@Localizer["StartDate"]</label>
+                    <input asp-for="StartDate" type="date" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="EndDate" class="control-label">@Localizer["EndDate"]</label>
+                    <input asp-for="EndDate" type="date" class="form-control" />
+                    <span asp-validation-for="EndDate" class=" text-danger
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label">@Localizer["Type"]</label>
+                    <select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<Factory.DAL.Enums.HR.LeaveType>()">
+                        <option value="">-- @Localizer["SelectType"] --</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Reason" class="control-label">@Localizer["Reason"]</label>
+                    <textarea asp-for="Reason" class="form-control"></textarea>
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label">@Localizer["Status"]</label>
+                    <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<Factory.DAL.Enums.HR.LeaveStatus>()">
+                        <option value="">-- @Localizer["SelectStatus"] --</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="RejectionReason" class="control-label">@Localizer["RejectionReason"]</label>
+                    <textarea asp-for="RejectionReason" class="form-control"></textarea>
+                    <span asp-validation-for="RejectionReason" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer text-center mt-2">
+            <input type="submit" value="@Localizer["Save"]" class="btn btn-outline-primary" />
+            <a asp-action="Index" class="btn btn-secondary">@Localizer["BackToList"]</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

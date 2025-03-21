@@ -230,6 +230,531 @@ namespace Factory.DAL.Migrations
                     b.ToTable("FinancialRecords", (string)null);
                 });
 
+            modelBuilder.Entity("Factory.DAL.Models.HR.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("Departments", "HR");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("BaseSalary")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("EmployeeCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FirstNameEn")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("HireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastNameEn")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("TerminationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("EmployeeCode")
+                        .IsUnique();
+
+                    b.HasIndex("PositionId");
+
+                    b.ToTable("Employees", "HR");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.LeaveRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApprovedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ApprovedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("RejectionReason")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("TotalDays")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("LeaveRequests", "HR");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Offboarding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AccessRevocationCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("BenefitsTerminationCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ExitInterviewCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ExitInterviewDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("FarewellEventCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FeedbackProvided")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FinalPaymentCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("KnowledgeTransferCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastWorkingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime?>("NoticeGivenDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("ReferenceArrangementCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ReturnOfCompanyPropertyCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("SupervisorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TerminationReason")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.ToTable("Offboardings", "HR");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Onboarding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ActualCompletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("EquipmentProvidedCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ExpectedCompletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("FeedbackSessionCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FirstAssignmentCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IntroductionToTeamCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<bool>("OrientationCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("PoliciesReviewedCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupervisorId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SystemAccessCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("TrainingCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("WorkspaceSetupCompleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.ToTable("Onboardings", "HR");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Performance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("CommunicationScore")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DevelopmentPlan")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("EmployeeFeedback")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GoalsForNextPeriod")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<decimal>("InitiativeScore")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ManagerFeedback")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<decimal>("OverallScore")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ProductivityScore")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("QualityScore")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReviewPeriodEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReviewPeriodStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReviewStatus")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TeamworkScore")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Performances", "HR");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Position", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TitleEn")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Positions", "HR");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Supervisor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Supervisors", "HR");
+                });
+
             modelBuilder.Entity("Factory.DAL.Models.Home.ContactUs", b =>
                 {
                     b.Property<int>("Id")
@@ -1052,6 +1577,14 @@ namespace Factory.DAL.Migrations
                             IsActive = true,
                             Name = "Settings",
                             Url = ""
+                        },
+                        new
+                        {
+                            Id = 10,
+                            IconClass = "bi-people",
+                            IsActive = true,
+                            Name = "HR",
+                            Url = ""
                         });
                 });
 
@@ -1104,7 +1637,7 @@ namespace Factory.DAL.Migrations
                             Controller = "PermissionManagement",
                             IsActive = true,
                             Name = "Permission List",
-                            SecureUrlKey = "c7dbbe638bfe4b118d79431947f3095c",
+                            SecureUrlKey = "bb361159e7824447a19cb92a7e87a4da",
                             SubmoduleId = 2
                         },
                         new
@@ -1114,7 +1647,7 @@ namespace Factory.DAL.Migrations
                             Controller = "PermissionManagement",
                             IsActive = true,
                             Name = "Assign Permission",
-                            SecureUrlKey = "273b4fcf767340059a3d6d0e084036ad",
+                            SecureUrlKey = "72bab28bc9f946199dc0d0af9f17e9d9",
                             SubmoduleId = 2
                         },
                         new
@@ -1124,7 +1657,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Module",
                             IsActive = true,
                             Name = "Module List",
-                            SecureUrlKey = "0783c1e54a2244889f1dcef291d32e17",
+                            SecureUrlKey = "1d6e55fd1a0442d7b77dcbfdcddbcc5d",
                             SubmoduleId = 3
                         },
                         new
@@ -1134,7 +1667,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Module",
                             IsActive = true,
                             Name = "Add Module",
-                            SecureUrlKey = "01f4ef4447e84e9186b7b78e50152034",
+                            SecureUrlKey = "65bb3adef16a4640b898036916ca77ae",
                             SubmoduleId = 3
                         },
                         new
@@ -1144,7 +1677,7 @@ namespace Factory.DAL.Migrations
                             Controller = "SubModule",
                             IsActive = true,
                             Name = "Submodule List",
-                            SecureUrlKey = "f3284da5f9174f82bc7823b57d1e432d",
+                            SecureUrlKey = "0a79a058c6f24aae8a5d99a248fd720e",
                             SubmoduleId = 4
                         },
                         new
@@ -1154,7 +1687,7 @@ namespace Factory.DAL.Migrations
                             Controller = "SubModule",
                             IsActive = true,
                             Name = "Add Submodule",
-                            SecureUrlKey = "d9d1455116574f859913a64aefa1d2fc",
+                            SecureUrlKey = "01b2f5c6e4084b4a896183f9e2508a09",
                             SubmoduleId = 4
                         },
                         new
@@ -1164,17 +1697,17 @@ namespace Factory.DAL.Migrations
                             Controller = "Auth",
                             IsActive = true,
                             Name = "User List",
-                            SecureUrlKey = "33b4adb9d0124104b1e4eeab26ae1ae1",
+                            SecureUrlKey = "e2b000e5aafc42ed9eb51cf6be023a6b",
                             SubmoduleId = 1
                         },
                         new
                         {
                             Id = 8,
-                            Action = "Create",
+                            Action = "Add",
                             Controller = "Auth",
                             IsActive = true,
                             Name = "Add User",
-                            SecureUrlKey = "2d88356608e04187a75f913d73e92ca4",
+                            SecureUrlKey = "b7419ebd9b464381a350d3824410e336",
                             SubmoduleId = 1
                         },
                         new
@@ -1184,7 +1717,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Role",
                             IsActive = true,
                             Name = "Role List",
-                            SecureUrlKey = "57c7c34e59104c2d8e21575981f13666",
+                            SecureUrlKey = "7c73478de7ff4514a39f0ac3d7703d5b",
                             SubmoduleId = 3
                         },
                         new
@@ -1194,7 +1727,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Role",
                             IsActive = true,
                             Name = "Add Role",
-                            SecureUrlKey = "aa77543bca7e4012ba23b4d24e75709b",
+                            SecureUrlKey = "a5ebaaf9c4bc4e2faa5264f3eb0e1424",
                             SubmoduleId = 3
                         },
                         new
@@ -1204,7 +1737,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Warehouse",
                             IsActive = true,
                             Name = "Warehouse List",
-                            SecureUrlKey = "ac1799dd27cb4c448763f0f1b7a38f54",
+                            SecureUrlKey = "d767167f089447ddb0734f7a0c2394c4",
                             SubmoduleId = 5
                         },
                         new
@@ -1214,7 +1747,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Warehouse",
                             IsActive = true,
                             Name = "Add Warehouse",
-                            SecureUrlKey = "199be72065f045ff9a6d97149b4bbe37",
+                            SecureUrlKey = "70ef420532514d4ba18c1a5f365889e1",
                             SubmoduleId = 5
                         },
                         new
@@ -1224,7 +1757,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Item",
                             IsActive = true,
                             Name = "Item List",
-                            SecureUrlKey = "79d5fbe319c3490fbb2ba041d93af621",
+                            SecureUrlKey = "899f17cdf00c491aa909b6e549487096",
                             SubmoduleId = 6
                         },
                         new
@@ -1234,7 +1767,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Item",
                             IsActive = true,
                             Name = "Add Item",
-                            SecureUrlKey = "3b7dfe6b42174409851323c85f3dc565",
+                            SecureUrlKey = "7f28a1aae2a44899b9ae98c472f4d55c",
                             SubmoduleId = 6
                         },
                         new
@@ -1244,7 +1777,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Order",
                             IsActive = true,
                             Name = "Create Order",
-                            SecureUrlKey = "93d851f939bb42c89a9ea642937aebe8",
+                            SecureUrlKey = "2774fb1edece47b5b311325f0d0529dd",
                             SubmoduleId = 7
                         },
                         new
@@ -1254,7 +1787,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Order",
                             IsActive = true,
                             Name = "Order List",
-                            SecureUrlKey = "8ead7af434d542c3a356bfa4a8a30b41",
+                            SecureUrlKey = "67b0d6e376ca4f1cbd9583a9db0c4d93",
                             SubmoduleId = 8
                         },
                         new
@@ -1264,7 +1797,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Settings",
                             IsActive = true,
                             Name = "General Settings",
-                            SecureUrlKey = "393ed41197424ace8047bcc33cfc2c59",
+                            SecureUrlKey = "9bda9682e0f8490bb9d3a0b10343abae",
                             SubmoduleId = 17
                         },
                         new
@@ -1274,7 +1807,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Settings",
                             IsActive = true,
                             Name = "Security Settings",
-                            SecureUrlKey = "46e63e80604e4d6796a0cd46bb7de1c0",
+                            SecureUrlKey = "5a2a839af7574eb889a2ba80dea0575d",
                             SubmoduleId = 18
                         },
                         new
@@ -1284,7 +1817,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Payroll Dashboard",
-                            SecureUrlKey = "398cec674adf47e3a7a6d57fc816dedf",
+                            SecureUrlKey = "934888686089422e885cf54ad3ebf7ea",
                             SubmoduleId = 9
                         },
                         new
@@ -1294,7 +1827,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Employee Salaries",
-                            SecureUrlKey = "c05a6b14d1ff498dbad22848686abb14",
+                            SecureUrlKey = "1e946a5d419e48118874d5123e925bbd",
                             SubmoduleId = 10
                         },
                         new
@@ -1304,7 +1837,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Salary Processing",
-                            SecureUrlKey = "d91c1a395a0c4f7f829a07f2bb57c05c",
+                            SecureUrlKey = "60c8bdcda448481aad0a2e6aac47a9ca",
                             SubmoduleId = 9
                         },
                         new
@@ -1314,7 +1847,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Payroll Reports",
-                            SecureUrlKey = "3ce7b73f859542e4835a69d1e0c90c2f",
+                            SecureUrlKey = "f3168065c40647de8ea0cf32ab3040c7",
                             SubmoduleId = 15
                         },
                         new
@@ -1324,7 +1857,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Bonuses Management",
-                            SecureUrlKey = "24bb2b1813614f0aa24185657a490fc3",
+                            SecureUrlKey = "e12903d7b2f6428c9dcf9fdb9baffc06",
                             SubmoduleId = 9
                         },
                         new
@@ -1334,7 +1867,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Deductions",
-                            SecureUrlKey = "42dc4b7233284672858a9130701f96f0",
+                            SecureUrlKey = "b3c3ab1566da474ba61bfc4d5c5d2083",
                             SubmoduleId = 9
                         },
                         new
@@ -1344,7 +1877,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Tax Calculations",
-                            SecureUrlKey = "6438dc649fe94747ad4bb0bab3592171",
+                            SecureUrlKey = "c4f18d5448974adabc9fb4f8b7249917",
                             SubmoduleId = 9
                         },
                         new
@@ -1354,7 +1887,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Payslip Generation",
-                            SecureUrlKey = "b8d6109c69ab4c2d987c0cf9be032fcd",
+                            SecureUrlKey = "a7f454c1d9b14db0852beae27c73e2bc",
                             SubmoduleId = 9
                         },
                         new
@@ -1364,7 +1897,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Overtime Payments",
-                            SecureUrlKey = "54f004a505de41ecb44baa3429dd334f",
+                            SecureUrlKey = "08306429a4374dae9c34d26a71f1753f",
                             SubmoduleId = 9
                         },
                         new
@@ -1374,7 +1907,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "Payroll History",
-                            SecureUrlKey = "9e84dcc0bf944523a830d4094eb87681",
+                            SecureUrlKey = "e96359fb6c7d4e3aba2df456c57b5970",
                             SubmoduleId = 9
                         },
                         new
@@ -1384,7 +1917,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Accountant",
                             IsActive = true,
                             Name = "Financial Orders",
-                            SecureUrlKey = "ff40be4350334419bcca13bb9f755669",
+                            SecureUrlKey = "b0a7bf6736b8476bb4c8497c1384a974",
                             SubmoduleId = 15
                         },
                         new
@@ -1394,7 +1927,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Onboarding",
                             IsActive = true,
                             Name = "Pre-Onboarding",
-                            SecureUrlKey = "fcca9643e0f244c589b1238db8237015",
+                            SecureUrlKey = "76c98c77a81743f4addf79d12dd70589",
                             SubmoduleId = 10
                         },
                         new
@@ -1404,7 +1937,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Onboarding",
                             IsActive = true,
                             Name = "IT Setup",
-                            SecureUrlKey = "35e669878439421dbcd025aa82c955f0",
+                            SecureUrlKey = "6d88bd729c40403987f96c6e115058d2",
                             SubmoduleId = 10
                         },
                         new
@@ -1414,7 +1947,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Onboarding",
                             IsActive = true,
                             Name = "Training & Orientation",
-                            SecureUrlKey = "501da3c6146a4b9fbf75838ea5cb853d",
+                            SecureUrlKey = "1d8611c4a3e24d1dbbc57674b2770f6c",
                             SubmoduleId = 10
                         },
                         new
@@ -1424,7 +1957,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Offboarding",
                             IsActive = true,
                             Name = "Exit Clearance",
-                            SecureUrlKey = "93ce2446779a4f8c8ef62fe1e825b874",
+                            SecureUrlKey = "157c74b8d2c843fd9ae3eccf54132753",
                             SubmoduleId = 10
                         },
                         new
@@ -1434,7 +1967,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Offboarding",
                             IsActive = true,
                             Name = "Access Revocation",
-                            SecureUrlKey = "c2dbf5f124b64766b489216f8756bbe5",
+                            SecureUrlKey = "d6b3101719864b808eb843f387c19166",
                             SubmoduleId = 10
                         },
                         new
@@ -1444,7 +1977,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Offboarding",
                             IsActive = true,
                             Name = "Final Payroll & Documents",
-                            SecureUrlKey = "f4b02d05ea6d4d37a6291ead9dfc9119",
+                            SecureUrlKey = "6722d1b4909e4517a3ca1f9c799f5d1d",
                             SubmoduleId = 10
                         },
                         new
@@ -1454,7 +1987,7 @@ namespace Factory.DAL.Migrations
                             Controller = "HR",
                             IsActive = true,
                             Name = "Employee Records",
-                            SecureUrlKey = "688264de11594803848a46dc820545e3",
+                            SecureUrlKey = "b89f235e33a8436bb458668ce177051f",
                             SubmoduleId = 10
                         },
                         new
@@ -1464,7 +1997,7 @@ namespace Factory.DAL.Migrations
                             Controller = "HR",
                             IsActive = true,
                             Name = "Leave Management",
-                            SecureUrlKey = "a8564dac4d26411b9b79d58daf364d8b",
+                            SecureUrlKey = "f024ec8f4808439880b5c876e6fb5447",
                             SubmoduleId = 10
                         },
                         new
@@ -1474,7 +2007,7 @@ namespace Factory.DAL.Migrations
                             Controller = "HR",
                             IsActive = true,
                             Name = "Payroll Processing",
-                            SecureUrlKey = "bdae0b8da37744c2a5275c16cd8c4531",
+                            SecureUrlKey = "65b0a30c94664f82bbdd230b7d7f62b3",
                             SubmoduleId = 9
                         },
                         new
@@ -1484,7 +2017,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Performance",
                             IsActive = true,
                             Name = "Performance Reviews",
-                            SecureUrlKey = "bc3acf26241a425d9d3a267e896571e5",
+                            SecureUrlKey = "0b3fef8f8baa4574879b4a248afb027b",
                             SubmoduleId = 10
                         },
                         new
@@ -1494,7 +2027,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Performance",
                             IsActive = true,
                             Name = "KPI Tracking",
-                            SecureUrlKey = "e15ab3e4c46f4132b7667beda0f100a2",
+                            SecureUrlKey = "b84c61c2b06c43109eceb0da2b56eaa0",
                             SubmoduleId = 10
                         },
                         new
@@ -1504,7 +2037,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Performance",
                             IsActive = true,
                             Name = "Feedback & Recognition",
-                            SecureUrlKey = "f3e1938cc7764933bad69b64907e6e51",
+                            SecureUrlKey = "bf6f51a1f3ad469d8f3a84c779e4d7e8",
                             SubmoduleId = 10
                         },
                         new
@@ -1514,7 +2047,7 @@ namespace Factory.DAL.Migrations
                             Controller = "ITService",
                             IsActive = true,
                             Name = "Ticket Management",
-                            SecureUrlKey = "43c42e26425f44e98ec8517707edb088",
+                            SecureUrlKey = "f14347e2e7d64c078ef3dcfc553ecf7b",
                             SubmoduleId = 11
                         },
                         new
@@ -1524,7 +2057,7 @@ namespace Factory.DAL.Migrations
                             Controller = "ITService",
                             IsActive = true,
                             Name = "System Monitoring",
-                            SecureUrlKey = "f2ddd4d3c34f4d9dbcda73d384d8601e",
+                            SecureUrlKey = "701833c220a34a178ebccd59cb046a9b",
                             SubmoduleId = 12
                         },
                         new
@@ -1534,7 +2067,7 @@ namespace Factory.DAL.Migrations
                             Controller = "ITService",
                             IsActive = true,
                             Name = "Hardware Inventory",
-                            SecureUrlKey = "da76278b2a3e4bda8acd21f51bfe0e45",
+                            SecureUrlKey = "664fc5807b99486aa5c8ebb59646ca7e",
                             SubmoduleId = 5
                         },
                         new
@@ -1544,7 +2077,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Support",
                             IsActive = true,
                             Name = "Support Tickets",
-                            SecureUrlKey = "54a953b7c80444cbacc3ca46da2fe246",
+                            SecureUrlKey = "2d4c425a598c40d0a14630d27f9d18a0",
                             SubmoduleId = 13
                         },
                         new
@@ -1554,7 +2087,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Support",
                             IsActive = true,
                             Name = "Live Chat",
-                            SecureUrlKey = "72534d8eca6148faa6899b0e7e4bddd0",
+                            SecureUrlKey = "92bacb679c4848439f5ee4e62ab519d1",
                             SubmoduleId = 14
                         },
                         new
@@ -1564,7 +2097,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Support",
                             IsActive = true,
                             Name = "FAQ & Help Center",
-                            SecureUrlKey = "a36069b5b1c341d7bc26384fcfaac91f",
+                            SecureUrlKey = "402b28222d0b4de3abf4720c40579dea",
                             SubmoduleId = 13
                         },
                         new
@@ -1574,7 +2107,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Reports",
                             IsActive = true,
                             Name = "Financial Reports",
-                            SecureUrlKey = "f5d5791586274da9b54a809a2c4f5bab",
+                            SecureUrlKey = "4889bfd1a13e4ff6a4b1e302f7c0550f",
                             SubmoduleId = 15
                         },
                         new
@@ -1584,7 +2117,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Reports",
                             IsActive = true,
                             Name = "Employee Insights",
-                            SecureUrlKey = "df3b711ddcd148f48d86a458d0ed0c88",
+                            SecureUrlKey = "1590692044d44d8ab938ae4bc627936f",
                             SubmoduleId = 15
                         },
                         new
@@ -1594,7 +2127,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Reports",
                             IsActive = true,
                             Name = "Sales & Revenue",
-                            SecureUrlKey = "c14421df79ec4c14a60a81894ac8ec87",
+                            SecureUrlKey = "0b53f650beb447e89d4f8cc14d8a7877",
                             SubmoduleId = 15
                         },
                         new
@@ -1604,7 +2137,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Support",
                             IsActive = true,
                             Name = "Support Dashboard",
-                            SecureUrlKey = "1d5f3aca9e2c4f0fbcf00dc1d0ee12fe",
+                            SecureUrlKey = "09c7d3aaf9b34eab905f5542d16f672e",
                             SubmoduleId = 13
                         },
                         new
@@ -1614,7 +2147,7 @@ namespace Factory.DAL.Migrations
                             Controller = "OrderReport",
                             IsActive = true,
                             Name = "Orders Dashboard",
-                            SecureUrlKey = "6e307a1dbd3e4200aae2f7ef3e529444",
+                            SecureUrlKey = "0937a5c9eb0d424a92bd9b21d17f919f",
                             SubmoduleId = 8
                         },
                         new
@@ -1624,7 +2157,7 @@ namespace Factory.DAL.Migrations
                             Controller = "ExportImport",
                             IsActive = true,
                             Name = "Data Management",
-                            SecureUrlKey = "9a7924317ed64d47b29ecc3997d60006",
+                            SecureUrlKey = "c2d5a4c2cf31466a95390a196990498e",
                             SubmoduleId = 17
                         },
                         new
@@ -1634,7 +2167,7 @@ namespace Factory.DAL.Migrations
                             Controller = "ExportImport",
                             IsActive = true,
                             Name = "Data Export",
-                            SecureUrlKey = "567ff0c09940425e934aa78b67554dd4",
+                            SecureUrlKey = "9c7e4575faa746e79689c595f55a870f",
                             SubmoduleId = 17
                         },
                         new
@@ -1644,7 +2177,7 @@ namespace Factory.DAL.Migrations
                             Controller = "ExportImport",
                             IsActive = true,
                             Name = "Data Import",
-                            SecureUrlKey = "31568815aa5e4176af9055ff89fc5c5d",
+                            SecureUrlKey = "b9c237bfaeb84f7bb36a9034d2e58246",
                             SubmoduleId = 17
                         },
                         new
@@ -1654,7 +2187,7 @@ namespace Factory.DAL.Migrations
                             Controller = "OrderReport",
                             IsActive = true,
                             Name = "Order Dashboard",
-                            SecureUrlKey = "b5f76d3803554b9984e95917f6033ca3",
+                            SecureUrlKey = "0ecd49ebe75a4214aec523db53a85899",
                             SubmoduleId = 16
                         },
                         new
@@ -1664,7 +2197,7 @@ namespace Factory.DAL.Migrations
                             Controller = "warehouse",
                             IsActive = true,
                             Name = "Stores",
-                            SecureUrlKey = "db0625b196ad433884ec4c02ac26e95a",
+                            SecureUrlKey = "24207c8cfbd44eba9ceacacce0e93bd6",
                             SubmoduleId = 15
                         },
                         new
@@ -1674,7 +2207,7 @@ namespace Factory.DAL.Migrations
                             Controller = "Country",
                             IsActive = true,
                             Name = "Countries",
-                            SecureUrlKey = "346ad6eee38640e9ada10733f183bbed",
+                            SecureUrlKey = "ba3e8f1051144a0ba7d3844757d69528",
                             SubmoduleId = 17
                         },
                         new
@@ -1684,8 +2217,148 @@ namespace Factory.DAL.Migrations
                             Controller = "items",
                             IsActive = true,
                             Name = "Countries and Their Items",
-                            SecureUrlKey = "f8b8bad4872e4befab76405c99ce7409",
+                            SecureUrlKey = "f08b8fa9866d48d3aecd67d19c74adcd",
                             SubmoduleId = 15
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Action = "Index",
+                            Controller = "Onboarding",
+                            IsActive = true,
+                            Name = "Onboarding List",
+                            SecureUrlKey = "2936a72ffdf14c92a1fb61038b638186",
+                            SubmoduleId = 19
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Action = "Create",
+                            Controller = "Onboarding",
+                            IsActive = true,
+                            Name = "Create Onboarding",
+                            SecureUrlKey = "02c8d8eacc9146fda1ed01a23c022e57",
+                            SubmoduleId = 19
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Action = "Index",
+                            Controller = "Offboarding",
+                            IsActive = true,
+                            Name = "Offboarding List",
+                            SecureUrlKey = "c25b0831902744b88810161762629793",
+                            SubmoduleId = 20
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Action = "Create",
+                            Controller = "Offboarding",
+                            IsActive = true,
+                            Name = "Create Offboarding",
+                            SecureUrlKey = "3da774b08c7f41308fcae245b77b3f8e",
+                            SubmoduleId = 20
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Action = "Index",
+                            Controller = "Performance",
+                            IsActive = true,
+                            Name = "Performance Reviews",
+                            SecureUrlKey = "5e638d33535547afacc2b4c8d81a501f",
+                            SubmoduleId = 21
+                        },
+                        new
+                        {
+                            Id = 65,
+                            Action = "Create",
+                            Controller = "Performance",
+                            IsActive = true,
+                            Name = "Add Performance Review",
+                            SecureUrlKey = "b3fb940e4fec4e0d95d355fda8d8e074",
+                            SubmoduleId = 21
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Action = "Index",
+                            Controller = "Supervisor",
+                            IsActive = true,
+                            Name = "Supervisors List",
+                            SecureUrlKey = "e5089ab6b9da45c2b52852365efc6087",
+                            SubmoduleId = 22
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Action = "Create",
+                            Controller = "Supervisor",
+                            IsActive = true,
+                            Name = "Add Supervisor",
+                            SecureUrlKey = "8e552297f7854e519dea9d854ef592ab",
+                            SubmoduleId = 22
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Action = "Index",
+                            Controller = "EmployeePosition",
+                            IsActive = true,
+                            Name = "Employee Positions",
+                            SecureUrlKey = "1ca86b277fcb43fdb4896adf352fb804",
+                            SubmoduleId = 23
+                        },
+                        new
+                        {
+                            Id = 69,
+                            Action = "Create",
+                            Controller = "EmployeePosition",
+                            IsActive = true,
+                            Name = "Create Employee Position",
+                            SecureUrlKey = "402dccf116ee44aea2a33d91d9f88540",
+                            SubmoduleId = 23
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Action = "Index",
+                            Controller = "Department",
+                            IsActive = true,
+                            Name = "Departments List",
+                            SecureUrlKey = "4b1db9c8592f44ba8f4570716c01c65e",
+                            SubmoduleId = 24
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Action = "Create",
+                            Controller = "Department",
+                            IsActive = true,
+                            Name = "Add Department",
+                            SecureUrlKey = "4e463f165d03469f97137778ad3bc811",
+                            SubmoduleId = 24
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Action = "Index",
+                            Controller = "LeaveRequest",
+                            IsActive = true,
+                            Name = "Leave Requests",
+                            SecureUrlKey = "6d63d3a6e74f4e8784da30a519f66c2e",
+                            SubmoduleId = 25
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Action = "Create",
+                            Controller = "LeaveRequest",
+                            IsActive = true,
+                            Name = "Submit Leave Request",
+                            SecureUrlKey = "39160977aac048e0a4fd64a6480ae15a",
+                            SubmoduleId = 25
                         });
                 });
 
@@ -1970,6 +2643,76 @@ namespace Factory.DAL.Migrations
                             IconClass = "bi-shield",
                             ModuleId = 9,
                             Name = "Security",
+                            Title = ""
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Action = "",
+                            Controller = "",
+                            IconClass = "bi-person-plus",
+                            ModuleId = 10,
+                            Name = "Onboarding",
+                            Title = ""
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Action = "",
+                            Controller = "",
+                            IconClass = "bi-person-dash",
+                            ModuleId = 10,
+                            Name = "Offboarding",
+                            Title = ""
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Action = "",
+                            Controller = "",
+                            IconClass = "bi-bar-chart-line",
+                            ModuleId = 10,
+                            Name = "Performance",
+                            Title = ""
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Action = "",
+                            Controller = "",
+                            IconClass = "bi-person-badge",
+                            ModuleId = 10,
+                            Name = "Supervisor",
+                            Title = ""
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Action = "",
+                            Controller = "",
+                            IconClass = "bi-briefcase",
+                            ModuleId = 10,
+                            Name = "Employee Position",
+                            Title = ""
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Action = "",
+                            Controller = "",
+                            IconClass = "bi-building",
+                            ModuleId = 10,
+                            Name = "Department",
+                            Title = ""
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Action = "",
+                            Controller = "",
+                            IconClass = "bi-calendar-check",
+                            ModuleId = 10,
+                            Name = "Leave Request",
                             Title = ""
                         });
                 });
@@ -2804,6 +3547,85 @@ namespace Factory.DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Factory.DAL.Models.HR.Employee", b =>
+                {
+                    b.HasOne("Factory.DAL.Models.HR.Department", "Department")
+                        .WithMany("Employees")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Factory.DAL.Models.HR.Position", "Position")
+                        .WithMany("Employees")
+                        .HasForeignKey("PositionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Position");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.LeaveRequest", b =>
+                {
+                    b.HasOne("Factory.DAL.Models.HR.Employee", "Employee")
+                        .WithMany("LeaveRequests")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Offboarding", b =>
+                {
+                    b.HasOne("Factory.DAL.Models.HR.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Factory.DAL.Models.HR.Supervisor", null)
+                        .WithMany()
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Onboarding", b =>
+                {
+                    b.HasOne("Factory.DAL.Models.HR.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Factory.DAL.Models.HR.Supervisor", null)
+                        .WithMany()
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Performance", b =>
+                {
+                    b.HasOne("Factory.DAL.Models.HR.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Position", b =>
+                {
+                    b.HasOne("Factory.DAL.Models.HR.Department", "Department")
+                        .WithMany("Positions")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
             modelBuilder.Entity("Factory.DAL.Models.OnBoarding.ITSetupModule", b =>
                 {
                     b.HasOne("Factory.DAL.Models.OnBoarding.OnboardingProcess", "OnboardingProcess")
@@ -3038,6 +3860,23 @@ namespace Factory.DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Department", b =>
+                {
+                    b.Navigation("Employees");
+
+                    b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Employee", b =>
+                {
+                    b.Navigation("LeaveRequests");
+                });
+
+            modelBuilder.Entity("Factory.DAL.Models.HR.Position", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("Factory.DAL.Models.OnBoarding.OnboardingProcess", b =>

@@ -4,7 +4,6 @@ using Factory.DAL;
 using Factory.DAL.Models.Auth;
 using Factory.DAL.Models.Settings;
 using Factory.PL.Helper;
-using Factory.PL.Helper.Lang;
 using Factory.PL.Options;
 using Factory.PL.Services;
 using Factory.PL.Services.AI;
@@ -12,6 +11,7 @@ using Factory.PL.Services.Background;
 using Factory.PL.Services.Dashboard;
 using Factory.PL.Services.DataExportImport;
 using Factory.PL.Services.Email;
+using Factory.PL.Services.Monitor;
 using Factory.PL.Services.NavbarSettings;
 using Factory.PL.Services.Notify;
 using Factory.PL.Services.Order;
@@ -87,6 +87,7 @@ public static class ServiceConfiguration
                 return sp.GetRequiredService<HuggingFaceChatService>(); 
             }
         });      
+        services.AddSingleton<SystemMonitoringService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddSingleton(new ExportImportSettings());
         services.AddScoped<IExportService, ExportService>();

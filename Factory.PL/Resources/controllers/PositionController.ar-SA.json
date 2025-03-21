@@ -1,0 +1,22 @@
+﻿{
+  "CreateTitle": "إنشاء وظيفة",
+  "Positions": "الوظائف",
+  "EditTitle": "تعديل وظيفة",
+  "DeleteTitle": "حذف وظيفة",
+  "DetailsTitle": "تفاصيل الوظيفة",
+  "Title": "الاسم",
+  "TitleEn": "الاسم بالإنجليزية",
+  "Code": "الكود",
+  "Description": "الوصف",
+  "Department": "القسم",
+  "Save": "حفظ",
+  "BackToList": "العودة إلى القائمة",
+  "DeleteConfirmation": "هل أنت متأكد من حذف هذه الوظيفة؟",
+  "PositionCreatedSuccessfully": "تم إضافة الوظيفة بنجاح!",
+  "PositionCreationError": "حدث خطأ أثناء إضافة الوظيفة. الخطأ: {0}",
+  "PositionUpdatedSuccessfully": "تم تحديث بيانات الوظيفة بنجاح!",
+  "PositionUpdateError": "حدث خطأ أثناء تحديث بيانات الوظيفة. الخطأ: {0}",
+  "PositionDeletedSuccessfully": "تم حذف الوظيفة بنجاح!",
+  "PositionDeletionError": "حدث خطأ أثناء حذف الوظيفة. الخطأ: {0}",
+  "PositionNotFound": "الوظيفة غير موجودة."
+}

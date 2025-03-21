@@ -1,5 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
-using Factory.DAL.Enums;
+using Factory.DAL.Enums.HR;
 using Factory.DAL.Models.OnBoarding;
 using Factory.PL.ViewModels.OnBoarding;
 using Microsoft.AspNetCore.Mvc;
@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OnboardingSystem.Controllers
 {
-    public class OnboardingController : Controller
+    public class OnboardingOldController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public OnboardingController(IUnitOfWork unitOfWork)
+        public OnboardingOldController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
