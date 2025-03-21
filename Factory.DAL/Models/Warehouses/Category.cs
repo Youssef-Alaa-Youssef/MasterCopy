@@ -27,7 +27,7 @@ namespace Factory.DAL.Models.Warehouses
 
         public DateTime? UpdatedDate { get; set; }
 
-        public GlassProductType GlassType { get; set; } = GlassProductType.Standard;
+        public GlassProductType GlassType { get; set; } = GlassProductType.Clear;
 
         public int MainWarehouseId { get; set; }
         public virtual MainWarehouse MainWarehouse { get; set; }

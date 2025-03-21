@@ -19,10 +19,9 @@
     @await Html.PartialAsync("ErrorSummaryPartial")
     @await Html.PartialAsync("_PageTitle")
 
-    <!-- Display alerts for dangerous metrics -->
     @if (isCpuDanger || isMemoryDanger || isDiskDanger)
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger m-2" role="alert">
             <h4 class="alert-heading">Warning!</h4>
             <p>The following metrics are in dangerous ranges:</p>
             <ul>
@@ -42,39 +41,44 @@
         </div>
     }
 
-    <div class="row">
-        <div class="col-md-6">
-            <h3>Current Metrics</h3>
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Metric</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="@(isCpuDanger ? "table-danger" : "")">
-                        <td>CPU Usage</td>
-                        <td><strong>@Model.CpuUsage.ToString("0.00") %</strong></td>
-                    </tr>
-                    <tr class="@(isMemoryDanger ? "table-danger" : "")">
-                        <td>Memory Usage</td>
-                        <td><strong>@Model.MemoryUsage.ToString("0.00") %</strong></td>
-                    </tr>
-                    <tr class="@(isDiskDanger ? "table-danger" : "")">
-                        <td>Disk Usage</td>
-                        <td><strong>@Model.DiskUsage.ToString("0.00") %</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Timestamp</td>
-                        <td>@Model.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <h3>Performance Charts</h3>
-            <canvas id="systemMetricsChart" width="400" height="200"></canvas>
+    <div class="card m-2 p-3">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="mb-4"><i class="bi bi-speedometer2 me-2"></i>Current Metrics</h3>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="@(isCpuDanger ? "table-danger" : "")">
+                            <td><i class="bi bi-cpu me-2"></i>CPU Usage</td>
+                            <td><strong>@Model.CpuUsage.ToString("0.00") %</strong></td>
+                        </tr>
+                        <tr class="@(isMemoryDanger ? "table-danger" : "")">
+                            <td><i class="bi bi-memory me-2"></i>Memory Usage</td>
+                            <td><strong>@Model.MemoryUsage.ToString("0.00") %</strong></td>
+                        </tr>
+                        <tr class="@(isDiskDanger ? "table-danger" : "")">
+                            <td><i class="bi bi-hdd me-2"></i>Disk Usage</td>
+                            <td><strong>@Model.DiskUsage.ToString("0.00") %</strong></td>
+                        </tr>
+                        <tr>
+                            <td><i class="bi bi-clock me-2"></i>Timestamp</td>
+                            <td>@Model.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-6">
+                <h3 class="mb-4"><i class="bi bi-bar-chart-line me-2"></i>Performance Charts</h3>
+                <div class="chart-container bg-light p-3 rounded shadow-sm">
+                    <canvas id="systemMetricsChart" width="400" height="200"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -88,9 +92,9 @@
                 label: 'Usage (%)',
                 data: [@Model.CpuUsage.ToString("0.00"), @Model.MemoryUsage.ToString("0.00"), @Model.DiskUsage.ToString("0.00")],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)', // Red for CPU
-                    'rgba(54, 162, 235, 0.2)', // Blue for Memory
-                    'rgba(75, 192, 192, 0.2)' // Green for Disk
+                    'rgba(255, 99, 132, 0.2)', 
+                    'rgba(54, 162, 235, 0.2)', 
+                    'rgba(75, 192, 192, 0.2)' 
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',

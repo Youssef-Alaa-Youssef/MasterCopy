@@ -37,7 +37,7 @@ namespace Factory.DAL.Configurations
                 .IsRequired(false);
 
             builder.Property(c => c.GlassType)
-                .HasDefaultValue(GlassProductType.Standard);
+                .HasDefaultValue(GlassProductType.Clear);
 
             builder.Property(c => c.HasDimensions)
                 .HasDefaultValue(false);

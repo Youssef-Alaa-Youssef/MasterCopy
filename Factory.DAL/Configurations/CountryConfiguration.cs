@@ -22,6 +22,7 @@ namespace Factory.DAL.Configurations
 
             builder.Property(c => c.ImagePath)
                 .HasMaxLength(255);
+            builder.Property(c => c.Order);
         }
     }
 }

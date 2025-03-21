@@ -213,7 +213,7 @@ namespace Factory.Controllers
         [HttpGet]
         public async Task<IActionResult> Countries()
         {
-            var countries = await _unitOfWork.GetRepository<Country>().GetAllAsync();
+            var countries = (await _unitOfWork.GetRepository<Country>().GetAllAsync()).OrderBy(c => c.Order).ToList();
             return View(countries);
         }
 

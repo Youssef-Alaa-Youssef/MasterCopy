@@ -28,7 +28,7 @@ namespace Factory.DAL.ViewModels.Warehouses
 
         public bool IsActive { get; set; } = true;
 
-        public GlassProductType GlassType { get; set; } = GlassProductType.Standard;
+        public GlassProductType GlassType { get; set; } = GlassProductType.Clear;
 
 
         public bool HasDimensions { get; set; } = false;

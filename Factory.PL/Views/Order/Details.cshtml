@@ -1,6 +1,6 @@
 ﻿@model Factory.PL.ViewModels.OrderList.OrderViewModel
 @{
-    ViewData["Title"] = "Delivery Invoice";
+    ViewData["Title"] = "Order Details";
     Layout = "_LogedUser";
 }
 
@@ -29,8 +29,8 @@
         </div>
         <div class="col-md-6 mb-4">
             <ul class="list-group">
+                <li class="list-group-item fw-bold"><strong>Job No: @Model.JobNo</strong></li>
                 <li class="list-group-item"><strong>Date:</strong> @Model.Date.ToString("yyyy-MM-dd")</li>
-                <li class="list-group-item"><strong>Job No:</strong> @Model.JobNo</li>
             </ul>
         </div>
     </div>

@@ -23,13 +23,16 @@ namespace Factory.PL.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var countries = await _unitOfWork.GetRepository<Country>().GetAllAsync();
+            var countries = (await _unitOfWork.GetRepository<Country>().GetAllAsync())
+                ?.OrderBy(c => c.Order)
+                .ToList();
             var countryViewModels = countries.Select(c => new CountryViewModel
             {
                 Id = c.Id,
                 Name = c.Name,
                 NameEn = c.NameEn,
                 Code = c.Code,
+                Order = c.Order,
                 ImagePath = c.ImagePath
             }).ToList();
 
@@ -65,6 +68,7 @@ namespace Factory.PL.Controllers
                     Name = countryViewModel.Name,
                     NameEn = countryViewModel.NameEn,
                     Code = countryViewModel.Code,
+                    Order = countryViewModel.Order,
                     ImagePath = countryViewModel.ImagePath 
                 };
 
@@ -93,6 +97,7 @@ namespace Factory.PL.Controllers
                 Name = country.Name,
                 NameEn = country.NameEn,
                 Code = country.Code,
+                Order = country.Order,
                 ImagePath = country.ImagePath
             };
 
@@ -131,6 +136,7 @@ namespace Factory.PL.Controllers
                         Name = countryViewModel.Name,
                         NameEn = countryViewModel.NameEn,
                         Code = countryViewModel.Code,
+                        Order = countryViewModel.Order,
                         ImagePath = countryViewModel.ImagePath 
                     };
 

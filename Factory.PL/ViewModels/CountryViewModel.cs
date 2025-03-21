@@ -17,7 +17,7 @@ namespace Factory.PL.ViewModels
         public string NameEn { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(2, MinimumLength = 2)]
+        [StringLength(5, MinimumLength = 2)]
         public string Code { get; set; } = string.Empty;
 
         [NotMapped]
@@ -25,5 +25,6 @@ namespace Factory.PL.ViewModels
         public IFormFile ImageFile { get; set; }
 
         public string ImagePath { get; set; } = string.Empty;
+        public int Order { get; set; }
     }
 }

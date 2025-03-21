@@ -2,15 +2,10 @@
 {
     public enum GlassProductType
     {
-        Standard,
-        Tempered,
-        Laminated,
+        Clear,
         LowE,
-        Insulated,
         Tinted,
-        Patterned,
-        Bulletproof,
-        Fireproof,
-        Decorative
+        Ref,
+        HD
     }
 }
