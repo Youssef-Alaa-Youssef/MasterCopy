@@ -4,7 +4,6 @@ using Factory.DAL.Models.Auth;
 using Factory.DAL.Models.Permission;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-
 namespace Factory.DAL.Configurations
 {
     public class DataSeeder
@@ -15,6 +14,14 @@ namespace Factory.DAL.Configurations
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork>();
 
+            await CreateRoles(roleManager);
+            await CreateDefaultUsersForRoles(userManager);
+            await CreatePermissions(unitOfWork);
+            await AssignRolePermissions(roleManager, unitOfWork);
+        }
+
+        private static async Task CreateRoles(RoleManager<IdentityRole> roleManager)
+        {
             foreach (UserRole role in Enum.GetValues(typeof(UserRole)))
             {
                 string roleName = role.ToString();
@@ -23,27 +30,39 @@ namespace Factory.DAL.Configurations
                     await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
             }
+        }
 
-            var defaultUserEmail = "superadmin@gmail.com";
-            var defaultUser = await userManager.FindByEmailAsync(defaultUserEmail);
-
-            if (defaultUser == null)
+        private static async Task CreateDefaultUsersForRoles(UserManager<ApplicationUser> userManager)
+        {
+            foreach (UserRole role in Enum.GetValues(typeof(UserRole)))
             {
-                defaultUser = new ApplicationUser
-                {
-                    UserName = defaultUserEmail,
-                    Email = defaultUserEmail,
-                    EmailConfirmed = true
-                };
+                string roleName = role.ToString();
+                string defaultUserEmail = $"{roleName.ToLower()}@MasterCopy.info"; 
+                string defaultPassword = $"{roleName}@123"; 
 
-                var result = await userManager.CreateAsync(defaultUser, "SuperAdmin@123");
+                var defaultUser = await userManager.FindByEmailAsync(defaultUserEmail);
 
-                if (result.Succeeded)
+                if (defaultUser == null)
                 {
-                    await userManager.AddToRoleAsync(defaultUser, UserRole.SuperAdmin.ToString());
+                    defaultUser = new ApplicationUser
+                    {
+                        UserName = defaultUserEmail,
+                        Email = defaultUserEmail,
+                        EmailConfirmed = true
+                    };
+
+                    var result = await userManager.CreateAsync(defaultUser, defaultPassword);
+
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(defaultUser, roleName);
+                    }
                 }
             }
+        }
 
+        private static async Task CreatePermissions(IUnitOfWork unitOfWork)
+        {
             var permissionRepository = unitOfWork.GetRepository<PermissionTyepe>();
             var existingPermissions = await permissionRepository.GetAllAsync();
 
@@ -59,42 +78,51 @@ namespace Factory.DAL.Configurations
                 await permissionRepository.AddRangeAsync(newPermissions);
                 await unitOfWork.SaveChangesAsync();
             }
+        }
 
+        private static async Task AssignRolePermissions(RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork)
+        {
             var moduleRepository = unitOfWork.GetRepository<Module>();
             var allModules = await moduleRepository.GetAllAsync();
 
-            var superAdminRole = await roleManager.FindByNameAsync(UserRole.SuperAdmin.ToString());
+            var permissionRepository = unitOfWork.GetRepository<PermissionTyepe>();
+            var allPermissions = await permissionRepository.GetAllAsync();
 
-            if (superAdminRole != null && allModules.Any())
+            var rolePermissionRepository = unitOfWork.GetRepository<RolePermission>();
+            var existingRolePermissions = await rolePermissionRepository.GetAllAsync();
+
+            foreach (UserRole role in Enum.GetValues(typeof(UserRole)))
             {
-                var rolePermissionRepository = unitOfWork.GetRepository<RolePermission>();
-                var allPermissions = await permissionRepository.GetAllAsync();
-                var existingRolePermissions = await rolePermissionRepository.GetAllAsync();
+                var roleName = role.ToString();
+                var identityRole = await roleManager.FindByNameAsync(roleName);
 
-                var newRolePermissions = new List<RolePermission>();
-
-                foreach (var module in allModules)
+                if (identityRole != null && allModules.Any())
                 {
-                    foreach (var permission in allPermissions)
+                    var newRolePermissions = new List<RolePermission>();
+
+                    foreach (var module in allModules)
                     {
-                        if (!existingRolePermissions.Any(rp => rp.RoleId == superAdminRole.Id &&
-                                                               rp.PermissionId == permission.Id &&
-                                                               rp.ModuleId == module.Id))
+                        foreach (var permission in allPermissions)
                         {
-                            newRolePermissions.Add(new RolePermission
+                            if (!existingRolePermissions.Any(rp => rp.RoleId == identityRole.Id &&
+                                                                  rp.PermissionId == permission.Id &&
+                                                                  rp.ModuleId == module.Id))
                             {
-                                RoleId = superAdminRole.Id,
-                                PermissionId = permission.Id,
-                                ModuleId = module.Id
-                            });
+                                newRolePermissions.Add(new RolePermission
+                                {
+                                    RoleId = identityRole.Id,
+                                    PermissionId = permission.Id,
+                                    ModuleId = module.Id
+                                });
+                            }
                         }
                     }
-                }
 
-                if (newRolePermissions.Any())
-                {
-                    await rolePermissionRepository.AddRangeAsync(newRolePermissions);
-                    await unitOfWork.SaveChangesAsync();
+                    if (newRolePermissions.Any())
+                    {
+                        await rolePermissionRepository.AddRangeAsync(newRolePermissions);
+                        await unitOfWork.SaveChangesAsync();
+                    }
                 }
             }
         }
