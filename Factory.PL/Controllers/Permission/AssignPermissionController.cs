@@ -1,16 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Factory.DAL.Services;
-using Factory.DAL.ViewModels.Permissions;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Factory.PL.ViewModels.Permissions;
+using Microsoft.AspNetCore.Authorization;
+using Factory.DAL.Enums;
 
 namespace Factory.PL.Controllers.Permission
 {
+    [Authorize(Roles = nameof(UserRole.SuperAdmin))]
     public class AssignPermissionController : Controller
     {
         private readonly RolePermissionService _rolePermissionService;
+        private readonly JsonSerializerOptions _jsonOptions;
 
         public AssignPermissionController(RolePermissionService rolePermissionService)
         {
             _rolePermissionService = rolePermissionService;
+
+            _jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                MaxDepth = 64 
+            };
         }
 
         public async Task<IActionResult> Index()
@@ -19,19 +31,54 @@ namespace Factory.PL.Controllers.Permission
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpGet]
+        public async Task<IActionResult> GetExistingPermissions(string roleId, int moduleId, int subModuleId)
+        {
+            if (string.IsNullOrEmpty(roleId) || moduleId <= 0 || subModuleId <= 0)
+            {
+                return Json(new List<object>());
+            }
+
+            var existingPermissions = await _rolePermissionService.GetExistingPermissionsAsync(roleId, moduleId, subModuleId);
+
+            var groupedPermissions = existingPermissions
+                .GroupBy(p => new { p.PageId, p.PermissionId })
+                .Select(g => new
+                {
+                    pageId = g.Key.PageId,
+                    permissionId = g.Key.PermissionId
+                });
+
+            return Json(groupedPermissions);
+        }
+        [HttpGet]
         public async Task<IActionResult> GetSubModules(int moduleId)
         {
             var subModules = await _rolePermissionService.GetSubModulesByModuleIdAsync(moduleId);
-            return Json(subModules);
+
+            var simplifiedSubModules = subModules.Select(sm => new
+            {
+                id = sm.Id,
+                name = sm.Name
+            });
+
+            return Json(simplifiedSubModules);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetPages(int subModuleId)
         {
             var pages = await _rolePermissionService.GetPagesBySubModuleIdAsync(subModuleId);
-            return Json(pages);
+
+            var simplifiedPages = pages.Select(p => new
+            {
+                id = p.Id,
+                name = p.Name
+            });
+
+            return Json(simplifiedPages);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> SaveRolePermission(RolePermissionV2ViewModel model)
@@ -39,11 +86,18 @@ namespace Factory.PL.Controllers.Permission
             if (ModelState.IsValid)
             {
                 await _rolePermissionService.SaveRolePermissionAsync(model);
-                TempData["Message"] = "Permission assigned successfully!";
+                TempData["Success"] = "Permissions have been successfully updated!";
                 return RedirectToAction("Index");
             }
 
             var viewModel = await _rolePermissionService.GetRolePermissionViewModelAsync();
+            viewModel.ModuleId = model.ModuleId;
+            viewModel.SubModuleId = model.SubModuleId;
+            viewModel.PageIds = model.PageIds;
+            viewModel.RoleId = model.RoleId;
+            viewModel.PermissionIds = model.PermissionIds;
+            TempData["Error"] = "Error, Please Try Again!";
+
             return View("Index", viewModel);
         }
     }

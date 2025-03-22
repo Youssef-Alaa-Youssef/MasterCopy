@@ -3,6 +3,7 @@ using Factory.BLL.InterFaces;
 using Factory.DAL;
 using Factory.DAL.Models.Auth;
 using Factory.DAL.Models.Settings;
+using Factory.DAL.Services;
 using Factory.PL.Helper;
 using Factory.PL.Options;
 using Factory.PL.Services;
@@ -25,6 +26,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Localization;
 using Serilog;
 using Serilog.Events;
@@ -88,6 +90,8 @@ public static class ServiceConfiguration
             }
         });      
         services.AddSingleton<SystemMonitoringService>();
+        services.AddSingleton<IMemoryCache, MemoryCache>();
+        services.AddScoped<IRolePermissionService, RolePermissionService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddSingleton(new ExportImportSettings());
         services.AddScoped<IExportService, ExportService>();

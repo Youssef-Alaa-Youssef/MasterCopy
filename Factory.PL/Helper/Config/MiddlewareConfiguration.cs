@@ -19,6 +19,7 @@ public static class MiddlewareConfiguration
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseHsts();
         }
+        app.UseStatusCodePagesWithReExecute("/Home/NotFound");
 
         app.UseMiddleware<ContractExpirationMiddleware>();
         app.UseRequestLocalization(new RequestLocalizationOptions

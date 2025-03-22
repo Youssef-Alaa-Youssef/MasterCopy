@@ -1,6 +1,6 @@
 ﻿@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
 @{
-    ViewData["Title"] = $"Access Denied | {appSettings.Value.CompanyName}";
+    ViewData["Title"] = $"Page Not Found | {appSettings.Value.CompanyName}";
     Layout = null;
 }
 <!DOCTYPE html>
@@ -16,7 +16,7 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            background: url('/images/accessdenied.jpg') no-repeat center center;
+            background: url('/images/NotFound.jpg') no-repeat center center;
             background-size: cover;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -32,7 +32,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(0, 0, 0, 0.5);
+                background: rgba(0, 0, 0, 0.4);
                 z-index: 1;
             }
 
@@ -66,10 +66,10 @@
         .error-code {
             font-size: 100px;
             font-weight: 700;
-            color: #e74c3c;
+            color: #2c3e50;
             line-height: 1;
             margin: 0;
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            background: linear-gradient(45deg, #3498db, #2c3e50);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -97,7 +97,7 @@
 
         .btn-home {
             display: inline-block;
-            background-color: #e74c3c;
+            background-color: #3498db;
             color: white;
             padding: 12px 25px;
             border-radius: 30px;
@@ -108,7 +108,7 @@
         }
 
             .btn-home:hover {
-                background-color: #c0392b;
+                background-color: #2c3e50;
                 transform: translateY(-3px);
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
                 color: white;
@@ -117,25 +117,19 @@
         .btn-back {
             display: inline-block;
             background-color: transparent;
-            color: #e74c3c;
+            color: #3498db;
             padding: 12px 25px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            border: 1px solid #e74c3c;
+            border: 1px solid #3498db;
         }
 
             .btn-back:hover {
-                background-color: rgba(231, 76, 60, 0.1);
-                color: #e74c3c;
+                background-color: rgba(52, 152, 219, 0.1);
+                color: #3498db;
             }
-
-        .lock-icon {
-            font-size: 40px;
-            color: #e74c3c;
-            margin-bottom: 20px;
-        }
 
         .company-info {
             margin-top: 20px;
@@ -169,12 +163,11 @@
 </head>
 <body>
     <div class="error-content">
-        <i class="fas fa-lock lock-icon"></i>
-        <h1 class="error-code">403</h1>
-        <h2 class="error-title">Access Denied</h2>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Page Not Found</h2>
         <p class="error-message">
-            You don't have permission to access this page.
-            Please contact your administrator if you believe this is a mistake.
+            We're sorry, the page you are looking for might have been removed,
+            had its name changed, or is temporarily unavailable.
         </p>
         <div class="buttons-container">
             <a href="/" class="btn-home">

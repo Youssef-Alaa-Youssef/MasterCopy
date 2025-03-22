@@ -1,4 +1,4 @@
-﻿@model Factory.DAL.ViewModels.Permissions.RolePermissionV2ViewModel
+﻿@model Factory.PL.ViewModels.Permissions.RolePermissionV2ViewModel
 
 @{
     ViewData["Title"] = "Assign Permission";
@@ -9,63 +9,132 @@
     @await Html.PartialAsync("ErrorSummaryPartial")
     @await Html.PartialAsync("_PageTitle")
 
-    <form asp-action="SaveRolePermission" method="post">
-        <div class="form-group">
-            <label asp-for="ModuleId">Module</label>
-            <select asp-for="ModuleId" asp-items="Model.Modules.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.Name })" class="form-control">
-                <option value="">Select Module</option>
-            </select>
-            <span asp-validation-for="ModuleId" class="text-danger"></span>
+    <form asp-action="SaveRolePermission" asp-controller="AssignPermission" method="post">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="ModuleId">Module</label>
+                    <select asp-for="ModuleId" asp-items="Model.Modules.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.Name })" class="form-control">
+                        <option value="">Select Module</option>
+                    </select>
+                    <span asp-validation-for="ModuleId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="SubModuleId">SubModule</label>
+                    <select asp-for="SubModuleId" class="form-control">
+                        <option value="">Select SubModule</option>
+                    </select>
+                    <span asp-validation-for="SubModuleId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="RoleId">Role</label>
+                    <select asp-for="RoleId" asp-items="Model.Roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name })" class="form-control">
+                        <option value="">Select Role</option>
+                    </select>
+                    <span asp-validation-for="RoleId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Permission Types</label>
+                    <div class="d-flex flex-wrap">
+                        @foreach (var permission in Model.PermissionTypes)
+                        {
+                            <div class="form-check mr-3">
+                                <input class="form-check-input" type="checkbox" name="PermissionIds" value="@permission.Id" id="permission-@permission.Id"
+                                @(Model.PermissionIds != null && Model.PermissionIds.Contains(permission.Id) ? "checked" : "") />
+                                <label class="form-check-label" for="permission-@permission.Id">@permission.Name</label>
+                            </div>
+                        }
+                    </div>
+                    <span asp-validation-for="PermissionIds" class="text-danger"></span>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
-            <label asp-for="SubModuleId">SubModule</label>
-            <select asp-for="SubModuleId" class="form-control">
-                <option value="">Select SubModule</option>
-            </select>
-            <span asp-validation-for="SubModuleId" class="text-danger"></span>
+            <label>Pages</label>
+            <div id="PageIds" class="d-flex flex-wrap">
+
+            </div>
+            <span asp-validation-for="PageIds" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="RoleId">Role</label>
-            <select asp-for="RoleId" asp-items="Model.Roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name })" class="form-control">
-                <option value="">Select Role</option>
-            </select>
-            <span asp-validation-for="RoleId" class="text-danger"></span>
+        <div class="card-footer text-center mt-2">
+            <button type="submit" class="btn btn-outline-primary">Assign Permission</button>
         </div>
-
-        <div class="form-group">
-            <label asp-for="PageId">Page</label>
-            <select asp-for="PageId" class="form-control">
-                <option value="">Select Page</option>
-            </select>
-            <span asp-validation-for="PageId" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="PermissionId">Permission Type</label>
-            <select asp-for="PermissionId" asp-items="Model.PermissionTypes.Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name })" class="form-control">
-                <option value="">Select Permission Type</option>
-            </select>
-            <span asp-validation-for="PermissionId" class="text-danger"></span>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Assign Permission</button>
     </form>
 </div>
-
 @section Scripts {
     <script>
+        function loadExistingPermissions() {
+            var roleId = $('#RoleId').val();
+            var moduleId = $('#ModuleId').val();
+            var subModuleId = $('#SubModuleId').val();
+
+            if (roleId && moduleId && subModuleId) {
+                $.ajax({
+                    url: '@Url.Action("GetExistingPermissions", "AssignPermission")',
+                    type: 'GET',
+                    data: { roleId: roleId, moduleId: moduleId, subModuleId: subModuleId },
+                    success: function (data) {
+                        $('input[name="PageIds"]').prop('checked', false);
+                        $('input[name="PermissionIds"]').prop('checked', false);
+
+                        var pagesWithPermissions = {};
+                        var permissionsUsed = {};
+
+                        $.each(data, function (index, item) {
+                            pagesWithPermissions[item.pageId] = true;
+                            permissionsUsed[item.permissionId] = true;
+                        });
+
+                        $.each(pagesWithPermissions, function (pageId, value) {
+                            $(`input[name="PageIds"][value="${pageId}"]`).prop('checked', true);
+                        });
+
+                        $.each(permissionsUsed, function (permissionId, value) {
+                            $(`input[name="PermissionIds"][value="${permissionId}"]`).prop('checked', true);
+                        });
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error("Error loading existing permissions: " + errorThrown);
+                    }
+                });
+            }
+        }
+
+        $('#RoleId, #ModuleId, #SubModuleId').change(function() {
+            if ($('#RoleId').val() && $('#ModuleId').val() && $('#SubModuleId').val()) {
+                loadExistingPermissions();
+            }
+        });
         $(document).ready(function () {
+            // Load SubModules when Module is selected
             $('#ModuleId').change(function () {
                 var moduleId = $(this).val();
                 if (moduleId) {
-                    $.post('@Url.Action("GetSubModules", "AssignPermission")', { moduleId: moduleId }, function (data) {
-                        $('#SubModuleId').empty();
-                        $('#SubModuleId').append('<option value="">Select SubModule</option>');
-                        $.each(data, function (index, item) {
-                            $('#SubModuleId').append('<option value="' + item.id + '">' + item.name + '</option>');
-                        });
+                    $.ajax({
+                        url: '@Url.Action("GetSubModules", "AssignPermission")',
+                        type: 'GET',
+                        data: { moduleId: moduleId },
+                        success: function (data) {
+                            $('#SubModuleId').empty();
+                            $('#SubModuleId').append('<option value="">Select SubModule</option>');
+                            $.each(data, function (index, item) {
+                                $('#SubModuleId').append('<option value="' + item.id + '">' + item.name + '</option>');
+                            });
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.error("Error loading submodules: " + errorThrown);
+                        }
                     });
                 } else {
                     $('#SubModuleId').empty();
@@ -73,19 +142,31 @@
                 }
             });
 
+            // Load Pages when SubModule is selected
             $('#SubModuleId').change(function () {
                 var subModuleId = $(this).val();
                 if (subModuleId) {
-                    $.post('@Url.Action("GetPages", "AssignPermission")', { subModuleId: subModuleId }, function (data) {
-                        $('#PageId').empty();
-                        $('#PageId').append('<option value="">Select Page</option>');
-                        $.each(data, function (index, item) {
-                            $('#PageId').append('<option value="' + item.id + '">' + item.name + '</option>');
-                        });
+                    $.ajax({
+                        url: '@Url.Action("GetPages", "AssignPermission")',
+                        type: 'GET',
+                        data: { subModuleId: subModuleId },
+                        success: function (data) {
+                            $('#PageIds').empty(); // Clear existing checkboxes
+                            $.each(data, function (index, item) {
+                                $('#PageIds').append(`
+                                    <div class="form-check mr-3">
+                                        <input class="form-check-input" type="checkbox" name="PageIds" value="${item.id}" id="page-${item.id}" />
+                                        <label class="form-check-label" for="page-${item.id}">${item.name}</label>
+                                    </div>
+                                `);
+                            });
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.error("Error loading pages: " + errorThrown);
+                        }
                     });
                 } else {
-                    $('#PageId').empty();
-                    $('#PageId').append('<option value="">Select Page</option>');
+                    $('#PageIds').empty();
                 }
             });
         });

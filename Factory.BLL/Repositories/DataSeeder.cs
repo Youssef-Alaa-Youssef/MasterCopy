@@ -71,7 +71,7 @@ namespace Factory.DAL.Configurations
             var permissionRepository = unitOfWork.GetRepository<PermissionTyepe>();
             var existingPermissions = await permissionRepository.GetAllAsync();
 
-            var requiredPermissions = new List<string> { "Delete", "Read", "Create", "Update" };
+            var requiredPermissions = new List<string> { "Read", "Create", "Update", "Delete" };
 
             var newPermissions = requiredPermissions
                 .Where(permissionName => !existingPermissions.Any(p => p.Name == permissionName))

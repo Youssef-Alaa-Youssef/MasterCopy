@@ -6,10 +6,10 @@ using Factory.PL.ViewModels;
 using Factory.BLL.InterFaces;
 using Factory.DAL.Enums.Uploads;
 using Microsoft.AspNetCore.Authorization;
+using Factory.DAL.Enums;
 
 namespace Factory.PL.Controllers
 {
-    [Authorize]
     public class CountryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,6 +21,7 @@ namespace Factory.PL.Controllers
             _fileUploadService = fileUploadService;
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
             var countries = (await _unitOfWork.GetRepository<Country>().GetAllAsync())

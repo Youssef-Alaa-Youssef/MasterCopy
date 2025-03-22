@@ -1,19 +1,40 @@
 ﻿using Factory.DAL.Models.Permission;
 using Microsoft.AspNetCore.Identity;
-namespace Factory.DAL.ViewModels.Permissions
-{
-    public class RolePermissionV2ViewModel
-    {
-        public int ModuleId { get; set; }
-        public int SubModuleId { get; set; }
-        public string RoleId { get; set; }
-        public int PageId { get; set; }
-        public int PermissionId { get; set; }
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
-        public ICollection<Module> Modules { get; set; }
-        public ICollection<SubModule> SubModules { get; set; }
-        public ICollection<IdentityRole> Roles { get; set; }
-        public ICollection<Page> Pages { get; set; }
-        public ICollection<PermissionTyepe> PermissionTypes { get; set; }
-    }
+namespace Factory.PL.ViewModels.Permissions
+{ 
+public class RolePermissionV2ViewModel
+{
+    [Required(ErrorMessage = "Please select a module")]
+    public int ModuleId { get; set; }
+
+    [Required(ErrorMessage = "Please select a submodule")]
+    public int SubModuleId { get; set; }
+
+    [Required(ErrorMessage = "Please select at least one page")]
+    public List<int> PageIds { get; set; } = new List<int>(); 
+
+    [Required(ErrorMessage = "Please select a role")]
+    public string RoleId { get; set; }
+
+    [Required(ErrorMessage = "Please select at least one permission type")]
+    public List<int> PermissionIds { get; set; } = new List<int>(); 
+
+    [ValidateNever]
+    public ICollection<Module> Modules { get; set; }
+
+    [ValidateNever]
+    public ICollection<SubModule> SubModules { get; set; }
+
+    [ValidateNever]
+    public ICollection<IdentityRole> Roles { get; set; }
+
+    [ValidateNever]
+    public ICollection<Page> Pages { get; set; }
+
+    [ValidateNever]
+    public ICollection<PermissionTyepe> PermissionTypes { get; set; }
+}
 }

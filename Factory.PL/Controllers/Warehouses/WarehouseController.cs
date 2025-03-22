@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Factory.PL.Controllers.Warehouses
 {
-    [Authorize(Roles = nameof(UserRole.SuperAdmin))]
     public class WarehouseController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -20,6 +19,7 @@ namespace Factory.PL.Controllers.Warehouses
             _unitOfWork = unitOfWork;
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
             var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync();
@@ -29,6 +29,7 @@ namespace Factory.PL.Controllers.Warehouses
             return View(mainWarehouses);
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Details(int id)
         {
             var mainWarehouse = await _unitOfWork.GetRepository<MainWarehouse>().GetByIdAsync(id, includeProperties: "SubWarehouses");
@@ -39,6 +40,7 @@ namespace Factory.PL.Controllers.Warehouses
             return View(mainWarehouse);
         }
 
+        [CheckPermission(Permissions.Create)]
         public IActionResult Create()
         {
             return View(new MainWarehouse());
@@ -46,6 +48,7 @@ namespace Factory.PL.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> Create(MainWarehouse model)
         {
             if (ModelState.IsValid)
@@ -61,6 +64,7 @@ namespace Factory.PL.Controllers.Warehouses
             return View(model);
         }
 
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(int id)
         {
             var mainWarehouse = await _unitOfWork.GetRepository<MainWarehouse>().GetByIdAsync(id);
@@ -73,6 +77,7 @@ namespace Factory.PL.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(int id, MainWarehouse model)
         {
             if (id != model.Id)
@@ -96,6 +101,7 @@ namespace Factory.PL.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
@@ -151,6 +157,7 @@ namespace Factory.PL.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> CreateSubWarehouse(SubWarehouseViewModel model)
         {
             if (ModelState.IsValid)
@@ -182,6 +189,7 @@ namespace Factory.PL.Controllers.Warehouses
             return View(model);
         }
 
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> EditSubWarehouse(int id)
         {
             var subWarehouse = await _unitOfWork.GetRepository<SubWarehouse>().GetByIdAsync(id);
@@ -210,6 +218,7 @@ namespace Factory.PL.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> EditSubWarehouse(int id, SubWarehouseViewModel model)
         {
             if (id != model.Id)
@@ -250,6 +259,7 @@ namespace Factory.PL.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> DeleteSubWarehouseConfirmed(int id)
         {
             try
@@ -271,6 +281,7 @@ namespace Factory.PL.Controllers.Warehouses
             }
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> WarehouseMangment()
         {
             var mainWarehouses = await _unitOfWork.GetRepository<MainWarehouse>().GetAllAsync();
@@ -301,7 +312,9 @@ namespace Factory.PL.Controllers.Warehouses
 
             return View(viewModel);
         }
+
         [HttpPost]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> AddMainWarehouse(MainWarehouseViewModel model)
         {
             if (ModelState.IsValid)
@@ -326,7 +339,7 @@ namespace Factory.PL.Controllers.Warehouses
             return Json(new { success = false, message = "Invalid data. Please check your inputs." });
         }
 
-
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> WarehouseReport()
         {
             var warehouses = await _unitOfWork.GetRepository<MainWarehouse>().GetAllAsync();
@@ -337,8 +350,5 @@ namespace Factory.PL.Controllers.Warehouses
 
             return View();
         }
-
-
-
     }
 }

@@ -9,7 +9,7 @@ namespace Factory.PL.Services.Permissions
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMemoryCache _memoryCache;
-        private const string CacheKeyPrefix = "UserModules_"; 
+        private const string CacheKeyPrefix = "UserModules_";
 
         public ModuleService(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
@@ -23,16 +23,22 @@ namespace Factory.PL.Services.Permissions
 
             if (_memoryCache.TryGetValue(cacheKey, out List<Module> cachedModules))
             {
-                return cachedModules; 
+                return cachedModules;
             }
 
             var modules = await _unitOfWork.GetRepository<Module>().GetModulesForUserAsync(userId);
             var cacheOptions = new MemoryCacheEntryOptions()
-                .SetSlidingExpiration(TimeSpan.FromMinutes(10)); 
+                .SetSlidingExpiration(TimeSpan.FromMinutes(10));
 
             _memoryCache.Set(cacheKey, modules, cacheOptions);
 
             return modules;
+        }
+
+        public void InvalidateCacheForUser(string userId)
+        {
+            var cacheKey = $"{CacheKeyPrefix}{userId}";
+            _memoryCache.Remove(cacheKey);
         }
     }
 }

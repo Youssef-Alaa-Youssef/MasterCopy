@@ -11,7 +11,6 @@ using System.Security.Claims;
 
 namespace Factory.Controllers
 {
-    [Authorize]
     public class AccountantController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,6 +20,7 @@ namespace Factory.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
             var orders = await _unitOfWork.GetRepository<Order>().GetAllAsync();
@@ -33,6 +33,7 @@ namespace Factory.Controllers
             return View(orderViewModels);
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Details(int id)
         {
             var financialRecord = await _unitOfWork.GetRepository<FinancialRecord>().GetByIdAsync(id);
@@ -44,11 +45,13 @@ namespace Factory.Controllers
             return View(financialRecord);
         }
 
+        [CheckPermission(Permissions.Create)]
         public IActionResult Create()
         {
             return View();
         }
 
+        [CheckPermission(Permissions.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FinancialRecordViewModel financialRecordViewModel)
@@ -80,7 +83,8 @@ namespace Factory.Controllers
 
             return View(financialRecordViewModel);
         }
-
+        
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(int id)
         {
             var financialRecord = await _unitOfWork.GetRepository<FinancialRecord>().GetByIdAsync(id);
@@ -101,6 +105,7 @@ namespace Factory.Controllers
             return View(financialRecordViewModel);
         }
 
+        [CheckPermission(Permissions.Update)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, FinancialRecordViewModel financialRecordViewModel)
@@ -141,7 +146,7 @@ namespace Factory.Controllers
             return View(financialRecordViewModel);
         }
 
-        [Authorize()]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
             var financialRecord = await _unitOfWork.GetRepository<FinancialRecord>().GetByIdAsync(id);
@@ -153,7 +158,7 @@ namespace Factory.Controllers
             return View(financialRecord);
         }
 
-        [Authorize()]
+        [CheckPermission(Permissions.Delete)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -232,6 +237,7 @@ namespace Factory.Controllers
         }
 
         [HttpPost]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> UpdateOrderRank([FromBody] OrderRankUpdateModel model)
         {
             if (!ModelState.IsValid)
@@ -275,6 +281,7 @@ namespace Factory.Controllers
             }
         }
         [HttpPost]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> UpdateOrderAcceptance([FromBody] UpdateOrderAcceptance model)
         {
             if (!ModelState.IsValid)
@@ -304,6 +311,7 @@ namespace Factory.Controllers
         }
 
         [HttpPost]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> UpdateRank([FromBody] RankUpdateModel model)
         {
             if (model == null)
@@ -336,6 +344,7 @@ namespace Factory.Controllers
         }
 
         [HttpPost]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> UpdateDeliveryStatus([FromBody] DeliveryDataViewModel data)
         {
             try

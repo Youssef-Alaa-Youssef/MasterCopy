@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Models.Settings;
 using Factory.PL.Services.Setting;
 using Factory.PL.ViewModels.Settings;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Factory.Controllers.Warehouses
 {
-    [Authorize] // Ensure all actions require authentication
     public class SettingController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,7 +21,8 @@ namespace Factory.Controllers.Warehouses
             _settingsService = settingsService;
 
         }
-
+        
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
             try
@@ -61,6 +62,7 @@ namespace Factory.Controllers.Warehouses
             }
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Details(int id)
         {
             try
@@ -105,6 +107,7 @@ namespace Factory.Controllers.Warehouses
             }
         }
 
+        [CheckPermission(Permissions.Create)]
         public IActionResult Create()
         {
             var viewModel = new SettingsViewModel
@@ -114,6 +117,7 @@ namespace Factory.Controllers.Warehouses
             return View(viewModel);
         }
 
+        [CheckPermission(Permissions.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SettingsViewModel viewModel)
@@ -159,6 +163,7 @@ namespace Factory.Controllers.Warehouses
             return View(viewModel);
         }
 
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(int id)
         {
             try
@@ -205,6 +210,7 @@ namespace Factory.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(int id, SettingsViewModel viewModel)
         {
             if (id != viewModel.Id)
@@ -255,6 +261,8 @@ namespace Factory.Controllers.Warehouses
             return View(viewModel);
         }
 
+
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -301,6 +309,7 @@ namespace Factory.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
@@ -325,6 +334,7 @@ namespace Factory.Controllers.Warehouses
             return RedirectToAction(nameof(Index));
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> NotificationSettings()
         {
             try
@@ -342,6 +352,7 @@ namespace Factory.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> SaveNotificationSettings(NotificationSettingsViewModel model)
         {
             if (!ModelState.IsValid)
@@ -363,6 +374,7 @@ namespace Factory.Controllers.Warehouses
             return RedirectToAction(nameof(NotificationSettings));
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> ContractSettings()
         {
             try
@@ -380,6 +392,7 @@ namespace Factory.Controllers.Warehouses
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> SaveContractSettings(ContractSettingsViewModel model)
         {
             if (!ModelState.IsValid)

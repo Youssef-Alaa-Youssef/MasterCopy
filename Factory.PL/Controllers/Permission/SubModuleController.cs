@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Models.Permission;
 using Factory.PL.ViewModels.Permission;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Factory.Controllers
 {
+    [Authorize(Roles = nameof(UserRole.SuperAdmin))]
+
     public class SubModuleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -17,7 +20,6 @@ namespace Factory.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [Authorize()]
         public async Task<IActionResult> Index()
         {
             var modules = (await _unitOfWork.GetRepository<Module>()
@@ -35,7 +37,6 @@ namespace Factory.Controllers
             return View(subModules);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Details(int id)
         {
             var subModule = await _unitOfWork.GetRepository<SubModule>().GetByIdAsync(id);
@@ -47,7 +48,6 @@ namespace Factory.Controllers
             return View(subModule);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Create()
         {
             var modules = await _unitOfWork.GetRepository<Module>().GetAllAsync();
@@ -61,7 +61,6 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize()]
         public async Task<IActionResult> Create(SubModulesViewModel SubModulesViewModel)
         {
             if (ModelState.IsValid)
@@ -94,7 +93,6 @@ namespace Factory.Controllers
             return View(SubModulesViewModel);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Edit(int id)
         {
             var subModule = await _unitOfWork.GetRepository<SubModule>().GetByIdAsync(id);
@@ -120,7 +118,6 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize()]
         public async Task<IActionResult> Edit(int id, SubModulesViewModel SubModulesViewModel)
         {
             if (id != SubModulesViewModel.Id)
@@ -161,7 +158,6 @@ namespace Factory.Controllers
             return View(SubModulesViewModel);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Delete(int id)
         {
             var subModule = await _unitOfWork.GetRepository<SubModule>().GetByIdAsync(id);
@@ -175,7 +171,6 @@ namespace Factory.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize()]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var subModule = await _unitOfWork.GetRepository<SubModule>().GetByIdAsync(id);

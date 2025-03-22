@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Models.Permission;
 using Factory.PL.ViewModels.Permission;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,8 @@ using System.Security.Claims;
 
 namespace Factory.Controllers
 {
+    [Authorize(Roles = nameof(UserRole.SuperAdmin))]
+
     public class PagesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -16,14 +19,12 @@ namespace Factory.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [Authorize()]
         public async Task<IActionResult> Index()
         {
             var pages = await _unitOfWork.GetRepository<Page>().GetAllAsync();
             return View(pages);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Details(int id)
         {
             var page = await _unitOfWork.GetRepository<Page>().GetByIdAsync(id);
@@ -35,13 +36,11 @@ namespace Factory.Controllers
             return View(page);
         }
 
-        [Authorize()]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PageViewModel pageViewModel)
@@ -74,7 +73,6 @@ namespace Factory.Controllers
             return View(pageViewModel);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Edit(int id)
         {
             var page = await _unitOfWork.GetRepository<Page>().GetByIdAsync(id);
@@ -96,7 +94,6 @@ namespace Factory.Controllers
             return View(pageViewModel);
         }
 
-        [Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, PageViewModel pageViewModel)
@@ -135,7 +132,6 @@ namespace Factory.Controllers
             return View(pageViewModel);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Delete(int id)
         {
             var page = await _unitOfWork.GetRepository<Page>().GetByIdAsync(id);
@@ -147,7 +143,6 @@ namespace Factory.Controllers
             return View(page);
         }
 
-        [Authorize()]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

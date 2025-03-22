@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Models;
 using Factory.DAL.Models.Warehouses;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Factory.Controllers
 {
-    [Authorize]
     public class ItemsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,6 +21,7 @@ namespace Factory.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index(int categoryId)
         {
             var items = await _unitOfWork.GetRepository<Item>().Query()
@@ -32,6 +33,7 @@ namespace Factory.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> AddItem(int categoryId)
         {
             try
@@ -65,6 +67,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> AddItem([FromForm] Item item)
         {
             if (!ModelState.IsValid)
@@ -95,6 +98,7 @@ namespace Factory.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> EditItem(int id)
         {
             var item = await _unitOfWork.GetRepository<Item>().GetByIdAsync(id);
@@ -109,6 +113,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> EditItem(int id, [FromForm] Item item)
         {
             if (id != item.Id)
@@ -138,6 +143,7 @@ namespace Factory.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Details(int id)
         {
             var item = await _unitOfWork.GetRepository<Item>().GetByIdAsync(id);
@@ -151,6 +157,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> DeleteItem(int id)
         {
             try
@@ -173,6 +180,7 @@ namespace Factory.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> GetItems(int id)
         {
             try
@@ -211,6 +219,7 @@ namespace Factory.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Countries()
         {
             var countries = (await _unitOfWork.GetRepository<Country>().GetAllAsync()).OrderBy(c => c.Order).ToList();
@@ -218,6 +227,7 @@ namespace Factory.Controllers
         }
 
         [HttpGet("items/bycountry/{countryId}")]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> GetItemsByCountry(int countryId)
         {
             var items = await _unitOfWork.GetRepository<Item>()
@@ -236,6 +246,7 @@ namespace Factory.Controllers
         }
 
         [HttpPost]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> UpdateStocks(int id, [FromBody] UpdateStockRequest request)
         {
             try

@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Models.Permission;
 using Factory.PL.ViewModels.Permission;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 
 namespace Factory.Controllers
 {
+    [Authorize(Roles = nameof(UserRole.SuperAdmin))]
     public class ModuleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -16,14 +18,12 @@ namespace Factory.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [Authorize()]
         public async Task<IActionResult> Index()
         {
             var modules = await _unitOfWork.GetRepository<Module>().GetAllAsync();
             return View(modules);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Details(int id)
         {
             var module = await _unitOfWork.GetRepository<Module>().GetByIdAsync(id);
@@ -35,16 +35,13 @@ namespace Factory.Controllers
             return View(module);
         }
 
-        [Authorize()]
         public IActionResult Create()
         {
             return View();
         }
-        [Authorize()]
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<IActionResult> Create(ModulesViewModel ModulesViewModel)
         {
             if (ModelState.IsValid)
@@ -75,7 +72,6 @@ namespace Factory.Controllers
             return View(ModulesViewModel);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Edit(int id)
         {
             var module = await _unitOfWork.GetRepository<Module>().GetByIdAsync(id);
@@ -96,7 +92,6 @@ namespace Factory.Controllers
 
             return View(ModulesViewModel);
         }
-        [Authorize()]
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -136,7 +131,6 @@ namespace Factory.Controllers
             return View(ModulesViewModel);
         }
 
-        [Authorize()]
         public async Task<IActionResult> Delete(int id)
         {
             var module = await _unitOfWork.GetRepository<Module>().GetByIdAsync(id);
@@ -147,11 +141,9 @@ namespace Factory.Controllers
 
             return View(module);
         }
-        [Authorize()]
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var module = await _unitOfWork.GetRepository<Module>().GetByIdAsync(id);

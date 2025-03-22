@@ -1,4 +1,5 @@
-﻿using Factory.PL.Models;
+﻿using Factory.DAL.Enums;
+using Factory.PL.Models;
 using Factory.PL.Services.Order;
 using Microsoft.AspNetCore.Mvc;
 using QuestPDF.Fluent;
@@ -11,7 +12,6 @@ namespace Factory.PL.Controllers.OrderList
     {
         private readonly IOrderService _orderService;
 
-        // Set license according to your organization's status
         static InvoiceController()
         {
             QuestPDF.Settings.License = LicenseType.Community;
@@ -22,12 +22,14 @@ namespace Factory.PL.Controllers.OrderList
             _orderService = orderService;
         }
 
+        [CheckPermission(Permissions.Read)]
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
+        [CheckPermission(Permissions.Read)]
         [HttpGet("Invoice/Details/{orderId}")]
         public async Task<IActionResult> Details(string orderId)
         {
@@ -58,6 +60,7 @@ namespace Factory.PL.Controllers.OrderList
             }
         }
 
+        [CheckPermission(Permissions.Read)]
         [HttpGet("Invoice/Download/{orderId}")]
         public async Task<IActionResult> Download(string orderId)
         {
@@ -89,6 +92,7 @@ namespace Factory.PL.Controllers.OrderList
             }
         }
 
+        [CheckPermission(Permissions.Read)]
         [HttpGet("Invoice/Preview/{orderId}")]
         public async Task<IActionResult> Preview(string orderId)
         {
