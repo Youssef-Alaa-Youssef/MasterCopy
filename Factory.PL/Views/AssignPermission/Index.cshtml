@@ -1,0 +1,93 @@
+﻿@model Factory.DAL.ViewModels.Permissions.RolePermissionV2ViewModel
+
+@{
+    ViewData["Title"] = "Assign Permission";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <form asp-action="SaveRolePermission" method="post">
+        <div class="form-group">
+            <label asp-for="ModuleId">Module</label>
+            <select asp-for="ModuleId" asp-items="Model.Modules.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.Name })" class="form-control">
+                <option value="">Select Module</option>
+            </select>
+            <span asp-validation-for="ModuleId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SubModuleId">SubModule</label>
+            <select asp-for="SubModuleId" class="form-control">
+                <option value="">Select SubModule</option>
+            </select>
+            <span asp-validation-for="SubModuleId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RoleId">Role</label>
+            <select asp-for="RoleId" asp-items="Model.Roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name })" class="form-control">
+                <option value="">Select Role</option>
+            </select>
+            <span asp-validation-for="RoleId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PageId">Page</label>
+            <select asp-for="PageId" class="form-control">
+                <option value="">Select Page</option>
+            </select>
+            <span asp-validation-for="PageId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PermissionId">Permission Type</label>
+            <select asp-for="PermissionId" asp-items="Model.PermissionTypes.Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name })" class="form-control">
+                <option value="">Select Permission Type</option>
+            </select>
+            <span asp-validation-for="PermissionId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Assign Permission</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#ModuleId').change(function () {
+                var moduleId = $(this).val();
+                if (moduleId) {
+                    $.post('@Url.Action("GetSubModules", "AssignPermission")', { moduleId: moduleId }, function (data) {
+                        $('#SubModuleId').empty();
+                        $('#SubModuleId').append('<option value="">Select SubModule</option>');
+                        $.each(data, function (index, item) {
+                            $('#SubModuleId').append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                    });
+                } else {
+                    $('#SubModuleId').empty();
+                    $('#SubModuleId').append('<option value="">Select SubModule</option>');
+                }
+            });
+
+            $('#SubModuleId').change(function () {
+                var subModuleId = $(this).val();
+                if (subModuleId) {
+                    $.post('@Url.Action("GetPages", "AssignPermission")', { subModuleId: subModuleId }, function (data) {
+                        $('#PageId').empty();
+                        $('#PageId').append('<option value="">Select Page</option>');
+                        $.each(data, function (index, item) {
+                            $('#PageId').append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                    });
+                } else {
+                    $('#PageId').empty();
+                    $('#PageId').append('<option value="">Select Page</option>');
+                }
+            });
+        });
+    </script>
+}

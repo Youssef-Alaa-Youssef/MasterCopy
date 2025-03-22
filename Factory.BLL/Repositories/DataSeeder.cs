@@ -4,6 +4,11 @@ using Factory.DAL.Models.Auth;
 using Factory.DAL.Models.Permission;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace Factory.DAL.Configurations
 {
     public class DataSeeder
@@ -37,8 +42,8 @@ namespace Factory.DAL.Configurations
             foreach (UserRole role in Enum.GetValues(typeof(UserRole)))
             {
                 string roleName = role.ToString();
-                string defaultUserEmail = $"{roleName.ToLower()}@MasterCopy.info"; 
-                string defaultPassword = $"{roleName}@123"; 
+                string defaultUserEmail = $"{roleName.ToLower()}@MasterCopy.info";
+                string defaultPassword = $"{roleName}@123";
 
                 var defaultUser = await userManager.FindByEmailAsync(defaultUserEmail);
 
@@ -85,6 +90,12 @@ namespace Factory.DAL.Configurations
             var moduleRepository = unitOfWork.GetRepository<Module>();
             var allModules = await moduleRepository.GetAllAsync();
 
+            var subModuleRepository = unitOfWork.GetRepository<SubModule>();
+            var allSubModules = await subModuleRepository.GetAllAsync();
+
+            var pageRepository = unitOfWork.GetRepository<Page>();
+            var allPages = await pageRepository.GetAllAsync();
+
             var permissionRepository = unitOfWork.GetRepository<PermissionTyepe>();
             var allPermissions = await permissionRepository.GetAllAsync();
 
@@ -100,24 +111,37 @@ namespace Factory.DAL.Configurations
                 {
                     var newRolePermissions = new List<RolePermission>();
 
-                    foreach (var module in allModules)
+                    if (roleName == UserRole.SuperAdmin.ToString())
                     {
-                        foreach (var permission in allPermissions)
+                        foreach (var module in allModules)
                         {
-                            if (!existingRolePermissions.Any(rp => rp.RoleId == identityRole.Id &&
-                                                                  rp.PermissionId == permission.Id &&
-                                                                  rp.ModuleId == module.Id))
+                            foreach (var subModule in allSubModules.Where(sm => sm.ModuleId == module.Id))
                             {
-                                newRolePermissions.Add(new RolePermission
+                                foreach (var page in allPages.Where(p => p.SubmoduleId == subModule.Id))
                                 {
-                                    RoleId = identityRole.Id,
-                                    PermissionId = permission.Id,
-                                    ModuleId = module.Id
-                                });
+                                    foreach (var permission in allPermissions)
+                                    {
+                                        if (!existingRolePermissions.Any(rp => rp.RoleId == identityRole.Id &&
+                                                                              rp.PermissionId == permission.Id &&
+                                                                              rp.ModuleId == module.Id &&
+                                                                              rp.SubModuleId == subModule.Id &&
+                                                                              rp.PageId == page.Id))
+                                        {
+                                            newRolePermissions.Add(new RolePermission
+                                            {
+                                                RoleId = identityRole.Id,
+                                                PermissionId = permission.Id,
+                                                ModuleId = module.Id,
+                                                SubModuleId = subModule.Id,
+                                                PageId = page.Id
+                                            });
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-
+                    
                     if (newRolePermissions.Any())
                     {
                         await rolePermissionRepository.AddRangeAsync(newRolePermissions);

@@ -10,23 +10,38 @@ namespace Factory.DAL.Configurations.Permission
         {
             builder.ToTable("RolePermissions");
 
-            builder.HasKey(rp => new { rp.RoleId, rp.PermissionId, rp.ModuleId });
+            // Use a simpler primary key (e.g., just Id)
+            builder.HasKey(rp => rp.Id);
 
+            // Role relationship
             builder.HasOne(rp => rp.Role)
                 .WithMany()
                 .HasForeignKey(rp => rp.RoleId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict); // Disable cascade
 
+            // Permission relationship
             builder.HasOne(rp => rp.Permission)
                 .WithMany(p => p.RolePermissions)
                 .HasForeignKey(rp => rp.PermissionId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict); // Disable cascade
 
+            // Module relationship
             builder.HasOne(rp => rp.Module)
                 .WithMany(m => m.RolePermissions)
                 .HasForeignKey(rp => rp.ModuleId)
-                .OnDelete(DeleteBehavior.Cascade);
-        }
+                .OnDelete(DeleteBehavior.Restrict); // Disable cascade
 
+            // SubModule relationship
+            builder.HasOne(rp => rp.SubModule)
+                .WithMany()
+                .HasForeignKey(rp => rp.SubModuleId)
+                .OnDelete(DeleteBehavior.Restrict); // Disable cascade
+
+            // Page relationship
+            builder.HasOne(rp => rp.Page)
+                .WithMany()
+                .HasForeignKey(rp => rp.PageId)
+                .OnDelete(DeleteBehavior.Restrict); // Disable cascade
+        }
     }
 }

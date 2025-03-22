@@ -48,6 +48,8 @@
     <Folder Include="Services\SMS\" />
     <Folder Include="wwwroot\AurcOpDB\" />
     <Folder Include="wwwroot\images\countries\" />
+    <Folder Include="wwwroot\images\Partners\" />
+    <Folder Include="wwwroot\images\properties\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

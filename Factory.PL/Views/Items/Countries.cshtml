@@ -10,18 +10,27 @@
     @await Html.PartialAsync("_PageTitle")
 
     <div class="row">
-        @foreach (var country in Model)
+        @if (Model != null && Model.Any())
         {
-            <div class="col-md-2 col-sm-4 col-6 mb-4">
-                <div class="card h-100 text-center" style="cursor: pointer;" onclick="openCountryModal(@country.Id, '@country.Name', '@country.ImagePath')">
-                    @if (!string.IsNullOrEmpty(country.ImagePath))
-                    {
-                        <img src="~/images/countries/@country.ImagePath" class="card-img-top img-fluid" alt="@country.NameEn" style="height: 150px; object-fit: cover;">
-                    }
-                    <div class="card-body">
-                        <h5 class="card-title text-truncate" style="max-width: 100%;">@country.NameEn</h5>
+            @foreach (var country in Model)
+            {
+                <div class="col-md-2 col-sm-4 col-6 mb-4">
+                    <div class="card h-100 text-center" style="cursor: pointer;" onclick="openCountryModal(@country.Id, '@country.Name', '@country.ImagePath')">
+                        @if (!string.IsNullOrEmpty(country.ImagePath))
+                        {
+                            <img src="~/images/countries/@country.ImagePath" class="card-img-top img-fluid" alt="@country.NameEn" style="height: 150px; object-fit: cover;">
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title text-truncate" style="max-width: 100%;">@country.NameEn</h5>
+                        </div>
                     </div>
                 </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center mt-2">
+                <p class="text-muted">No countries found.</p>
             </div>
         }
     </div>
