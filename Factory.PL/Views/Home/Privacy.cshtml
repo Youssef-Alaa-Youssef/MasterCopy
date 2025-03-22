@@ -1,71 +1,158 @@
 ﻿@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
-
 @{
     ViewData["Title"] = $"Privacy Policy | {appSettings.Value.CompanyName}";
-    Layout = "_Auth";
-
+    Layout = "_AuthLayout";
 }
 
-<div class="container-fluid mt-5">
-    <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-            <h1 class="display-4 text-center mb-4">Privacy Policy</h1>
-            <p class="text-muted text-center">Last updated: [Date]</p>
+<style>
+    .lead {
+        font-size: 1.25rem;
+        color: #4a5568;
+    }
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Introduction</h2>
-                    <p>
-                        At <strong>@appSettings.Value.CompanyName</strong>, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our software solutions for glass factories.
-                    </p>
-                </div>
-            </div>
+    /* Accordion Styling */
+    .accordion {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Information We Collect</h2>
-                    <p>
-                        We may collect the following types of information:
-                    </p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Personal Information:</strong> Name, email address, phone number, etc.</li>
-                        <li class="list-group-item"><strong>Usage Data:</strong> Information about how you use our software.</li>
-                        <li class="list-group-item"><strong>Technical Data:</strong> IP address, browser type, operating system, etc.</li>
-                    </ul>
-                </div>
-            </div>
+    .accordion-item {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">How We Use Your Information</h2>
-                    <p>
-                        We use the information we collect to:
-                    </p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Provide and maintain our software services.</li>
-                        <li class="list-group-item">Improve and personalize your experience.</li>
-                        <li class="list-group-item">Communicate with you about updates and support.</li>
-                    </ul>
-                </div>
-            </div>
+    .accordion-button {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #2c3e50;
+        background-color: rgba(0, 102, 153, 0.05);
+        padding: 1rem 1.5rem;
+        transition: background-color 0.3s ease;
+    }
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Data Security</h2>
-                    <p>
-                        We implement industry-standard security measures to protect your data from unauthorized access, alteration, or disclosure.
-                    </p>
-                </div>
-            </div>
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(0, 102, 153, 0.1);
+            color: #2c3e50;
+        }
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Contact Us</h2>
-                    <p>
-                        If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy{@appSettings.Value.CompanyName}.com" class="text-decoration-none">privacy@mastercopy.com</a>.
-                    </p>
-                </div>
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+
+    .accordion-body {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: #4a5568;
+        padding: 1rem 1.5rem;
+    }
+
+    /* Hover Effects */
+    .accordion-button:hover {
+        background-color: rgba(0, 102, 153, 0.1);
+    }
+
+    /* Animation */
+    .accordion-button.collapsed::after {
+        transition: transform 0.3s ease;
+    }
+
+    .accordion-button:not(.collapsed)::after {
+        transform: rotate(180deg);
+    }
+
+    /* Back to Login Button */
+.back-to-login-btns {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+    .back-to-login-btns .btns {
+        background-color: #006699;
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+        .back-to-login-btns .btns:hover {
+            background-color: #004466;
+        }
+</style>
+
+<h2 class="fw-bold fs-1 mb-4">Privacy Policy</h2>
+<p class="lead">Your privacy is important to us. Here's how we handle your data...</p>
+
+<div class="accordion" id="privacyAccordion">
+    <div class="accordion-item">
+        <h3 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                1. Introduction
+            </button>
+        </h3>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#privacyAccordion">
+            <div class="accordion-body">
+                Welcome to our Privacy Policy. This document outlines how we collect, use, and protect your personal data.
             </div>
         </div>
     </div>
+
+    <!-- Section 2: Data Collection -->
+    <div class="accordion-item">
+        <h3 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                2. Data Collection
+            </button>
+        </h3>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#privacyAccordion">
+            <div class="accordion-body">
+                We collect information such as your name, email address, and usage data to provide and improve our services.
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Data Usage -->
+    <div class="accordion-item">
+        <h3 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                3. Data Usage
+            </button>
+        </h3>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#privacyAccordion">
+            <div class="accordion-body">
+                Your data is used to personalize your experience, process transactions, and send periodic updates.
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 4: Data Protection -->
+    <div class="accordion-item">
+        <h3 class="accordion-header" id="headingFour">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                4. Data Protection
+            </button>
+        </h3>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#privacyAccordion">
+            <div class="accordion-body">
+                We implement industry-standard security measures to protect your data from unauthorized access or disclosure.
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 5: Your Rights -->
+    <div class="accordion-item">
+        <h3 class="accordion-header" id="headingFive">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                5. Your Rights
+            </button>
+        </h3>
+        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#privacyAccordion">
+            <div class="accordion-body">
+                You have the right to access, update, or delete your personal data at any time. Contact us for assistance.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="back-to-login-btns">
+    <a asp-controller="Auth" asp-action="Login" class="btns">Back to Login</a>
 </div>

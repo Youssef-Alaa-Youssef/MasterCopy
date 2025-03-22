@@ -1,84 +1,187 @@
 ﻿@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
-
 @{
-    ViewData["Title"] = "Terms of Service | MasterCopy";
-    Layout = "_Auth";
-
+    ViewData["Title"] = $"Terms of Service | {appSettings.Value.CompanyName}";
+    Layout = "_AuthLayout";
 }
 
-<div class="container-fluid mt-5">
-    <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-            <h1 class="display-4 text-center mb-4">Terms of Service</h1>
-            <p class="text-muted text-center">Last updated: [Date]</p>
+<style>
+    .text-muted {
+        color: #718096 !important;
+    }
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Introduction</h2>
-                    <p>
+    .accordion {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .accordion-item {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .accordion-button {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #2c3e50;
+        background-color: rgba(0, 102, 153, 0.05);
+        padding: 1rem 1.5rem;
+        transition: background-color 0.3s ease;
+    }
+
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(0, 102, 153, 0.1);
+            color: #2c3e50;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+
+    .accordion-body {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: #4a5568;
+        padding: 1rem 1.5rem;
+    }
+
+    /* Hover Effects */
+    .accordion-button:hover {
+        background-color: rgba(0, 102, 153, 0.1);
+    }
+
+    /* Animation */
+    .accordion-button.collapsed::after {
+        transition: transform 0.3s ease;
+    }
+
+    .accordion-button:not(.collapsed)::after {
+        transform: rotate(180deg);
+    }
+
+    .back-to-login-btns {
+        margin-top: 2rem;
+        text-align: center;
+    }
+
+        .back-to-login-btns .btns {
+            background-color: #006699;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+            .back-to-login-btns .btns:hover {
+                background-color: #004466;
+</style>
+
+<h1 class="display-4 text-center mb-4">Terms of Service</h1>
+<p class="text-muted text-center">Last updated: @DateTime.UtcNow.Subtract(TimeSpan.FromDays(10)).ToString("dd-MM-yyyy")</p>
+
+<div class="accordion" id="termsAccordion">
+            <!-- Section 1: Introduction -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        1. Introduction
+                    </button>
+                </h3>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#termsAccordion">
+                    <div class="accordion-body">
                         Welcome to <strong>MasterCopy</strong>! These Terms of Service govern your use of our software solutions for glass factories. By accessing or using our software, you agree to these terms.
-                    </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Eligibility</h2>
-                    <p>
+            <!-- Section 2: Eligibility -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        2. Eligibility
+                    </button>
+                </h3>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#termsAccordion">
+                    <div class="accordion-body">
                         You must be at least 18 years old to use our software. By using our software, you represent that you meet this requirement.
-                    </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">License</h2>
-                    <p>
+            <!-- Section 3: License -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        3. License
+                    </button>
+                </h3>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#termsAccordion">
+                    <div class="accordion-body">
                         We grant you a limited, non-exclusive, non-transferable license to use our software for your business operations.
-                    </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Prohibited Activities</h2>
-                    <p>
+            <!-- Section 4: Prohibited Activities -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        4. Prohibited Activities
+                    </button>
+                </h3>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#termsAccordion">
+                    <div class="accordion-body">
                         You agree not to:
-                    </p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Reverse engineer, decompile, or disassemble the software.</li>
-                        <li class="list-group-item">Use the software for any illegal or unauthorized purpose.</li>
-                        <li class="list-group-item">Share your login credentials with unauthorized users.</li>
-                    </ul>
+                        <ul class="list-group list-group-flush mt-3">
+                            <li class="list-group-item">Reverse engineer, decompile, or disassemble the software.</li>
+                            <li class="list-group-item">Use the software for any illegal or unauthorized purpose.</li>
+                            <li class="list-group-item">Share your login credentials with unauthorized users.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Termination</h2>
-                    <p>
+            <!-- Section 5: Termination -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        5. Termination
+                    </button>
+                </h3>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#termsAccordion">
+                    <div class="accordion-body">
                         We reserve the right to terminate or suspend your access to the software at any time, without notice, for any reason.
-                    </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Limitation of Liability</h2>
-                    <p>
+            <!-- Section 6: Limitation of Liability -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        6. Limitation of Liability
+                    </button>
+                </h3>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#termsAccordion">
+                    <div class="accordion-body">
                         <strong>MasterCopy</strong> shall not be liable for any indirect, incidental, or consequential damages arising from your use of the software.
-                    </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h4 mb-3">Contact Us</h2>
-                    <p>
+            <!-- Section 7: Contact Us -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        7. Contact Us
+                    </button>
+                </h3>
+                <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#termsAccordion">
+                    <div class="accordion-body">
                         If you have any questions about these Terms of Service, please contact us at <a href="mailto:terms{@appSettings.Value.CompanyName}.com" class="text-decoration-none">terms@mastercopy.com</a>.
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+<div class="back-to-login-btns">
+    <a asp-controller="Auth" asp-action="Login" class="btns">Back to Login</a>
 </div>

@@ -5,5 +5,6 @@
         public string CompanyName { get; set; }
         public string PartnerName { get; set; }
         public bool ChatBot { get; set; }
+        public bool ExternalLogin { get; set; }
     }
 }

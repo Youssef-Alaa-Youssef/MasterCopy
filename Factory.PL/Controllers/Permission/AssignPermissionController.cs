@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Factory.DAL.Services;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Factory.PL.ViewModels.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Factory.DAL.Enums;
+using Factory.PL.Services.Permssions;
 
 namespace Factory.PL.Controllers.Permission
 {
     [Authorize(Roles = nameof(UserRole.SuperAdmin))]
     public class AssignPermissionController : Controller
     {
-        private readonly RolePermissionService _rolePermissionService;
+        private readonly IRolePermissionService _rolePermissionService;
         private readonly JsonSerializerOptions _jsonOptions;
 
-        public AssignPermissionController(RolePermissionService rolePermissionService)
+        public AssignPermissionController(IRolePermissionService rolePermissionService)
         {
             _rolePermissionService = rolePermissionService;
 
@@ -87,7 +87,7 @@ namespace Factory.PL.Controllers.Permission
             {
                 await _rolePermissionService.SaveRolePermissionAsync(model);
                 TempData["Success"] = "Permissions have been successfully updated!";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "PermissionManagement");
             }
 
             var viewModel = await _rolePermissionService.GetRolePermissionViewModelAsync();

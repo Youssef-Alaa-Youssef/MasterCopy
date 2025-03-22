@@ -17,8 +17,8 @@ namespace Factory.DAL.Configurations.Permission
                 .HasMaxLength(100);
 
             builder.HasData(
-                new PermissionTyepe { Id = 1, Name = "Create" },
-                new PermissionTyepe { Id = 2, Name = "Read" },
+                new PermissionTyepe { Id = 1, Name = "Read" },
+                new PermissionTyepe { Id = 2, Name = "Create" },
                 new PermissionTyepe { Id = 3, Name = "Update" },
                 new PermissionTyepe { Id = 4, Name = "Delete" }
             );

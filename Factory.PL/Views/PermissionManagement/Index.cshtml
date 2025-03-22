@@ -60,45 +60,6 @@
         </div>
     </div>
 
-    <!-- Charts Section -->
-    <div class="row mb-4">
-        <!-- Pie Chart: User Roles -->
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-header">
-                    <h6 class="m-0 font-weight-bold">User Roles Distribution</h6>
-                </div>
-                <div class="card-body">
-                    <canvas id="userRolesChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bar Chart: Module Distribution -->
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-header">
-                    <h6 class="m-0 font-weight-bold">Module Distribution</h6>
-                </div>
-                <div class="card-body">
-                    <canvas id="moduleDistributionChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Doughnut Chart: Permission Usage -->
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-header">
-                    <h6 class="m-0 font-weight-bold">Permission Usage</h6>
-                </div>
-                <div class="card-body">
-                    <canvas id="permissionUsageChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Tables Section -->
     <div class="row">
         <!-- Users Table -->
@@ -166,67 +127,8 @@
     </div>
 
     <div class="card-footer text-center mt-2">
-        <a asp-action="AssignPermissions" class="btn btn-outline-primary btn-lg">
-            <i class="fas fa-shield-alt mr-2"></i> Assign Permissions
+        <a asp-action="Index" asp-controller="AssignPermission" class="btn btn-outline-primary">
+            Assign Permissions
         </a>
     </div>
 </div>
-
-@section Scripts {
-    <script src="~/lib/chart.js/chart.min.js"></script>
-    <script>
-        var userRolesCtx = document.getElementById('userRolesChart').getContext('2d');
-        var userRolesChart = new Chart(userRolesCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Admin', 'Editor', 'Viewer'], // Replace with actual roles
-                datasets: [{
-                    data: [10, 20, 30], // Replace with actual counts
-                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-            }
-        });
-
-        var moduleDistributionCtx = document.getElementById('moduleDistributionChart').getContext('2d');
-        var moduleDistributionChart = new Chart(moduleDistributionCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Module 1', 'Module 2', 'Module 3'],  
-                datasets: [{
-                    label: 'Modules',
-                    data: [12, 19, 8], 
-                    backgroundColor: '#4e73df',
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        var permissionUsageCtx = document.getElementById('permissionUsageChart').getContext('2d');
-        var permissionUsageChart = new Chart(permissionUsageCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Read', 'Write', 'Delete'], 
-                datasets: [{
-                    data: [15, 25, 10], 
-                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-            }
-        });
-    </script>
-}
