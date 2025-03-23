@@ -4017,7 +4017,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LastOS\\.nuget\\packages\\": {},
+    "C:\\Users\\yalaa\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
@@ -4026,7 +4026,7 @@
       "projectUniqueName": "F:\\MasterCopy\\Factory.BLL\\Factory.BLL.csproj",
       "projectName": "Factory.BLL",
       "projectPath": "F:\\MasterCopy\\Factory.BLL\\Factory.BLL.csproj",
-      "packagesPath": "C:\\Users\\LastOS\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\yalaa\\.nuget\\packages\\",
       "outputPath": "F:\\MasterCopy\\Factory.BLL\\obj\\",
       "projectStyle": "PackageReference",
       "centralPackageVersionsManagementEnabled": true,
@@ -4034,7 +4034,7 @@
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\LastOS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\yalaa\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4134,7 +4134,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.104/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

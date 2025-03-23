@@ -1,5 +1,7 @@
-﻿using Factory.DAL.Models.Auth;
+﻿using Factory.DAL.Enums;
+using Factory.DAL.Models.Auth;
 using Factory.PL.ViewModels.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 public class SettingsController : Controller
@@ -14,6 +16,8 @@ public class SettingsController : Controller
     }
 
     [HttpGet]
+    //[CheckPermission(Permissions.Read)]
+    [Authorize]
     public async Task<IActionResult> Index()
     {
         var user = await _userManager.GetUserAsync(User);
@@ -38,6 +42,7 @@ public class SettingsController : Controller
     }
 
     [HttpPost]
+    [CheckPermission(Permissions.Update)]
     public async Task<IActionResult> UpdateSettings(SettingsViewModel model)
     {
         var user = await _userManager.GetUserAsync(User);

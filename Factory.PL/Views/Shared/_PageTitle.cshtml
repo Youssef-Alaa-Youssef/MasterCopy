@@ -1,8 +1,129 @@
 ﻿@{
     var pageTitle = ViewData["Title"] as string ?? "Untitled Page";
+    var videoId = ViewData["YoutubeUrl"] as string;
+    var modalId = "helpModal_" + Guid.NewGuid().ToString("N"); 
+    var iframeId = "youtubeVideo_" + Guid.NewGuid().ToString("N"); 
 }
 
-<div class="d-flex align-items-center gap-2 py-3 border-bottom mb-3">
-    <i class="bi bi-stars text-warning fs-4"></i>
+<div class="d-flex align-items-center gap-3 py-3 border-bottom mb-2">
+    <i class="bi bi-stars text-warning fs-4 me-1"></i>
     <h2 class="fw-semibold mb-0">@pageTitle</h2>
+    @if (!string.IsNullOrEmpty(videoId))
+    {
+        <button type="button"
+                class="btn btn-link text-decoration-none p-0 ms-auto help-icon"
+                data-bs-toggle="modal"
+                data-bs-target="#@modalId"
+                aria-label="View Tutorial Video">
+            <i class="bi bi-question-circle-fill text-primary fs-4"
+               title="View Tutorial Video"
+               style="transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;"></i>
+        </button>
+    }
 </div>
+
+@if (!string.IsNullOrEmpty(videoId))
+{
+    <div class="modal fade" id="@modalId" tabindex="-1" aria-labelledby="@(modalId + "Label")" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="@(modalId + "Label")">
+                        <i class="bi bi-play-circle-fill text-primary me-2"></i>
+                        Video Tutorial
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="ratio ratio-16x9">
+                        <div id="@(iframeId)_container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('@modalId');
+            const container = document.getElementById('@(iframeId)_container');
+            const helpIcon = document.querySelector('[data-bs-target="#@modalId"]');
+
+            if (helpIcon) {
+                helpIcon.addEventListener('mouseover', function() {
+                    const icon = this.querySelector('i');
+                    if (icon) {
+                        icon.style.transform = 'scale(1.1)';
+                    }
+                });
+
+                helpIcon.addEventListener('mouseout', function() {
+                    const icon = this.querySelector('i');
+                    if (icon) {
+                        icon.style.transform = 'scale(1)';
+                    }
+                });
+            }
+
+            if (modal && container) {
+                modal.addEventListener('show.bs.modal', function () {
+                    const iframe = document.createElement('iframe');
+                    iframe.id = '@iframeId';
+                    iframe.src = 'https://www.youtube.com/embed/@videoId?autoplay=1&mute=0';
+                    iframe.setAttribute('allowfullscreen', '');
+                    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                    iframe.style.border = '0';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.position = 'absolute';
+
+                    container.innerHTML = '';
+                    container.appendChild(iframe);
+                });
+
+                modal.addEventListener('hidden.bs.modal', function () {
+                    container.innerHTML = '';
+                });
+            }
+
+            function updateModalTheme() {
+                if (!modal) return;
+
+                const bodyTheme = document.body.getAttribute('data-bs-theme');
+                const modalContent = modal.querySelector('.modal-content');
+
+                if (!modalContent) return;
+
+                if (bodyTheme === 'dark') {
+                    modalContent.setAttribute('data-bs-theme', 'dark');
+                    modal.querySelectorAll('.modal-header, .modal-footer').forEach(el => {
+                        el.classList.add('bg-dark');
+                        el.classList.add('text-white');
+                    });
+                    modal.querySelector('.modal-body').classList.add('bg-black');
+                    modal.querySelector('.btn-close').classList.add('btn-close-white');
+                } else {
+                    modalContent.setAttribute('data-bs-theme', 'light');
+                    modal.querySelectorAll('.modal-header, .modal-footer').forEach(el => {
+                        el.classList.remove('bg-dark');
+                        el.classList.remove('text-white');
+                    });
+                    modal.querySelector('.modal-body').classList.remove('bg-black');
+                    modal.querySelector('.btn-close').classList.remove('btn-close-white');
+                }
+            }
+
+            updateModalTheme();
+
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-bs-theme') {
+                        updateModalTheme();
+                    }
+                });
+            });
+
+            observer.observe(document.body, { attributes: true });
+        });
+    </script>
+}

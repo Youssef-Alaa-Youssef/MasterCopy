@@ -1,4 +1,5 @@
-﻿using Factory.PL.Services.Monitor;
+﻿using Factory.DAL.Enums;
+using Factory.PL.Services.Monitor;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Factory.PL.Controllers
@@ -12,6 +13,7 @@ namespace Factory.PL.Controllers
             _monitoringService = monitoringService;
         }
 
+        [CheckPermission(Permissions.Read)]
         public IActionResult Monitoring()
         {
             var metrics = _monitoringService.GetSystemMetrics();

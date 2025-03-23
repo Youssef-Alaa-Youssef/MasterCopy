@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Models.Home;
 using Factory.PL.Services.UploadFile;
 using Factory.PL.ViewModels.Home;
@@ -9,7 +10,6 @@ using System.Security.Claims;
 
 namespace Factory.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class PartnersController : Controller
     {
         private readonly IFileService _fileService;
@@ -21,12 +21,14 @@ namespace Factory.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
             var partners = await _unitOfWork.GetRepository<Partner>().GetAllAsync();
             return View(partners);
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Details(int id)
         {
             var partner = await _unitOfWork.GetRepository<Partner>().GetByIdAsync(id);
@@ -37,6 +39,8 @@ namespace Factory.Controllers
 
             return View(partner);
         }
+
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(int id)
         {
             var partner = await _unitOfWork.GetRepository<Partner>().GetByIdAsync(id);
@@ -56,12 +60,14 @@ namespace Factory.Controllers
             return View(partnerViewModel);
         }
 
+        [CheckPermission(Permissions.Create)]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> Create(PartnerViewModel model)
         {
             if (ModelState.IsValid)
@@ -109,6 +115,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(int id, PartnerViewModel partnerViewModel)
         {
             if (id != partnerViewModel.Id)
@@ -170,7 +177,7 @@ namespace Factory.Controllers
             return View(partnerViewModel);
         }
 
-
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
             var partner = await _unitOfWork.GetRepository<Partner>().GetByIdAsync(id);
@@ -184,6 +191,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var partner = await _unitOfWork.GetRepository<Partner>().GetByIdAsync(id);

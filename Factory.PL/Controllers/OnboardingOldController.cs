@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Enums.HR;
 using Factory.DAL.Models.OnBoarding;
 using Factory.PL.ViewModels.OnBoarding;
@@ -15,7 +16,7 @@ namespace OnboardingSystem.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
             var onboardingProcesses = await _unitOfWork.GetRepository<OnboardingProcess>()
@@ -25,7 +26,7 @@ namespace OnboardingSystem.Controllers
 
             return View(onboardingProcesses);
         }
-
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -53,7 +54,7 @@ namespace OnboardingSystem.Controllers
 
             return View(viewModel);
         }
-
+        [CheckPermission(Permissions.Create)]
         public IActionResult Create()
         {
             return View();
@@ -61,6 +62,7 @@ namespace OnboardingSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> Create(OnboardingCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -82,7 +84,7 @@ namespace OnboardingSystem.Controllers
             }
             return View(viewModel);
         }
-
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -121,6 +123,7 @@ namespace OnboardingSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(int id, OnboardingEditViewModel viewModel)
         {
             if (id != viewModel.Id)
@@ -174,7 +177,7 @@ namespace OnboardingSystem.Controllers
             }
             return View(viewModel);
         }
-
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Preboarding(int? id)
         {
             if (id == null)
@@ -204,6 +207,7 @@ namespace OnboardingSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> UpdatePreboarding(PreboardingViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -234,7 +238,7 @@ namespace OnboardingSystem.Controllers
 
             return View("Preboarding", viewModel);
         }
-
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> ITSetup(int? id)
         {
             if (id == null)
@@ -264,6 +268,7 @@ namespace OnboardingSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> UpdateITSetup(ITSetupViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -295,7 +300,7 @@ namespace OnboardingSystem.Controllers
             return View("ITSetup", viewModel);
         }
 
-
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Training(int? id)
         {
             if (id == null)
@@ -325,6 +330,7 @@ namespace OnboardingSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> UpdateTraining(TrainingViewModel viewModel)
         {
             if (ModelState.IsValid)

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Dynamic;
 using Microsoft.Extensions.Caching.Memory;
+using Factory.DAL.Enums;
 
 namespace Factory.PL.Controllers
 {
@@ -36,6 +37,7 @@ namespace Factory.PL.Controllers
 
 
         [HttpGet]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Settings()
         {
             var existingSettings = await _unitOfWork.GetRepository<ExportImportSettings>().GetFirstOrDefaultAsync();
@@ -44,6 +46,7 @@ namespace Factory.PL.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> Settings(ExportImportSettings model)
         {
             if (!ModelState.IsValid)
@@ -74,6 +77,7 @@ namespace Factory.PL.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Export()
         {
             var existingSettings = await GetExportSettingsAsync();
@@ -93,6 +97,7 @@ namespace Factory.PL.Controllers
         }
 
         [HttpPost]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> ExportData<T>(string format, IEnumerable<T> data, List<string> selectedColumns)
         {
             var existingSettings = await GetExportSettingsAsync();
@@ -150,6 +155,7 @@ namespace Factory.PL.Controllers
             }
         }
         [HttpGet]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Import()
         {
             var existingSettings = await GetExportSettingsAsync();
@@ -168,6 +174,7 @@ namespace Factory.PL.Controllers
         }
 
         [HttpPost]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> ImportData<T>(IFormFile file, string format) where T : new()
         {
             var existingSettings = await GetExportSettingsAsync();
@@ -212,6 +219,7 @@ namespace Factory.PL.Controllers
         }
         
         [HttpPost]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> GenericExport(string modelType, string format, List<string> selectedColumns)
         {
             var existingSettings = await GetExportSettingsAsync();
@@ -258,6 +266,7 @@ namespace Factory.PL.Controllers
         }
         
         [HttpGet]
+        [CheckPermission(Permissions.Read)]
         public IActionResult GetColumns(string modelType)
         {
             var columns = modelType switch

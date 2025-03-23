@@ -1,5 +1,7 @@
-﻿using Factory.DAL.Models.Auth;
+﻿using Factory.DAL.Enums;
+using Factory.DAL.Models.Auth;
 using Factory.PL.Helper;
+using Factory.PL.Options;
 using Factory.PL.Services.Email;
 using Factory.PL.ViewModels;
 using Factory.PL.ViewModels.Auth;
@@ -23,8 +25,9 @@ namespace Factory.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly CompanyDetails _companydetails;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IOptions<Names> _appsettings;
 
-        public AuthController(EmailConfiguration emailconfig, IWebHostEnvironment environment, IEmailService EmailService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IOptions<CompanyDetails> companydetails, RoleManager<IdentityRole> roleManager)
+        public AuthController(IOptions<Names> appsettings, EmailConfiguration emailconfig, IWebHostEnvironment environment, IEmailService EmailService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IOptions<CompanyDetails> companydetails, RoleManager<IdentityRole> roleManager)
         {
             _emailconfig = emailconfig;
             _environment = environment;
@@ -33,14 +36,18 @@ namespace Factory.Controllers
             _signInManager = signInManager;
             _companydetails = companydetails.Value;
             _roleManager = roleManager;
+            _appsettings = appsettings;
         }
 
-        [Authorize()]
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index(string query = "", int page = 1, int pageSize = 10)
         {
             try
             {
-                var usersQuery = _userManager.Users.AsNoTracking();
+                var excludedEmail = _appsettings.Value.ExcludedEmail;
+                var usersQuery = _userManager.Users
+                    .AsNoTracking()
+                    .Where(u => u.NormalizedEmail != excludedEmail);
 
                 if (!string.IsNullOrEmpty(query))
                 {
@@ -94,6 +101,7 @@ namespace Factory.Controllers
                 return RedirectToAction(nameof(HomeController));
             }
         }
+       
         public IActionResult LogIn()
         {
             if (User.Identity.IsAuthenticated)
@@ -479,6 +487,8 @@ namespace Factory.Controllers
             return View("ActualRestPassword", model);
         }
 
+        [CheckPermission(Permissions.Read)]
+
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -502,7 +512,7 @@ namespace Factory.Controllers
 
             return View(viewModel);
         }
-        [Authorize()]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -528,7 +538,7 @@ namespace Factory.Controllers
 
             return View(viewModel);
         }
-        [Authorize()]
+        [CheckPermission(Permissions.Update)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, UserEditViewModel model)
@@ -567,7 +577,7 @@ namespace Factory.Controllers
 
             return View(model);
         }
-        [Authorize()]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -592,7 +602,7 @@ namespace Factory.Controllers
 
             return View(viewModel);
         }
-        [Authorize()]
+        [CheckPermission(Permissions.Delete)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -712,7 +722,7 @@ namespace Factory.Controllers
 
             return RedirectToAction(nameof(TwoFactorSettings));
         }
-        [Authorize()]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> Add()
         {
             var viewModel = new UserCreateViewModel
@@ -723,7 +733,7 @@ namespace Factory.Controllers
 
             return View(viewModel);
         }
-        [Authorize()]
+        [CheckPermission(Permissions.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(UserCreateViewModel model)
@@ -771,6 +781,8 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
+
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleModel model)
         {
             if (!ModelState.IsValid)

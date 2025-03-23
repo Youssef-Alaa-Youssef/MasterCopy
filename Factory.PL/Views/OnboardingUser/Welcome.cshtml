@@ -10,7 +10,7 @@
     <div class="swiper-wrapper">
         <!-- Slide 1 -->
         <div class="swiper-slide">
-            <img src="~/images/Machines/One.jpg" alt="Glass Machine 1" class="swiper-image" />
+            <img src="~/images/Machines/One.jpg" loading="lazy" alt="Glass Machine 1" class="swiper-image" />
             <div class="slide-overlay">
                 <h2 class="slide-title">Precision Glass Cutting</h2>
                 <p class="slide-description">Experience cutting-edge technology for flawless glass production.</p>
@@ -18,7 +18,7 @@
         </div>
         <!-- Slide 2 -->
         <div class="swiper-slide">
-            <img src="~/images/Machines/Two.jpg" alt="Glass Machine 2" class="swiper-image" />
+            <img src="~/images/Machines/Two.jpg" loading="lazy" alt="Glass Machine 2" class="swiper-image" />
             <div class="slide-overlay">
                 <h2 class="slide-title">Automated Glass Molding</h2>
                 <p class="slide-description">Innovative molding solutions for high-quality glass products.</p>
@@ -26,7 +26,7 @@
         </div>
         <!-- Slide 3 -->
         <div class="swiper-slide">
-            <img src="~/images/Machines/Three.jpg" alt="Glass Machine 3" class="swiper-image" />
+            <img src="~/images/Machines/Three.jpg" loading="lazy" alt="Glass Machine 3" class="swiper-image" />
             <div class="slide-overlay">
                 <h2 class="slide-title">Tempering Excellence</h2>
                 <p class="slide-description">Advanced tempering for durable and safe glass.</p>
@@ -34,7 +34,7 @@
         </div>
         <!-- Slide 4 -->
         <div class="swiper-slide">
-            <img src="~/images/Machines/Four.jpg" alt="Glass Machine 4" class="swiper-image" />
+            <img src="~/images/Machines/Four.jpg" loading="lazy" alt="Glass Machine 4" class="swiper-image" />
             <div class="slide-overlay">
                 <h2 class="slide-title">Eco-Friendly Solutions</h2>
                 <p class="slide-description">Sustainable glass manufacturing for a greener future.</p>
@@ -42,7 +42,7 @@
         </div>
         <!-- Slide 5 -->
         <div class="swiper-slide">
-            <img src="~/images/Machines/Five.jpg" alt="Glass Machine 5" class="swiper-image" />
+            <img src="~/images/Machines/Five.jpg" loading="lazy" alt="Glass Machine 5" class="swiper-image" />
             <div class="slide-overlay">
                 <h2 class="slide-title">Custom Glass Designs</h2>
                 <p class="slide-description">Tailored solutions for unique glass applications.</p>
@@ -82,7 +82,7 @@
             <div class="tour-slide active animate__animated animate__fadeIn" id="slide-1">
                 <div class="row g-0 align-items-center py-4 px-3">
                     <div class="col-md-6 mb-4 mb-md-0">
-                        <img src="~/assets/images/login.png" alt="Dashboard Overview" class="img-fluid rounded animate__animated animate__zoomIn shadow-sm" />
+                        <img src="~/assets/images/login.png" loading="lazy" alt="Dashboard Overview" class="img-fluid rounded animate__animated animate__zoomIn shadow-sm" />
                     </div>
                     <div class="col-md-6 ps-md-5">
                         <h2 class="fw-bold mb-4 animate__animated animate__fadeInRight">Your Personalized Dashboard</h2>
@@ -210,7 +210,8 @@
         height: 100vh; 
         margin: 0;
         padding: 0;
-        overflow: hidden;
+        overflow: hidden; 
+        box-sizing: border-box; 
     }
 
     .swiper-slide {

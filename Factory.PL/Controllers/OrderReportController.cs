@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Models.OrderList;
 using Factory.PL.ViewModels.OrderList;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace Factory.PL.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
             var orders = await _unitOfWork.GetRepository<Order>().GetAllAsync();

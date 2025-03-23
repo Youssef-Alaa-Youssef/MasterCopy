@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Models.Auth;
 using Factory.DAL.Models.Support;
 using Factory.DAL.ViewModels.Support;
@@ -24,7 +25,7 @@ namespace Factory.Controllers
         }
 
         #region Dashboard & Overview
-
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
             try
@@ -52,6 +53,7 @@ namespace Factory.Controllers
 
         #region Ticket Management
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Tickets()
         {
             try
@@ -69,6 +71,7 @@ namespace Factory.Controllers
             }
         }
 
+        [CheckPermission(Permissions.Read)]
         public IActionResult CreateTicket()
         {
             return View();
@@ -76,6 +79,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> CreateTicket(SupportTicketViewModel ticketViewModel)
         {
             if (!ModelState.IsValid)
@@ -118,6 +122,7 @@ namespace Factory.Controllers
 
         #region Ticket Chat & Responses
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Chat(int id)
         {
             try
@@ -156,6 +161,7 @@ namespace Factory.Controllers
             }
         }
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> GetResponses(int id)
         {
             var responses = await _unitOfWork.GetRepository<SupportResponse>()
@@ -163,6 +169,8 @@ namespace Factory.Controllers
 
             return PartialView("_ResponsesPartial", responses);
         }
+
+        [CheckPermission(Permissions.Create)]
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateResponse(SupportResponseViewModel model)
@@ -219,6 +227,7 @@ namespace Factory.Controllers
 
         #region FAQ Management
 
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> FAQ()
         {
             try
@@ -234,6 +243,7 @@ namespace Factory.Controllers
             }
         }
 
+        [CheckPermission(Permissions.Create)]
         public IActionResult CreateFAQ()
         {
             return View();
@@ -241,6 +251,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> CreateFAQ(FAQSViewModel faqViewModel)
         {
             if (!ModelState.IsValid)
@@ -275,6 +286,7 @@ namespace Factory.Controllers
             }
         }
 
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> EditFAQ(int id)
         {
             try
@@ -306,6 +318,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> EditFAQ(int id, FAQSViewModel faqViewModel)
         {
             if (id != faqViewModel.Id)
@@ -346,7 +359,7 @@ namespace Factory.Controllers
             }
         }
 
-        [Authorize(Policy = "CustomerSupport_Delete")]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> DeleteFAQ(int id)
         {
             try
@@ -370,7 +383,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "CustomerSupport_Delete")]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> DeleteFAQConfirmed(int id)
         {
             try

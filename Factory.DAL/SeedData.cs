@@ -23,7 +23,8 @@ namespace Factory.DAL
                 new Module { Id = 7, Name = "Support Management", IconClass = "bi-headset", IsActive = true },
                 new Module { Id = 8, Name = "Reports", IconClass = "bi-file-earmark-bar-graph", IsActive = true },
                 new Module { Id = 9, Name = "Settings", IconClass = "bi-gear", IsActive = true },
-                new Module { Id = 10, Name = "HR", IconClass = "bi-people", IsActive = true }
+                new Module { Id = 10, Name = "HR", IconClass = "bi-people", IsActive = true },
+                new Module { Id = 11, Name = "Notifications", IconClass = "bi-bell", IsActive = true }
             );
         }
 
@@ -55,7 +56,11 @@ namespace Factory.DAL
                 new SubModule { Id = 23, Name = "Employee Position", IconClass = "bi-briefcase", ModuleId = 10 },
                 new SubModule { Id = 24, Name = "Department", IconClass = "bi-building", ModuleId = 10 },
                 new SubModule { Id = 25, Name = "Leave Request", IconClass = "bi-calendar-check", ModuleId = 10 },
-                new SubModule { Id = 26, Name = "Employees", IconClass = "bi-people", ModuleId = 10 });
+                new SubModule { Id = 26, Name = "Employees", IconClass = "bi-people", ModuleId = 10 },
+                new SubModule { Id = 27, Name = "Notification Service", IconClass = "bi-megaphone", ModuleId = 11 },
+                new SubModule { Id = 28, Name = "Notification Settings", IconClass = "bi-gear", ModuleId = 11 }
+              
+               );
         }
 
         private static void SeedPages(ModelBuilder modelBuilder)
@@ -135,8 +140,11 @@ namespace Factory.DAL
                 new Page { Id = 72, Name = "Leave Requests", Action = "Index", Controller = "LeaveRequest", IsActive = true, SubmoduleId = 25, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 73, Name = "Submit Leave Request", Action = "Create", Controller = "LeaveRequest", IsActive = true, SubmoduleId = 25, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 74, Name = "Employee List", Action = "Index", Controller = "Employee", IsActive = true, SubmoduleId = 26, SecureUrlKey = GenerateSecureKey() },
-                new Page { Id = 75, Name = "Add Employee", Action = "Create", Controller = "Employee", IsActive = true, SubmoduleId = 26, SecureUrlKey = GenerateSecureKey() }
-
+                new Page { Id = 75, Name = "Add Employee", Action = "Create", Controller = "Employee", IsActive = true, SubmoduleId = 26, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 76, Name = "Notification List", Action = "Index", Controller = "Notification", IsActive = true, SubmoduleId = 27, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 77, Name = "Create Notification", Action = "Add", Controller = "Notification", IsActive = true, SubmoduleId = 27, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 78, Name = "Notification Settings", Action = "Index", Controller = "Notification", IsActive = true, SubmoduleId = 28, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 79, Name = "Edit Settings", Action = "Edit", Controller = "Notification", IsActive = true, SubmoduleId = 28, SecureUrlKey = GenerateSecureKey() }
                 );
         }
         private static string GenerateSecureKey()

@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "User Roles";
     Layout = "_LogedUser";
+    ViewData["YoutubeUrl"] = "lbYDCc9_osI";
 }
 
 <div class="container-fluid card  shadow-sm p-3">
@@ -17,9 +18,11 @@
             <i class="bi bi-eye me-2"></i> All Roles
         </a>
     </div>
-    <table class="table table-striped text-center">
+    <div class="table-responsive-lg">
+        <table class="table table-striped text-center">
         <thead>
             <tr>
+                <th style="width: 5%;">#</th>
                 <th>User Name</th>
                 <th>Email</th>
                 <th>Roles</th>
@@ -27,9 +30,13 @@
             </tr>
         </thead>
         <tbody>
+            @{
+                int counter = 1;
+            }
             @foreach (var user in Model)
             {
                 <tr>
+                    <td>@counter</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
                     <td>
@@ -50,8 +57,10 @@
                         </a>
                     </td>
                 </tr>
+                counter++;
             }
         </tbody>
     </table>
+    </div>
 </div>
 

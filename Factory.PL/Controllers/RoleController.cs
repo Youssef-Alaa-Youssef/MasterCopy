@@ -1,60 +1,84 @@
-﻿using Factory.DAL.Models.Auth;
+﻿using Factory.DAL.Enums;
+using Factory.DAL.Models.Auth;
+using Factory.PL.Options;
 using Factory.PL.ViewModels.Auth;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Factory.Controllers
 {
-    //[Authorize(Policy = "Role Management_Create")]
-    //[Authorize(Policy = "Role Management_Update")]
-    [Authorize]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger<RoleController> _logger;
+        private readonly IOptions<Names> _appsettings;
 
-        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<RoleController> logger,IOptions<Names> appsettings)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
+            _appsettings = appsettings;
         }
+
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
-            var users = await _userManager.Users.ToListAsync();
-            var userViewModels = new List<ApplicationUserViewModel>();
-
-            foreach (var user in users)
+            try
             {
-                var roles = await _userManager.GetRolesAsync(user);
-                var userModel = new ApplicationUserViewModel
+                var excludedEmail = _appsettings.Value.ExcludedEmail;
+                var users = await _userManager.Users
+                    .Where(u => u.NormalizedEmail != excludedEmail)
+                    .ToListAsync();
+
+                var userViewModels = new List<ApplicationUserViewModel>();
+
+                foreach (var user in users)
                 {
-                    UserId = user.Id,
-                    UserName = user.UserName ?? string.Empty,
-                    Email = user.Email ?? string.Empty,
-                    Roles = roles.ToList()
-                };
-                userViewModels.Add(userModel);
+                    var roles = await _userManager.GetRolesAsync(user);
+
+                    var filteredRoles = roles.Where(role => role != nameof(UserRole.SuperAdmin)).ToList();
+
+                    var userModel = new ApplicationUserViewModel
+                    {
+                        UserId = user.Id,
+                        UserName = user.UserName ?? string.Empty,
+                        Email = user.Email ?? string.Empty,
+                        Roles = filteredRoles
+                    };
+
+                    userViewModels.Add(userModel);
+                }
+
+                ViewBag.Roles = _roleManager.Roles
+                    .Where(r => r.Name != nameof(UserRole.SuperAdmin)) 
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.Name,
+                        Text = r.Name
+                    })
+                    .ToList();
+
+                return View(userViewModels);
             }
-
-            ViewBag.Roles = _roleManager.Roles
-                .Select(r => new SelectListItem
-                {
-                    Value = r.Name,
-                    Text = r.Name
-                })
-                .ToList();
-
-            return View(userViewModels);
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error occurred while fetching users or roles: {ex.Message}");
+                return View("Error", new { message = "An error occurred while processing your request." });
+            }
         }
 
+
+        //[CheckPermission(Permissions.Read)]
         public async Task<IActionResult> AllRoles(string query)
         {
-            IQueryable<IdentityRole> rolesQuery = _roleManager.Roles;
+            IQueryable<IdentityRole> rolesQuery = _roleManager.Roles.Where(r => r.Name != nameof(UserRole.SuperAdmin));
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -68,6 +92,7 @@ namespace Factory.Controllers
         }
 
         [HttpGet]
+        //[CheckPermission(Permissions.Read)]
         public async Task<IActionResult> AssignRoles(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -83,7 +108,7 @@ namespace Factory.Controllers
                 Roles = (await _userManager.GetRolesAsync(user)).ToList()
             };
 
-            ViewBag.Roles = _roleManager.Roles.Select(r => new SelectListItem
+            ViewBag.Roles = _roleManager.Roles.Where(r => r.Name != nameof(UserRole.SuperAdmin)).Select(r => new SelectListItem
             {
                 Value = r.Name,
                 Text = r.Name
@@ -94,6 +119,7 @@ namespace Factory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> AssignRoles(ApplicationUserViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.UserId);
@@ -135,14 +161,15 @@ namespace Factory.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permissions.Create)]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST action to create a new role
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> Create(ApplicationRoles role)
         {
             if (ModelState.IsValid)
@@ -165,7 +192,7 @@ namespace Factory.Controllers
             return View(role);
         }
 
-        // GET action to edit a role
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(string id)
         {
             if (string.IsNullOrEmpty(id)) return NotFound();
@@ -182,9 +209,9 @@ namespace Factory.Controllers
             return View(roleViewModel);
         }
 
-        // POST action to update a role
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Update)]
         public async Task<IActionResult> Edit(string id, ApplicationRolesViewModel role)
         {
             if (id != role.Id) return NotFound();
@@ -214,7 +241,7 @@ namespace Factory.Controllers
             return View(role);
         }
 
-        // GET action to delete a role
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id)) return NotFound();
@@ -225,9 +252,9 @@ namespace Factory.Controllers
             return View(role);
         }
 
-        // POST action to confirm and delete a role
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Delete)]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);

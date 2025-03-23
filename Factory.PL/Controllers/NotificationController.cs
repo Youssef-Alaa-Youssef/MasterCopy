@@ -9,10 +9,10 @@ using Factory.PL.Hubs;
 using System.Security.Claims;
 using Factory.PL.ViewModels.Notification;
 using Microsoft.AspNetCore.Authorization;
+using Factory.DAL.Enums;
 
 namespace Factory.PL.Controllers
 {
-    [Authorize]
     public class NotificationController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ namespace Factory.PL.Controllers
             _unitOfWork = unitOfWork;
             _hubContext = hubContext;
         }
-
+        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
             var notifications = (await _unitOfWork.GetRepository<Notification>()
@@ -35,6 +35,7 @@ namespace Factory.PL.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> Add()
         {
             var users = await _unitOfWork.GetRepository<ApplicationUser>().GetAllAsync();
@@ -45,6 +46,7 @@ namespace Factory.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> Add(AddNotificationViewModel model)
         {
             if (ModelState.IsValid && model.SelectedUserIds != null && model.SelectedUserIds.Any())
@@ -100,6 +102,7 @@ namespace Factory.PL.Controllers
             return View(model);
         }
         [HttpGet("api/notification/unread")]
+        [Authorize]
         public async Task<IActionResult> GetUnreadNotifications()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -127,6 +130,7 @@ namespace Factory.PL.Controllers
         }
 
         [HttpPost("api/notification/MarkAsRead/{id}")]
+        [Authorize]
         public async Task<IActionResult> MarkAsRead(int id)
         {
             var notification = await _unitOfWork.GetRepository<Notification>().GetByIdAsync(id);
@@ -140,6 +144,9 @@ namespace Factory.PL.Controllers
 
             return Ok();
         }
+
+        //[CheckPermission(Permissions.Read)]
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var notification = await _unitOfWork.GetRepository<Notification>()
@@ -154,6 +161,8 @@ namespace Factory.PL.Controllers
             return View(notification);
         }
 
+        //[CheckPermission(Permissions.Read)]
+        [Authorize]
         public async Task<IActionResult> AllNotifications()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
