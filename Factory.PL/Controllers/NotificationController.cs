@@ -26,11 +26,10 @@ namespace Factory.PL.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var notifications = await _unitOfWork.GetRepository<Notification>()
-                .Query()
-                .Where(n => !n.IsRead)
+            var notifications = (await _unitOfWork.GetRepository<Notification>()
+                .GetAllAsync())
                 .OrderByDescending(n => n.CreatedAt)
-                .ToListAsync();
+                .ToList();
 
             return View(notifications);
         }

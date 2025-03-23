@@ -28,7 +28,6 @@ public static class MiddlewareConfiguration
             SupportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("ar-SA") }, 
             SupportedUICultures = new[] { new CultureInfo("en-US"), new CultureInfo("ar-SA") }
         });
-        app.UseStaticFiles();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseSecureUrlMapping();
