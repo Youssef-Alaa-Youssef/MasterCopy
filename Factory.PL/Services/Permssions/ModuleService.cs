@@ -38,6 +38,10 @@ namespace Factory.PL.Services.Permissions
         public void InvalidateCacheForUser(string userId)
         {
             var cacheKey = $"{CacheKeyPrefix}{userId}";
+            if (_memoryCache.TryGetValue(cacheKey, out _))
+            {
+                _memoryCache.Remove(cacheKey);
+            }
             _memoryCache.Remove(cacheKey);
         }
     }

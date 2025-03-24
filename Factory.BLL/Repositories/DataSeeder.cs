@@ -94,7 +94,7 @@ namespace Factory.DAL.Configurations
             var allSubModules = await subModuleRepository.GetAllAsync();
 
             var pageRepository = unitOfWork.GetRepository<Page>();
-            var allPages = await pageRepository.GetAllAsync();
+            var allPages = (await pageRepository.GetAllAsync());
 
             var permissionRepository = unitOfWork.GetRepository<PermissionTyepe>();
             var allPermissions = await permissionRepository.GetAllAsync();

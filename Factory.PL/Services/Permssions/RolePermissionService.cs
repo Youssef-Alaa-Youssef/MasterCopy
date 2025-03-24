@@ -1,4 +1,5 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.DAL.Enums;
 using Factory.DAL.Models.Permission;
 using Factory.PL.Services.Permissions;
 using Factory.PL.Services.Permssions;
@@ -130,8 +131,17 @@ namespace Factory.DAL.Services
             }
 
             await _context.SaveChangesAsync();
+            
+            var roleUser = await _context.GetRepository<IdentityUserRole<string>>()
+                .GetFirstOrDefaultAsync(ur => ur.RoleId == model.RoleId);
+            var userId = string.Empty;
+            if (roleUser != null)
+            {
+                userId = roleUser.UserId;
+            }
+            
             var moduleService = new ModuleService(_context, _memoryCache);
-            moduleService.InvalidateCacheForUser(model.RoleId);
+            moduleService.InvalidateCacheForUser(userId);
 
         }
         public async Task<bool> CheckUserPermission(ClaimsPrincipal user, int pageId, int permissionId)

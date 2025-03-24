@@ -14,6 +14,9 @@ namespace Factory.DAL.Models.Auth
         public bool HasCompletedTour { get; set; } = false;
         public DateTime AccountCreatedDate { get; set; } = DateTime.UtcNow;
         //public virtual UserPreferences UserPreferences { get; set; }
+        public string? AuthenticatorKey { get; set; }
+        public string? RecoveryCodes { get; set; }
+
 
     }
 

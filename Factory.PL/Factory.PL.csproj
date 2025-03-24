@@ -25,6 +25,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <PackageReference Include="MimeKit" />
     <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="QRCoder" />
     <PackageReference Include="QuestPDF" />
     <PackageReference Include="Serilog.AspNetCore" />
     <PackageReference Include="Serilog.Enrichers.CorrelationId" />

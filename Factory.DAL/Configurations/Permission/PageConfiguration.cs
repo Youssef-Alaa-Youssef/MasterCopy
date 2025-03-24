@@ -23,8 +23,7 @@ namespace Factory.DAL.Configurations.Permission
                 .HasMaxLength(100);
 
             builder.Property(p => p.IsActive)
-                .IsRequired()
-                .HasDefaultValue(true);
+                .IsRequired();
 
             builder.HasOne(p => p.Submodule)
                 .WithMany(s => s.Pages)

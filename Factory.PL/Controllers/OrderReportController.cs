@@ -39,10 +39,10 @@ namespace Factory.PL.Controllers
                 JobNum = o.JobNo,
             }).ToList();
 
-            var monthlyDeliveries = new List<int> { 12, 19, 3, 5, 2, 3, 7, 8, 9, 10, 11, 12 }; // Replace with actual data
-            var totalSQMData = orders.Select(o => o.TotalSQM).ToList(); // Total SQM per order
-            var totalLMData = orders.Select(o => o.TotalLM).ToList(); // Total LM per order
-            var totalItemsData = orders.Select(o => o.Items.Count).ToList(); // Total Items per order
+            //var monthlyDeliveries = new List<int> { 12, 19, 3, 5, 2, 3, 7, 8, 9, 10, 11, 12 }; // Replace with actual data
+            var totalSQMData = orders.Select(o => o.TotalSQM).ToList(); 
+            var totalLMData = orders.Select(o => o.TotalLM).ToList(); 
+            var totalItemsData = orders.Select(o => o.Items.Count).ToList(); 
 
             var orderStatusDistribution = new Dictionary<string, int>
         {
@@ -51,25 +51,25 @@ namespace Factory.PL.Controllers
             { "Cancelled", cancelledOrders }
         };
 
-            var topCustomers = orders
-                .GroupBy(o => o.CustomerName)
-                .OrderByDescending(g => g.Count())
-                .Take(5)
-                .ToDictionary(g => g.Key, g => g.Count());
+            //var topCustomers = orders
+            //    .GroupBy(o => o.CustomerName)
+            //    .OrderByDescending(g => g.Count())
+            //    .Take(5)
+            //    .ToDictionary(g => g.Key, g => g.Count());
 
             var viewModel = new OrderReportViewModel
             {
                 TotalOrders = totalOrders,
-                DeliveredOrders = deliveredOrders,
-                PendingOrders = pendingOrders,
-                CancelledOrders = cancelledOrders,
+                //DeliveredOrders = deliveredOrders,
+                //PendingOrders = pendingOrders,
+                //CancelledOrders = cancelledOrders,
                 Orders = orderDetails,
-                MonthlyDeliveries = monthlyDeliveries,
+                //MonthlyDeliveries = monthlyDeliveries,
                 TotalSQMData = totalSQMData,
                 TotalLMData = totalLMData,
                 TotalItemsData = totalItemsData,
                 OrderStatusDistribution = orderStatusDistribution,
-                TopCustomers = topCustomers,
+                //TopCustomers = topCustomers,
             };
 
             return View(viewModel);

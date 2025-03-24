@@ -10,7 +10,7 @@
         "projectUniqueName": "F:\\MasterCopy\\Factory.BLL\\Factory.BLL.csproj",
         "projectName": "Factory.BLL",
         "projectPath": "F:\\MasterCopy\\Factory.BLL\\Factory.BLL.csproj",
-        "packagesPath": "C:\\Users\\yalaa\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\LastOS\\.nuget\\packages\\",
         "outputPath": "F:\\MasterCopy\\Factory.BLL\\obj\\",
         "projectStyle": "PackageReference",
         "centralPackageVersionsManagementEnabled": true,
@@ -18,7 +18,7 @@
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\yalaa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LastOS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -88,6 +88,7 @@
             "MimeKit": "4.7.1",
             "Moq": "4.20.72",
             "Newtonsoft.Json": "13.0.3",
+            "QRCoder": "1.6.0",
             "QuestPDF": "2025.1.3",
             "Serilog.AspNetCore": "9.0.0",
             "Serilog.Enrichers.CorrelationId": "3.0.1",
@@ -118,7 +119,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.104/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -128,7 +129,7 @@
         "projectUniqueName": "F:\\MasterCopy\\Factory.DAL\\Factory.DAL.csproj",
         "projectName": "Factory.DAL",
         "projectPath": "F:\\MasterCopy\\Factory.DAL\\Factory.DAL.csproj",
-        "packagesPath": "C:\\Users\\yalaa\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\LastOS\\.nuget\\packages\\",
         "outputPath": "F:\\MasterCopy\\Factory.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "centralPackageVersionsManagementEnabled": true,
@@ -136,7 +137,7 @@
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\yalaa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LastOS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -231,6 +232,7 @@
             "MimeKit": "4.7.1",
             "Moq": "4.20.72",
             "Newtonsoft.Json": "13.0.3",
+            "QRCoder": "1.6.0",
             "QuestPDF": "2025.1.3",
             "Serilog.AspNetCore": "9.0.0",
             "Serilog.Enrichers.CorrelationId": "3.0.1",
@@ -261,7 +263,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.104/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -271,7 +273,7 @@
         "projectUniqueName": "F:\\MasterCopy\\Factory.PL\\Factory.PL.csproj",
         "projectName": "Factory.PL",
         "projectPath": "F:\\MasterCopy\\Factory.PL\\Factory.PL.csproj",
-        "packagesPath": "C:\\Users\\yalaa\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\LastOS\\.nuget\\packages\\",
         "outputPath": "F:\\MasterCopy\\Factory.PL\\obj\\",
         "projectStyle": "PackageReference",
         "centralPackageVersionsManagementEnabled": true,
@@ -279,7 +281,7 @@
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\yalaa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LastOS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -391,6 +393,11 @@
               "version": "[13.0.3, )",
               "versionCentrallyManaged": true
             },
+            "QRCoder": {
+              "target": "Package",
+              "version": "[1.6.0, )",
+              "versionCentrallyManaged": true
+            },
             "QuestPDF": {
               "target": "Package",
               "version": "[2025.1.3, )",
@@ -464,6 +471,7 @@
             "MimeKit": "4.7.1",
             "Moq": "4.20.72",
             "Newtonsoft.Json": "13.0.3",
+            "QRCoder": "1.6.0",
             "QuestPDF": "2025.1.3",
             "Serilog.AspNetCore": "9.0.0",
             "Serilog.Enrichers.CorrelationId": "3.0.1",
@@ -497,7 +505,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.104/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

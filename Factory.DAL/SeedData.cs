@@ -78,8 +78,8 @@ namespace Factory.DAL
                 new Page { Id = 10, Name = "Add Role", Action = "Create", Controller = "Role", IsActive = true, SubmoduleId = 3, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 11, Name = "Warehouse List", Action = "Index", Controller = "Warehouse", IsActive = true, SubmoduleId = 5, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 12, Name = "Add Warehouse", Action = "Create", Controller = "Warehouse", IsActive = true, SubmoduleId = 5, SecureUrlKey = GenerateSecureKey() },
-                new Page { Id = 13, Name = "Item List", Action = "List", Controller = "Item", IsActive = true, SubmoduleId = 6 , SecureUrlKey = GenerateSecureKey() },
-                new Page { Id = 14, Name = "Add Item", Action = "AddItem", Controller = "Item", IsActive = true, SubmoduleId = 6, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 13, Name = "Item List", Action = "Index", Controller = "Items", IsActive = true, SubmoduleId = 6 , SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 14, Name = "Add Item", Action = "AddItem", Controller = "Items", IsActive = true, SubmoduleId = 6, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 15, Name = "Create Order", Action = "Create", Controller = "Order", IsActive = true, SubmoduleId = 7, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 16, Name = "Order List", Action = "Index", Controller = "Order", IsActive = true, SubmoduleId = 8, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 17, Name = "General Settings", Action = "General", Controller = "Settings", IsActive = true, SubmoduleId = 17, SecureUrlKey = GenerateSecureKey() },
@@ -144,7 +144,12 @@ namespace Factory.DAL
                 new Page { Id = 76, Name = "Notification List", Action = "Index", Controller = "Notification", IsActive = true, SubmoduleId = 27, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 77, Name = "Create Notification", Action = "Add", Controller = "Notification", IsActive = true, SubmoduleId = 27, SecureUrlKey = GenerateSecureKey() },
                 new Page { Id = 78, Name = "Notification Settings", Action = "Index", Controller = "Notification", IsActive = true, SubmoduleId = 28, SecureUrlKey = GenerateSecureKey() },
-                new Page { Id = 79, Name = "Edit Settings", Action = "Edit", Controller = "Notification", IsActive = true, SubmoduleId = 28, SecureUrlKey = GenerateSecureKey() }
+                new Page { Id = 79, Name = "Edit Settings", Action = "Edit", Controller = "Notification", IsActive = true, SubmoduleId = 28, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 80, Name = "Order Details", Action = "Details", Controller = "Order", IsActive = false, SubmoduleId = 7, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 81, Name = "Order Optimization", Action = "Optimization", Controller = "Order", IsActive = false, SubmoduleId = 7, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 82, Name = "Order GlassLabel", Action = "GlassLabel", Controller = "Order", IsActive = false, SubmoduleId = 7, SecureUrlKey = GenerateSecureKey() },
+                new Page { Id = 83, Name = "Order Delete", Action = "Delete", Controller = "Order", IsActive = false, SubmoduleId = 7, SecureUrlKey = GenerateSecureKey() }
+
                 );
         }
         private static string GenerateSecureKey()

@@ -1,0 +1,65 @@
+﻿@model Factory.PL.ViewModels.Auth.LoginWith2faViewModel
+@{
+    ViewData["Title"] = "Two-factor authentication";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm mt-2 p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Two-Step Verification</h3>
+            </div>
+            <div class="card-body">
+                <p>For added security, please enter the verification code from your authenticator app.</p>
+
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["Error"]</div>
+                }
+
+                <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+                    <input asp-for="RememberMe" type="hidden" />
+                    <input asp-for="ReturnUrl" type="hidden" />
+                    <input asp-for="TwoFactorProvider" type="hidden" />
+
+                    <div class="form-group">
+                        <label asp-for="TwoFactorCode" class="control-label">Verification Code</label>
+                        <input asp-for="TwoFactorCode" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="TwoFactorCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <input asp-for="RememberMachine" class="form-check-input" />
+                        <label asp-for="RememberMachine" class="form-check-label">Remember this device</label>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                    </div>
+
+                    <div class="text-center">
+                        @if (Model.TwoFactorProvider == "Authenticator")
+                        {
+                            <p>Having trouble? <a asp-action="LoginWithRecoveryCode">Use a recovery code</a></p>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("TwoFactorCode").focus();
+        });
+    </script>
+}

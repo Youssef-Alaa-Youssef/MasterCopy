@@ -210,14 +210,12 @@ namespace Factory.BLL.Repositories
 
         public async Task<List<Module>> GetModulesForUserAsync(string userId)
         {
-            // Fetch the roles assigned to the user
             var userRoles = await _context.Set<IdentityUserRole<string>>()
                 .Where(ur => ur.UserId == userId)
                 .AsNoTracking()
                 .Select(ur => ur.RoleId)
                 .ToListAsync();
 
-            // Fetch modules that the user has permissions for
             var modules = await _context.Set<RolePermission>()
                 .Where(rp => userRoles.Contains(rp.RoleId))
                 .AsNoTracking()
@@ -225,15 +223,12 @@ namespace Factory.BLL.Repositories
                 .Distinct()
                 .ToListAsync();
 
-            // Load submodules and pages for each module
             foreach (var module in modules)
             {
-                // Load submodules for the module
                 await _context.Entry(module)
                     .Collection(m => m.SubModules)
                     .LoadAsync();
 
-                // Filter submodules to include only those the user has permissions for
                 var allowedSubModules = await _context.Set<RolePermission>()
                     .Where(rp => userRoles.Contains(rp.RoleId) && rp.ModuleId == module.Id)
                     .Select(rp => rp.SubModule)
@@ -251,6 +246,7 @@ namespace Factory.BLL.Repositories
                     var allowedPages = await _context.Set<RolePermission>()
                         .Where(rp => userRoles.Contains(rp.RoleId) && rp.SubModuleId == subModule.Id)
                         .Select(rp => rp.Page)
+                        .Where(page => page.IsActive) 
                         .Distinct()
                         .ToListAsync();
 
