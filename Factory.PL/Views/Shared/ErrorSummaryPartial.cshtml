@@ -3,58 +3,59 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 @{
     var modelState = ViewData.ModelState;
-    var culture = System.Globalization.CultureInfo.CurrentCulture; 
+    var culture = System.Globalization.CultureInfo.CurrentCulture;
 }
-@section Scripts {
- <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            toastr.options = {
-                positionClass: '@(culture.TextInfo.IsRightToLeft ? "toast-top-left" : "toast-top-right")', // Position based on culture
-                closeButton: true, 
-                timeOut: 3000, 
-                extendedTimeOut: 1000, 
-                preventDuplicates: true, 
-                progressBar: true, 
-                newestOnTop: true, 
-                showEasing: 'swing', 
-                hideEasing: 'linear', 
-                showMethod: 'fadeIn', 
-                hideMethod: 'fadeOut', 
-                tapToDismiss: true, 
-                rtl: @(culture.TextInfo.IsRightToLeft ? "true" : "false"), 
-            };
 
-            function showToast(message, type) {
-                toastr[type](message);
-            }
+@section Scripts {
+    <script>
+        $(function() { 
+            toastr.options = {
+                positionClass: '@(culture.TextInfo.IsRightToLeft ? "toast-top-left" : "toast-top-right")',
+                closeButton: true,
+                timeOut: 3000,
+                extendedTimeOut: 1000,
+                preventDuplicates: true,
+                progressBar: true,
+                newestOnTop: true,
+                showEasing: 'swing',
+                hideEasing: 'linear',
+                showMethod: 'fadeIn',
+                hideMethod: 'fadeOut',
+                tapToDismiss: true,
+                rtl: @(culture.TextInfo.IsRightToLeft ? "true" : "false")
+            };
 
         @if (modelState != null && !modelState.IsValid)
         {
-            var errorMessages = string.Join("<br/>", modelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            var errorMessages = string.Join("<br/>",
+                modelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage));
+
             if (!string.IsNullOrEmpty(errorMessages))
             {
-                <text>showToast('@Html.Raw(errorMessages)', 'error');</text>
+                <text>toastr.error('@Html.Raw(errorMessages)');</text>
             }
         }
 
         @if (TempData["Error"] != null)
         {
-            <text>showToast('@TempData["Error"]', 'error');</text>
+            <text>toastr.error('@Html.Raw(TempData["Error"])');</text>
         }
 
         @if (TempData["Success"] != null)
         {
-            <text>showToast('@TempData["Success"]', 'success');</text>
+            <text>toastr.success('@Html.Raw(TempData["Success"])');</text>
         }
 
         @if (TempData["Info"] != null)
         {
-            <text>showToast('@TempData["Info"]', 'info');</text>
+            <text>toastr.info('@Html.Raw(TempData["Info"])');</text>
         }
 
         @if (TempData["Warning"] != null)
         {
-            <text>showToast('@TempData["Warning"]', 'warning');</text>
+            <text>toastr.warning('@Html.Raw(TempData["Warning"])');</text>
         }
         });
     </script>

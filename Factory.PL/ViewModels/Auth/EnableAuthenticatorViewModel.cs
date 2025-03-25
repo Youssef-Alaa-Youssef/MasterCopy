@@ -9,6 +9,7 @@ namespace Factory.PL.ViewModels.Auth
         [DataType(DataType.Text)]
         [Display(Name = "Verification Code")]
         public string Code { get; set; }
+
     }
 
 }

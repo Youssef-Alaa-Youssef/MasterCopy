@@ -72,9 +72,53 @@ public class JsonStringLocalizer : IStringLocalizer
 
     private string GetResourceFile(CultureInfo culture)
     {
-        var controllerName = _baseName.Split('.').Last(); 
-        var resourceName = $"Controllers/{controllerName}.{culture.Name}.json";
-        return Path.Combine(_resourcesPath, resourceName);
+        if (culture == null)
+        {
+            throw new ArgumentNullException(nameof(culture));
+        }
+
+        if (string.IsNullOrWhiteSpace(_baseName))
+        {
+            throw new InvalidOperationException("Base name cannot be null or empty");
+        }
+
+        if (string.IsNullOrWhiteSpace(_resourcesPath))
+        {
+            throw new InvalidOperationException("Resources path cannot be null or empty");
+        }
+
+        var parts = _baseName.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+
+        if (parts.Length < 2)
+        {
+            throw new InvalidOperationException($"Invalid base name format: {_baseName}");
+        }
+
+        var controllerIndex = Array.FindIndex(parts, x =>
+            string.Equals(x, "Views", StringComparison.OrdinalIgnoreCase)) + 1;
+
+        if (controllerIndex <= 0 || controllerIndex >= parts.Length)
+        {
+            throw new InvalidOperationException($"Could not determine controller from base name: {_baseName}");
+        }
+
+        var controllerName = parts[controllerIndex];
+        var sanitizedControllerName = Path.GetFileName(controllerName); 
+
+        if (string.IsNullOrWhiteSpace(sanitizedControllerName))
+        {
+            throw new InvalidOperationException("Invalid controller name");
+        }
+
+        var resourceName = $"Controllers/{sanitizedControllerName}.{culture.Name}.json";
+        var fullPath = Path.Combine(_resourcesPath, resourceName);
+
+        if (!Path.GetFullPath(fullPath).StartsWith(Path.GetFullPath(_resourcesPath)))
+        {
+            throw new InvalidOperationException("Invalid resource path generated");
+        }
+
+        return fullPath;
     }
 
 }

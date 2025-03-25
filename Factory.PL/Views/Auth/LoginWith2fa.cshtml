@@ -1,54 +1,87 @@
 ﻿@model Factory.PL.ViewModels.Auth.LoginWith2faViewModel
 @{
-    ViewData["Title"] = "Two-factor authentication";
-    Layout = "_LogedUser";
+    ViewData["Title"] = "Two-Factor Authentication";
+    Layout = "_AuthLayout";
 }
 
-<div class="container-fluid card shadow-sm mt-2 p-3">
-    @await Html.PartialAsync("ErrorSummaryPartial")
-    @await Html.PartialAsync("_PageTitle")
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="text-center">Two-Step Verification</h3>
+<div class="container-fluid overflow-hidden">
+    @if (TempData["Error"] != null)
+    {
+        <div id="error-alert" class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+            <div class="d-flex">
+                <i class="bi bi-exclamation-circle fs-5 me-2"></i>
+                <div>@TempData["Error"]</div>
             </div>
-            <div class="card-body">
-                <p>For added security, please enter the verification code from your authenticator app.</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
-                @if (TempData["Error"] != null)
-                {
-                    <div class="alert alert-danger">@TempData["Error"]</div>
-                }
+    @if (TempData["Success"] != null)
+    {
+        <div id="success-alert" class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+            <div class="d-flex">
+                <i class="bi bi-check-circle fs-5 me-2"></i>
+                <div>@TempData["Success"]</div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class="row">
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="card-header py-4 text-center text-white" style="background: linear-gradient(125deg, rgba(0, 102, 153, 0.95) 0%, rgba(0, 51, 102, 0.9) 100%);">
+                    <h2 class="mb-0">
+                        <i class="bi bi-shield-lock me-2"></i>Two-Step Verification
+                    </h2>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted text-center mb-4">
+                        Enter the 6-digit verification code from your authenticator app to proceed.
+                    </p>
+                    
+                    <form method="post" asp-route-returnUrl="@Model.ReturnUrl" id="twoFactorForm" novalidate>
+                        <input asp-for="RememberMe" type="hidden" />
+                        <input asp-for="ReturnUrl" type="hidden" />
+                        <input asp-for="TwoFactorProvider" type="hidden" />
 
-                <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
-                    <input asp-for="RememberMe" type="hidden" />
-                    <input asp-for="ReturnUrl" type="hidden" />
-                    <input asp-for="TwoFactorProvider" type="hidden" />
+                        <div class="mb-3">
+                            <label asp-for="TwoFactorCode" class="form-label fw-bold">Verification Code</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                <input asp-for="TwoFactorCode"
+                                       class="form-control form-control-lg code-input"
+                                       placeholder="Enter 6-digit code"
+                                       autocomplete="off"
+                                       maxlength="6"
+                                       pattern="\d{6}"
+                                       required />
+                            </div>
+                            <span asp-validation-for="TwoFactorCode" class="text-danger small mt-1 d-block"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label asp-for="TwoFactorCode" class="control-label">Verification Code</label>
-                        <input asp-for="TwoFactorCode" class="form-control" autocomplete="off" />
-                        <span asp-validation-for="TwoFactorCode" class="text-danger"></span>
-                    </div>
+                        <div class="mb-3 form-check form-switch">
+                            <input asp-for="RememberMachine" class="form-check-input" type="checkbox" role="switch" />
+                            <label asp-for="RememberMachine" class="form-check-label text-muted">
+                                Remember this device for 30 days
+                            </label>
+                        </div>
 
-                    <div class="form-group form-check">
-                        <input asp-for="RememberMachine" class="form-check-input" />
-                        <label asp-for="RememberMachine" class="form-check-label">Remember this device</label>
-                    </div>
+                        <div class="d-grid">
+                        <button type="submit" class="btn btn-lg text-light fw-bold" style="background: linear-gradient(125deg, rgba(0, 102, 153, 0.95) 0%, rgba(0, 51, 102, 0.9) 100%);">
+                                <i class="bi bi-check-circle me-2"></i>Verify Code
+                            </button>
+                        </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block">Verify</button>
-                    </div>
-
-                    <div class="text-center">
                         @if (Model.TwoFactorProvider == "Authenticator")
                         {
-                            <p>Having trouble? <a asp-action="LoginWithRecoveryCode">Use a recovery code</a></p>
+                            <div class="text-center mt-3">
+                                <a asp-action="LoginWithRecoveryCode" class="text-decoration-none text-primary">
+                                    <i class="bi bi-life-preserver me-1"></i>Can't access your authenticator?
+                                </a>
+                            </div>
                         }
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
     </div>
 </div>
 
@@ -56,10 +89,26 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("TwoFactorCode").focus();
+            const codeInput = document.getElementById("TwoFactorCode");
+            const form = document.getElementById("twoFactorForm");
+
+            if (codeInput) {
+                codeInput.focus();
+
+                codeInput.addEventListener('input', function() {
+                    if (this.value.length === 6 && /^\d{6}$/.test(this.value)) {
+                        form.submit();
+                    }
+                });
+
+                codeInput.addEventListener('keypress', function(e) {
+                    if (e.which < 48 || e.which > 57) {
+                        e.preventDefault();
+                    }
+                });
+            }
         });
     </script>
 }

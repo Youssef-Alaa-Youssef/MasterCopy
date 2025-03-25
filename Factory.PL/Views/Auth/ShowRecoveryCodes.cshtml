@@ -1,0 +1,42 @@
+﻿@model ShowRecoveryCodesViewModel
+@{
+    ViewData["Title"] = "Recovery Codes";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm mt-3 p-4">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+
+    <h1 class="h3 mb-3">@ViewData["Title"]</h1>
+    <div class="alert alert-warning" role="alert">
+        <p class="mb-1">
+            <strong>Put these codes in a safe place.</strong>
+        </p>
+        <p class="mb-0">
+            If you lose your device and don't have the recovery codes you will lose access to your account.
+        </p>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h4 class="h5 mb-3">Your recovery codes:</h4>
+            <div class="bg-light p-3 rounded">
+                @for (var i = 0; i < Model.RecoveryCodes.Length; i++)
+                {
+                    <span class="d-inline-block bg-white p-2 rounded me-2 mb-2 font-monospace">
+                        @Model.RecoveryCodes[i]
+                    </span>
+                    @if (i % 2 == 1)
+                    {
+                        <br />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        You can <a asp-action="GenerateRecoveryCodes" class="link-primary">generate new recovery codes</a>, this will invalidate these codes.
+    </div>
+</div>

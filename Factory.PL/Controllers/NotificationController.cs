@@ -23,16 +23,29 @@ namespace Factory.PL.Controllers
             _unitOfWork = unitOfWork;
             _hubContext = hubContext;
         }
-        [CheckPermission(Permissions.Read)]
         public async Task<IActionResult> Index()
         {
+            var users = await _unitOfWork.GetRepository<ApplicationUser>().GetAllAsync();
             var notifications = (await _unitOfWork.GetRepository<Notification>()
                 .GetAllAsync())
                 .OrderByDescending(n => n.CreatedAt)
+                .Select(n => new Notification
+                {
+                    Id = n.Id,
+                    Message = n.Message,
+                    CreatedAt = n.CreatedAt,
+                    UserId = users.FirstOrDefault(u => u.Id == n.UserId)?.FullName,
+                    IsRead = n.IsRead,
+                    Description = n.Description,
+                    Type = n.Type,
+                    IconClass = n.IconClass
+                })
                 .ToList();
 
             return View(notifications);
         }
+
+
 
         [HttpGet]
         [CheckPermission(Permissions.Create)]

@@ -14,6 +14,10 @@ namespace Factory.DAL.Configurations.Permission
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(m => m.NameEn)
+               .IsRequired()
+               .HasMaxLength(100);
+
             builder.Property(s => s.IconClass)
                 .IsRequired()
                 .HasMaxLength(50);

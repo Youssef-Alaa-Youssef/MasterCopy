@@ -129,10 +129,8 @@ namespace Factory.Controllers
                 return View(model);
             }
 
-            // Check if user has 2FA enabled
             if (await _userManager.GetTwoFactorEnabledAsync(user))
             {
-                // First verify password without signing in
                 var isPasswordValid = await _userManager.CheckPasswordAsync(user, model.Password);
                 if (!isPasswordValid)
                 {
@@ -140,18 +138,24 @@ namespace Factory.Controllers
                     return View(model);
                 }
 
-                // Generate and send 2FA token (if using email/SMS)
-                // Or redirect to authenticator app verification
+                await HttpContext.SignInAsync(
+                    IdentityConstants.TwoFactorUserIdScheme,
+                    StoreTwoFactorInfo(user.Id, "Authenticator"));
+
+                // Redirect to 2FA verification
                 return RedirectToAction("LoginWith2fa", new
                 {
                     ReturnUrl = returnUrl,
                     RememberMe = model.RememberMe,
-                    Provider = "Authenticator" // or "Email"/"Phone" if using other providers
+                    Provider = "Authenticator"
                 });
             }
 
-            // Regular login flow for users without 2FA
-            var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
+            var result = await _signInManager.PasswordSignInAsync(
+                user,
+                model.Password,
+                model.RememberMe,
+                lockoutOnFailure: true);
 
             if (result.Succeeded)
             {
@@ -184,7 +188,10 @@ namespace Factory.Controllers
             }
             else if (result.RequiresTwoFactor)
             {
-                // This handles cases where 2FA might be required for other reasons
+                await HttpContext.SignInAsync(
+                    IdentityConstants.TwoFactorUserIdScheme,
+                    StoreTwoFactorInfo(user.Id, "Authenticator"));
+
                 return RedirectToAction("LoginWith2fa", new
                 {
                     ReturnUrl = returnUrl,
@@ -206,6 +213,15 @@ namespace Factory.Controllers
             TempData["Error"] = "Invalid Email Or Password.";
             return View(model);
         }
+
+        private ClaimsPrincipal StoreTwoFactorInfo(string userId, string provider)
+        {
+            var identity = new ClaimsIdentity(IdentityConstants.TwoFactorUserIdScheme);
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));
+            identity.AddClaim(new Claim("amr", provider));
+            return new ClaimsPrincipal(identity);
+        }
+
         public IActionResult SignUp()
         {
             return View();
@@ -743,20 +759,86 @@ namespace Factory.Controllers
 
             return View(model);
         }
+
+
+
         [HttpGet]
         public async Task<IActionResult> EnableAuthenticator()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var userId = _userManager.GetUserId(User);
+            if (userId == null)
+            {
+                return NotFound("User ID not found in claims.");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Unable to load user with ID '{userId}'.");
             }
 
             await LoadSharedKeyAndQrCodeUriAsync(user);
-
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToggleTwoFactorAuthentication(bool EnableMFA)
+        {
+            var userId = _userManager.GetUserId(User);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return NotFound("User ID not found in claims.");
+            }
 
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{userId}'.");
+            }
+
+            try
+            {
+                if (EnableMFA)
+                {
+                    var is2faAlreadyEnabled = await _userManager.GetTwoFactorEnabledAsync(user);
+                    if (is2faAlreadyEnabled)
+                    {
+                        TempData["Success"] = "Two-factor authentication is already enabled.";
+                        return RedirectToAction("SecuritySettings");
+                    }
+
+                    await LoadSharedKeyAndQrCodeUriAsync(user);
+                    return View("EnableAuthenticator");
+                }
+                else
+                {
+                    var is2faEnabled = await _userManager.GetTwoFactorEnabledAsync(user);
+                    if (!is2faEnabled)
+                    {
+                        TempData["Success"] = "Two-factor authentication is already disabled.";
+                        return RedirectToAction("Index","Settings");
+                    }
+
+                    var disableResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
+                    if (!disableResult.Succeeded)
+                    {
+                        TempData["Error"] = "Failed to disable two-factor authentication.";
+                        return RedirectToAction("SecuritySettings");
+                    }
+
+                    await _userManager.ResetAuthenticatorKeyAsync(user);
+
+
+                    TempData["Success"] = "Two-factor authentication has been disabled.";
+                    return RedirectToAction("SecuritySettings");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "An unexpected error occurred. Please try again.";
+                return RedirectToAction("SecuritySettings");
+            }
+        }
         private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user)
         {
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
@@ -771,6 +853,7 @@ namespace Factory.Controllers
 
             ViewData["SharedKey"] = FormatKey(unformattedKey);
             ViewData["AuthenticatorUri"] = authenticatorUri;
+            ViewData["Is2faEnabled"] = await _userManager.GetTwoFactorEnabledAsync(user); ;
         }
 
         private string FormatKey(string unformattedKey)
@@ -794,7 +877,7 @@ namespace Factory.Controllers
         {
             return string.Format(
                 "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6",
-                Uri.EscapeDataString("YourAppName"),
+                Uri.EscapeDataString(_appsettings.Value.CompanyName),
                 Uri.EscapeDataString(email),
                 unformattedKey);
         }
@@ -803,7 +886,7 @@ namespace Factory.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorViewModel model)
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -816,7 +899,6 @@ namespace Factory.Controllers
             }
 
             var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
-
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
@@ -829,77 +911,149 @@ namespace Factory.Controllers
 
             await _userManager.SetTwoFactorEnabledAsync(user, true);
 
+            // Store codes in database temporarily
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            TempData["RecoveryCodes"] = recoveryCodes.ToArray();
+            user.RecoveryCodes = string.Join(";", recoveryCodes);
+            await _userManager.UpdateAsync(user);
 
             return RedirectToAction("ShowRecoveryCodes");
         }
 
-
         [HttpGet]
-        public IActionResult ShowRecoveryCodes()
+        public async Task<IActionResult> ShowRecoveryCodes()
         {
-            var recoveryCodes = (string[])TempData["RecoveryCodes"];
-            if (recoveryCodes == null)
+            var userId = _userManager.GetUserId(User);
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{userId}'.");
+            }
+
+            if (TempData["RecoveryCodes"] is string[] recoveryCodes)
+            {
+                var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
+                return View(model);
+            }
+
+            if (!await _userManager.GetTwoFactorEnabledAsync(user))
             {
                 return RedirectToAction("TwoFactorAuthentication");
             }
 
-            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
+            recoveryCodes = (await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10)).ToArray();
+            var modelWithNewCodes = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
+            return View(modelWithNewCodes);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl, string provider)
+        {
+            var result = await HttpContext.AuthenticateAsync(IdentityConstants.TwoFactorUserIdScheme);
+            if (!result.Succeeded)
+            {
+                TempData["Error"] = "Your login session has expired. Please log in again.";
+                return RedirectToAction("Login");
+            }
+
+            var userId = result.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                TempData["Error"] = "User not found.";
+                return RedirectToAction("Login");
+            }
+
+            var model = new LoginWith2faViewModel
+            {
+                RememberMe = rememberMe,
+                ReturnUrl = returnUrl,
+                Provider = provider
+            };
+
             return View(model);
         }
 
-
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
-        {
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
-            }
-
-            return View(new LoginWith2faViewModel { RememberMe = rememberMe });
-        }
-
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginWith2fa(LoginWith2faViewModel model, bool rememberMe, string returnUrl = null)
+        public async Task<IActionResult> LoginWith2fa(LoginWith2faViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            returnUrl ??= Url.Content("~/");
+            var result = await HttpContext.AuthenticateAsync(IdentityConstants.TwoFactorUserIdScheme);
+            if (!result.Succeeded)
+            {
+                TempData["Error"] = "Your login session has expired. Please log in again.";
+                return RedirectToAction("Login");
+            }
 
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            var userId = result.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                TempData["Error"] = "User not found.";
+                return RedirectToAction("Login");
             }
 
             var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
+            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+                user, _userManager.Options.Tokens.AuthenticatorTokenProvider, authenticatorCode);
 
-            if (result.Succeeded)
+            if (!is2faTokenValid)
             {
-                return LocalRedirect(returnUrl);
+                TempData["Error"] = "Invalid verification code.";
+                ModelState.AddModelError(string.Empty, "Invalid verification code.");
+                return View(model);
             }
-            else if (result.IsLockedOut)
-            {
-                return RedirectToAction("Lockout");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
-                return View();
-            }
+
+            await HttpContext.SignOutAsync(IdentityConstants.TwoFactorUserIdScheme);
+
+            await _signInManager.SignInAsync(user, model.RememberMe, IdentityConstants.TwoFactorUserIdScheme);
+
+            return LocalRedirect(model.ReturnUrl ?? Url.Content("~/"));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GenerateRecoveryCodes()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (!await _userManager.GetTwoFactorEnabledAsync(user))
+            {
+                return RedirectToAction("EnableAuthenticator");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GenerateRecoveryCodesPost()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (!await _userManager.GetTwoFactorEnabledAsync(user))
+            {
+                return RedirectToAction("EnableAuthenticator");
+            }
+
+            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+            TempData["RecoveryCodes"] = recoveryCodes.ToArray();
+
+            return RedirectToAction("ShowRecoveryCodes");
+        }
+
 
         [CheckPermission(Permissions.Create)]
         public async Task<IActionResult> Add()
@@ -927,7 +1081,7 @@ namespace Factory.Controllers
 
             if (result.Succeeded)
             {
-                TempData["SuccessMessage"] = "User created successfully!";
+                TempData["Success"] = "User created successfully!";
                 return RedirectToAction("Index");
             }
 

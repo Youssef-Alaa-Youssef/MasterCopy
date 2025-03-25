@@ -44,6 +44,7 @@ namespace Factory.DAL.Configurations
                 string roleName = role.ToString();
                 string defaultUserEmail = $"{roleName.ToLower()}@MasterCopy.info";
                 string defaultPassword = $"{roleName}@123";
+                string defaultfullname = $"{roleName}";
 
                 var defaultUser = await userManager.FindByEmailAsync(defaultUserEmail);
 
@@ -53,7 +54,9 @@ namespace Factory.DAL.Configurations
                     {
                         UserName = defaultUserEmail,
                         Email = defaultUserEmail,
-                        EmailConfirmed = true
+                        EmailConfirmed = true,
+                        FullName = defaultfullname,
+
                     };
 
                     var result = await userManager.CreateAsync(defaultUser, defaultPassword);

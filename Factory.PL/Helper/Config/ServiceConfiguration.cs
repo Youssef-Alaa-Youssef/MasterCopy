@@ -234,6 +234,7 @@ public static class ServiceConfiguration
             options.LogoutPath = "/Auth/LogOut";
             options.AccessDeniedPath = "/Auth/AccessDenied";
             options.ExpireTimeSpan = TimeSpan.FromDays(2);
+            options.SlidingExpiration = true;
         });
 
         services.AddSession(options =>

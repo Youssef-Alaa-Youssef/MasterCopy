@@ -5,1196 +5,1499 @@
 namespace Factory.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class ModifyApplicationUserModel : Migration
+    public partial class Addnameenglishmodulesubmdoulepage : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "AuthenticatorKey",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
+                name: "NameEn",
+                table: "SubModules",
+                type: "nvarchar(100)",
+                maxLength: 100,
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.AddColumn<string>(
-                name: "RecoveryCodes",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
+                name: "NameEn",
+                table: "Pages",
+                type: "nvarchar(100)",
+                maxLength: 100,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "NameEn",
+                table: "Modules",
+                type: "nvarchar(100)",
+                maxLength: 100,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 2,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 3,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 4,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 5,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 6,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 7,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 8,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 9,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 10,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "Modules",
+                keyColumn: "Id",
+                keyValue: 11,
+                column: "NameEn",
+                value: "");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 1,
-                column: "SecureUrlKey",
-                value: "a417d8c724084da392f8f840ed7dee65");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "1995412861244c0291cbdcfa37be3865" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 2,
-                column: "SecureUrlKey",
-                value: "aa36c3680efc4492a741fdbd5e449d79");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "8ec6c470286746beab4ee1e2e9c00abf" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 3,
-                column: "SecureUrlKey",
-                value: "a1eadacfff674974910f8075a4571ef0");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "5f601ff3872f4c71a39363cf00fbc2b0" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 4,
-                column: "SecureUrlKey",
-                value: "4cd67964f4444d5ab685fe6b3f1cdf21");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "fe74bdb7ecd74f8fa20f7c608209edfc" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 5,
-                column: "SecureUrlKey",
-                value: "1cee0b0fe640473f8635d3408ad43f95");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "10ab49f87c8540d7929a435dfe8af233" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 6,
-                column: "SecureUrlKey",
-                value: "0fb7112158854922a85b9d02fe2087da");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "3cda0828ed5547fc809523706f454ab7" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 7,
-                column: "SecureUrlKey",
-                value: "4be855553f404ab7ae44bac1f5dce753");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "55e1b2fa6d434cadb26500a1b409239c" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 8,
-                column: "SecureUrlKey",
-                value: "90e94b3613254d058951567ca46e8803");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "f9fb15a9bcdd45b5a2fceb3be00be6f6" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 9,
-                column: "SecureUrlKey",
-                value: "e48ad7a9074a411681f2c129ba5d8ded");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "950b7baa23e24657bfcf958dd7adb702" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 10,
-                column: "SecureUrlKey",
-                value: "e08931b580a54c1aa4615a50d2eab585");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "12de5f4b230140b2b98b343c5780b34c" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 11,
-                column: "SecureUrlKey",
-                value: "0571f86177d944abb8e15d22dfaf3257");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "afb0b99f67f04f73a87827f1ff381b94" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 12,
-                column: "SecureUrlKey",
-                value: "232ce607803a4a9ca035faf07240bc57");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "665629c1e01b49fd8389e982ef98a743" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 13,
-                column: "SecureUrlKey",
-                value: "a7de41de887240bc8728dea2b9c49cf9");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "43a6842c7ffb447da0b1ce13a55ee2a8" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 14,
-                column: "SecureUrlKey",
-                value: "49181fe1879340c5858162be2c32c17d");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "de084e2e3736445abfc698701ca6df11" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 15,
-                column: "SecureUrlKey",
-                value: "ad8bea58041d42f09d443030f01b0e0e");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "074caac2cabb4cb88bca2eff3e8f4efc" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 16,
-                column: "SecureUrlKey",
-                value: "cfe764c4171b4b8d92049359cb95ee0f");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "ea874983d2264ba9a21708f3aa281aeb" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 17,
-                column: "SecureUrlKey",
-                value: "419b6b4c78b14721a9082eda84f62b6f");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "a0747ea70b4048dd92b808ea34051086" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 18,
-                column: "SecureUrlKey",
-                value: "dc148e8860ba409ab39c7a3af5408d62");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "441f8f8999d843e48a280d933e2bb358" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 19,
-                column: "SecureUrlKey",
-                value: "6d0f349b91994b6aa8ebc3c39121e081");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "3a226d93f904444b8b6d971ae042bf11" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 20,
-                column: "SecureUrlKey",
-                value: "6ef4cb101d624bf280ce8913dfaaf892");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "d7813623c9d14ed189e924c2202d1087" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 21,
-                column: "SecureUrlKey",
-                value: "0c9a2ea984c6434caab1791b8306a305");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "862bf0eaaf5544f0b9242972eac5e3ff" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 22,
-                column: "SecureUrlKey",
-                value: "b3a3da9d26dd4a96928f04eaabef48b2");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "20ceadf9e04c492484b12d5a51f458aa" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 23,
-                column: "SecureUrlKey",
-                value: "83f172fa4c98431aa0d6c333ab653060");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "02d5fbbef3fe4716b2cb61a798b8874f" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 24,
-                column: "SecureUrlKey",
-                value: "2bdeb20b1332425bb3d30e85f92a148b");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "18c12cba925e4ab49f0a529932cf0bd6" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 25,
-                column: "SecureUrlKey",
-                value: "7269bd1c1d484215afd5f882017f8b44");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "f1574c8bf96245a3bc6b9bdcc9c84d5a" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 26,
-                column: "SecureUrlKey",
-                value: "7b8ccfefcea047cfa80f0b01cefd880c");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "e8ee05180ed54448964daa9bbc250934" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 27,
-                column: "SecureUrlKey",
-                value: "c07c350dda3d4870945061ff2a8e7477");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "f8134f1f7b2b4b288a8503259af614e8" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 28,
-                column: "SecureUrlKey",
-                value: "4a756e14ed82414dbf1613230c4225ff");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "5398a7864c10414192b04dff780eea19" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 29,
-                column: "SecureUrlKey",
-                value: "c3f198bf5c184b33b25c720b5ad3fcbd");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "11577e6d951c4bf0b2c167a6404cb1c4" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 30,
-                column: "SecureUrlKey",
-                value: "3e17c94c90a64263ab5ac3c4d6d40661");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "9dedba009d3a469395bffd174c7a0009" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 31,
-                column: "SecureUrlKey",
-                value: "ebdec686459c449698c5de00882dc395");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "497c9d98b6754bf9908934d3e340b349" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 32,
-                column: "SecureUrlKey",
-                value: "cc7becc6a76b41f894f9d3acfefa34a7");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "77974f35edbf4cdea39d9590cdf8fe89" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 33,
-                column: "SecureUrlKey",
-                value: "4ca922ff96e546ffbd399555286b996e");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "8c55cf914d8d44c184322b925cf7b1cb" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 34,
-                column: "SecureUrlKey",
-                value: "6824cf5d5e4946b48fd3f3c8891a35ab");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "9f0f00fad50a4231a1de8b591452001a" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 35,
-                column: "SecureUrlKey",
-                value: "5c8931a9a3cf4889a68abef47d8a91d9");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "8f3f2d878bc242d5adccb059c82eeb7a" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 36,
-                column: "SecureUrlKey",
-                value: "07ea58b2028a46d083e52cac728840dc");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "308d288e67f9480481022950d3feaaf7" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 37,
-                column: "SecureUrlKey",
-                value: "5c01972d6e21489d902742388dabd716");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "89c6de637d6c40528c4ebd80db43939f" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 38,
-                column: "SecureUrlKey",
-                value: "354822f348b041508c311e90965e3416");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "a26dda38cbfd4b3690b34b3f146aa74d" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 39,
-                column: "SecureUrlKey",
-                value: "3b7eb06fb97541e8838a9dea8a601d93");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "9a8d6de28f06412db55700974916aa1f" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 40,
-                column: "SecureUrlKey",
-                value: "315d4caf7ad0402db88d8831485d97ea");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "007419236c434dfcb2b5ff9234a5a319" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 41,
-                column: "SecureUrlKey",
-                value: "b51ab24217b2432a84f13f3efea8a5c6");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "c5f7b8ca54a649069257a07d87e75b07" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 42,
-                column: "SecureUrlKey",
-                value: "66a60895408048a6a3e334c1c9befe1c");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "beefc8f4e4074878a06a594846ed143c" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 43,
-                column: "SecureUrlKey",
-                value: "316d800702be43fba580dbaf4aa3fbf9");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "b70d3d520fb94e989ba08f5f593b6a97" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 44,
-                column: "SecureUrlKey",
-                value: "29ea35d7bf43470c96219d819d064cdb");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "3f8b60387e8d4d7f91a697ee64a2fc4e" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 45,
-                column: "SecureUrlKey",
-                value: "04ee0aa410b748a0a31bdbd1d57475ad");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "598b0d71fd42470f8ef43e20841e1732" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 46,
-                column: "SecureUrlKey",
-                value: "2a2165a7d8854558b1d2b8d1162232e0");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "bcf543f4f96d477690887368b9a13397" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 47,
-                column: "SecureUrlKey",
-                value: "b0e9afb4df184c9997e73738ae495326");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "a2a6aba138fb41f6a954f9d02413bd0a" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 48,
-                column: "SecureUrlKey",
-                value: "167dd8aed7f1489ba7c298cf24da8aba");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "80951403962449299385203678e539de" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 49,
-                column: "SecureUrlKey",
-                value: "73e6ed9f63de4d8d82cd6fff9b4a0d49");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "260bc65333b94a1ba5fdd71bbbe25176" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 50,
-                column: "SecureUrlKey",
-                value: "813e2b4f09444130885b0371a0eb56e2");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "b1eb7d82101d43a488961798bbe68b45" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 51,
-                column: "SecureUrlKey",
-                value: "f7e3bb659eb744b0a809ba62fc35e7f2");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "676524865fb9486591be9b81e39ef5a7" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 52,
-                column: "SecureUrlKey",
-                value: "2df8ae72b6684ec48eefb600a7eb43a3");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "50925173278a40829f6947f6fce5d14b" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 53,
-                column: "SecureUrlKey",
-                value: "0b1be777ce83437d83db5ab9313c42da");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "b828d6c9b3964999b7c301474adbe038" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 54,
-                column: "SecureUrlKey",
-                value: "fce182a6d86b4a9ab741608264f098a4");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "7dc9203cd68c4b8db92f3ab6da2526c8" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 55,
-                column: "SecureUrlKey",
-                value: "f48f720fcc0f4ac3a01b244ee60550f9");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "ac8e4fb201a847c98eecacfbbd6ca8ef" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 56,
-                column: "SecureUrlKey",
-                value: "99fba136514a43c0bfd5f8ae0cb79ff9");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "6ee4ed87664842d1943f067afc685e8e" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 57,
-                column: "SecureUrlKey",
-                value: "3f8ba3e8f7374671a397bb3c0b69f3e1");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "1a0a1e5ff67d47249c25150b5cf92fc7" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 58,
-                column: "SecureUrlKey",
-                value: "cc7bbbf43356400b9899396f2abc2467");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "a45db2a3e1024217ad31ba024cd250cd" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 59,
-                column: "SecureUrlKey",
-                value: "7b12765741c34cfb89192d84efe6a5fc");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "482c7882fbd940f99bfd141a3defb0d6" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 60,
-                column: "SecureUrlKey",
-                value: "8b63e25107b64ec09ee8d03144fbe564");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "94ca17acd8334110808d9fb43577c4bc" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 61,
-                column: "SecureUrlKey",
-                value: "d2be30bc87264cb18958f18f3ed11434");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "31fba01df8e543d39114a87d709e2ae8" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 62,
-                column: "SecureUrlKey",
-                value: "c2fb5217bcf049abb1a4a29fd836cd1f");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "987cbf72547f4a11b2ceddfdc39baced" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 63,
-                column: "SecureUrlKey",
-                value: "0d5c2e8b950d40d8b38a801bef015426");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "6ac59e1913904054a2389dab643a9306" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 64,
-                column: "SecureUrlKey",
-                value: "fce7b6e723ab4763bc4b58ea204ba847");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "9ed52f9b6628404e9bc35e6a8a7579e0" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 65,
-                column: "SecureUrlKey",
-                value: "5967b834142548509f26c6b40a264f93");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "3422fbf52fc94415b7cf0b50153914c2" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 66,
-                column: "SecureUrlKey",
-                value: "5e62e4d7733843f18eefedefbee4f2ab");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "fa4dcfa9698f455186526a44c06da791" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 67,
-                column: "SecureUrlKey",
-                value: "957122c424234f93a0046ee156ce0fd5");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "47bb988a977c43ebb88ab5c8f7ddc528" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 68,
-                column: "SecureUrlKey",
-                value: "cdb3e34c6738465288ad97cf9e8c7c3e");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "d890af694d454e699a56fea83369f149" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 69,
-                column: "SecureUrlKey",
-                value: "05cfdf96ce9c42ceb46e08177d0ff5ed");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "4c4d39b7333849b68eee07ea24093c94" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 70,
-                column: "SecureUrlKey",
-                value: "b145424cc1134488978b8ead7cfbc06e");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "cde8240f27154fb8895d7e0723502743" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 71,
-                column: "SecureUrlKey",
-                value: "b92de735098d4485a64b3c22acf56622");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "d8291f45b67e4ff7bba1c2d99a0d4699" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 72,
-                column: "SecureUrlKey",
-                value: "548e963ea72c48bc8d15b3651f0af526");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "38257889456d4e4c8428d8d806a73695" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 73,
-                column: "SecureUrlKey",
-                value: "d76ae26e98434d75910b0d61c3ae381b");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "05cc8422f5b747218f5888d828801f96" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 74,
-                column: "SecureUrlKey",
-                value: "3bad2e193e39466093fac3243798c120");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "ef025226cbec4ed9ada671696021f7b7" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 75,
-                column: "SecureUrlKey",
-                value: "dd9871e6f9014cca89af12d0ceeccf5b");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "88af98cb0d034db59ab49b2ba3f8ed5d" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 76,
-                column: "SecureUrlKey",
-                value: "937a7d47dce44a1daa123fc1c1b19f54");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "92205f09df5e4f7195169a6d75182fee" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 77,
-                column: "SecureUrlKey",
-                value: "bd5501031f884a2cb535cff5c043af51");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "c01ca9cc7c524dd0b9326295a5226d06" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 78,
-                column: "SecureUrlKey",
-                value: "b1720d6f2b4f4993ae8c7c8152e57021");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "11257e8bbaca450a95dec8b328687b48" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 79,
-                column: "SecureUrlKey",
-                value: "fb781c8007ac4c5e955d9ca17236a2b0");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "15690e6f6dba4a99b88f7fbf9f7a0593" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 80,
-                column: "SecureUrlKey",
-                value: "b1d7087b0262498582271331a4ea98a5");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "96e6e5994fcd4224b57ee2a16c5e5fc0" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 81,
-                column: "SecureUrlKey",
-                value: "739c578ac1594f37a8daf02dadfb3174");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "f081fda9662647c1840fd2b0d9e90924" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 82,
-                column: "SecureUrlKey",
-                value: "808630b61add4715be01d66f3404f7d6");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "3c8ddb8614f94bdbb268f3779e7342fb" });
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 83,
-                column: "SecureUrlKey",
-                value: "7dde23f606464b41916707256fddddfc");
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "16c70abd225e4c428263bbbf55afea65" });
+
+            migrationBuilder.UpdateData(
+                table: "Pages",
+                keyColumn: "Id",
+                keyValue: 84,
+                columns: new[] { "NameEn", "SecureUrlKey" },
+                values: new object[] { "", "f5f7c3ab156c43ce84bdf5945163447d" });
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 2,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 3,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 4,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 5,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 6,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 7,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 8,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 9,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 10,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 11,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 12,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 13,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 14,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 15,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 16,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 17,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 18,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 19,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 20,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 21,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 22,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 23,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 24,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 25,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 26,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 27,
+                column: "NameEn",
+                value: "");
+
+            migrationBuilder.UpdateData(
+                table: "SubModules",
+                keyColumn: "Id",
+                keyValue: 28,
+                column: "NameEn",
+                value: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "AuthenticatorKey",
-                table: "AspNetUsers");
+                name: "NameEn",
+                table: "SubModules");
 
             migrationBuilder.DropColumn(
-                name: "RecoveryCodes",
-                table: "AspNetUsers");
+                name: "NameEn",
+                table: "Pages");
+
+            migrationBuilder.DropColumn(
+                name: "NameEn",
+                table: "Modules");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "SecureUrlKey",
-                value: "6761dba70c174082927d15a83f90651b");
+                value: "fe8cab76723e4c54bd7f3ea28dfd01c5");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "SecureUrlKey",
-                value: "1d2006d0f2de4d80a0faaa61209988e4");
+                value: "fa8a2c87aa0847a0be0e743be624d771");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "SecureUrlKey",
-                value: "2c5cb6addb9e4dbb8d53c9ffdf9cc32e");
+                value: "306ead00374b4a34b8a365256c53c3e4");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "SecureUrlKey",
-                value: "c66eadd467c943de8866a0d630c488cc");
+                value: "7e38f4cc5606431fb26ba3b1b96c8970");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 5,
                 column: "SecureUrlKey",
-                value: "3e07e08b3bd94945ae5b09399c839e82");
+                value: "3a126a697aaa415c83b15cb6c3c64ea3");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 6,
                 column: "SecureUrlKey",
-                value: "0fea2670085b49b0b9929b2589ac3bf6");
+                value: "ab2c23766d814d51a31c60dc0d0a88cd");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 7,
                 column: "SecureUrlKey",
-                value: "67dca34412bc41fa817a720bc03d9a85");
+                value: "ea554a2914434e27acf02b8c60da601b");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 8,
                 column: "SecureUrlKey",
-                value: "c422984e342641219489e11ae6fcc13a");
+                value: "f12dbdd813e14460835d7bcbefbf2ebf");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 9,
                 column: "SecureUrlKey",
-                value: "ca576abc6e094cc9988703795544075a");
+                value: "821ebe14704c4a53867770308c5cd432");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 10,
                 column: "SecureUrlKey",
-                value: "1d520403f99648a583a44b89450ec87e");
+                value: "e4535ac8b6e24662805120895c0b5013");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 11,
                 column: "SecureUrlKey",
-                value: "0cc3f2709fb44fc1a635915526acedb4");
+                value: "7b798fc6f3e14451a0a6311f16a24dc9");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 12,
                 column: "SecureUrlKey",
-                value: "a1447ddbb0bb49b2b5a590c15bc5baa8");
+                value: "41e269ce5c7b43dda59aa97945d59f6c");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 13,
                 column: "SecureUrlKey",
-                value: "1211ddacebfa496095aabb0b3efd0110");
+                value: "cbc6e75346e94316bbb19079928611ee");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 14,
                 column: "SecureUrlKey",
-                value: "bb4dfd3644164b86ae530cca7700f52c");
+                value: "e3442c63ae8a4633b4c47f64fd32ecd8");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 15,
                 column: "SecureUrlKey",
-                value: "0b0493d472924f00a148a7e9b580b625");
+                value: "3676993075d742ad98c0ef9322fb252d");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 16,
                 column: "SecureUrlKey",
-                value: "82fdff012dcf41bba361dd3149f0fa44");
+                value: "3d1db1c339f04b51a3b27b387758c514");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 17,
                 column: "SecureUrlKey",
-                value: "1442309e733e4befbc1028987c8d1571");
+                value: "8158a3825958496cb90d8dd0880a6e5d");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 18,
                 column: "SecureUrlKey",
-                value: "a85442385e82430fa4dcc9ba15d32b26");
+                value: "71e72fefa5c54f718dbe7ec72c1ecaee");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 19,
                 column: "SecureUrlKey",
-                value: "0c332c4c2eb1438f8f59812b10a00a29");
+                value: "e1d929fca7a34277a09084a48b3763db");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 20,
                 column: "SecureUrlKey",
-                value: "6e26e901fbe64102982e4ab13f1fef01");
+                value: "939e1818a16c4ee48885ef4218dbe5d4");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 21,
                 column: "SecureUrlKey",
-                value: "e96f2a30e9d24727859bcafaeb5df9b0");
+                value: "f31353a0477c46a89d127c44c3d097a9");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 22,
                 column: "SecureUrlKey",
-                value: "c7c6c9c8988841058662f4c1b83b02e4");
+                value: "d2d5f65744c647ff8aa2725858deba66");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 23,
                 column: "SecureUrlKey",
-                value: "6a2c07f73af241928334fc90ac430eb1");
+                value: "25d5eaa7abfc4716b56f3803a1c68cad");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 24,
                 column: "SecureUrlKey",
-                value: "5b020e7b478f4b5aa4335cdb9d303b64");
+                value: "6d973f10afa14514a36489b3b5c21c43");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 25,
                 column: "SecureUrlKey",
-                value: "390167b75ad546849b215aca9a0d59d3");
+                value: "f84ba095826b40cdb1c3f9168f73c7ee");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 26,
                 column: "SecureUrlKey",
-                value: "aacf07c49a7648e092a5dd5e54e75ea0");
+                value: "f420a9a42a224c3aa8c5a2d49469e14d");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 27,
                 column: "SecureUrlKey",
-                value: "0e047f764bb740a0ae60606a0e976bb1");
+                value: "72fc5d63dc89414bb84e342965255256");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 28,
                 column: "SecureUrlKey",
-                value: "6d399d7a7fcb49a9b51a14175f272fa3");
+                value: "7dc1e37ccdde4136a8ee2d0e0b7e746b");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 29,
                 column: "SecureUrlKey",
-                value: "4ac0871c9ce340439c390c4006cde98d");
+                value: "c040d31f3c254a4783ea942c2e6655ee");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 30,
                 column: "SecureUrlKey",
-                value: "fe49c6df96ed4c2e913701692ce08443");
+                value: "a6d7187180234a60aa98d117f121c09b");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 31,
                 column: "SecureUrlKey",
-                value: "19914705f57d48ab9d9d616e45ab8330");
+                value: "54441e500e6140439b70df7488920865");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 32,
                 column: "SecureUrlKey",
-                value: "5cf003e922184dfa8f7c80445ab474e0");
+                value: "e99bed12101947c6b80f61775d835f96");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 33,
                 column: "SecureUrlKey",
-                value: "c6e2d404d1fb450aa43aaa4a7fad31bd");
+                value: "e05fac212d944f2bb2c5406379f766d7");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 34,
                 column: "SecureUrlKey",
-                value: "4d90d1698a68407285eab1e37f85c568");
+                value: "0071bb42a49e497c95387f1519274add");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 35,
                 column: "SecureUrlKey",
-                value: "6dea58418117456cb4ee1aec5c3c2cb2");
+                value: "7d95a1abebb042fb85b069dd748a5565");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 36,
                 column: "SecureUrlKey",
-                value: "5bb3fd5d87564301903f510a8b5fc86d");
+                value: "8a159a42af5b4062a58c73f00b6927a1");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 37,
                 column: "SecureUrlKey",
-                value: "9597ba91f8d94a0f9ef5ca510ec963d3");
+                value: "6a7240c899804d1bb5c3a114001e034c");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 38,
                 column: "SecureUrlKey",
-                value: "54585f75fb944e45b53cebacad49ab8b");
+                value: "bd738642b86942cf828019b078489188");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 39,
                 column: "SecureUrlKey",
-                value: "bb6dcdc8da9f46ce8822b9b6b0ffa011");
+                value: "bb8124d8158b433da9a45522f14e396e");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 40,
                 column: "SecureUrlKey",
-                value: "fe3ed548f5b442719a841b8bba9214f1");
+                value: "bf66f11676e74be7b87617968981f62a");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 41,
                 column: "SecureUrlKey",
-                value: "eb9597ac1f764c1eaf0e9fcf0f86172b");
+                value: "9b9f93718f8f4fc8be6822c0e200fcc3");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 42,
                 column: "SecureUrlKey",
-                value: "c529bf288dd144d284ed380ce14f21d7");
+                value: "59d6a2aaaa0f46108cf05f3787e3c45e");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 43,
                 column: "SecureUrlKey",
-                value: "178e04341dce421cb4ed09a36afb7656");
+                value: "6776e04566f64c7c8ff033750b5b73fd");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 44,
                 column: "SecureUrlKey",
-                value: "b83c80a114a143e5b62e8702f1f88ca8");
+                value: "e400a96037f34cd7bc16b81583948d83");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 45,
                 column: "SecureUrlKey",
-                value: "8a5591a83761411bbce1583a60f7b039");
+                value: "ec5cb319c3dc4d838f80f701c7bc1ac8");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 46,
                 column: "SecureUrlKey",
-                value: "8336fcc8babb45268a4ebfd67ff0fcf6");
+                value: "a0d527f04ae04faeb70b5d5f877df348");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 47,
                 column: "SecureUrlKey",
-                value: "7f74d7ab0fbb49298f4780fbb7659fa8");
+                value: "58c797776e1d4d8cbcc74944fb183658");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 48,
                 column: "SecureUrlKey",
-                value: "6dc7098441554fd7ba277a27687d7d90");
+                value: "b5b447b34920474981b9fd67eacc1e4d");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 49,
                 column: "SecureUrlKey",
-                value: "28b28bc9f981497da93fc348dd93576a");
+                value: "3f7d9324c2674792897ea2641f570ab7");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 50,
                 column: "SecureUrlKey",
-                value: "2003a2b94aae47bfbd3286fcc37fc1ec");
+                value: "f927e943d8a84cc984ab7a1b77f85637");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 51,
                 column: "SecureUrlKey",
-                value: "5f5443808cca4daabe953ca96126203f");
+                value: "92b7afcb17d24200a247042a8bffc26d");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 52,
                 column: "SecureUrlKey",
-                value: "4a76905c98e648999670f3f35c6ff4da");
+                value: "acb944206d524cfeb7ac5d85894315fd");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 53,
                 column: "SecureUrlKey",
-                value: "22c5cf97ab214f9f8f4dcdd98e7daf57");
+                value: "f654329f34ad42c498044e8d126dd0d9");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 54,
                 column: "SecureUrlKey",
-                value: "e0182aed097b406f838764c2a95ae8da");
+                value: "780d88ad205e481dae5b2cfdbc2bc7d1");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 55,
                 column: "SecureUrlKey",
-                value: "5d6cf4428d084ae593364a53aa56483e");
+                value: "826071417da349c2a71152289a499481");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 56,
                 column: "SecureUrlKey",
-                value: "bb3cb78cc6024e0dbf38acf68b962cb7");
+                value: "a1475f34c9784e33a9f80d68cfabb9f5");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 57,
                 column: "SecureUrlKey",
-                value: "d7a7ac98530647bca0982703e33a0ba2");
+                value: "4ec304bfa0954ca38b9f9ac49d24646f");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 58,
                 column: "SecureUrlKey",
-                value: "88e796586f554f68a56a279611ef45d0");
+                value: "fe4204547ef24c4197891fa641eb4438");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 59,
                 column: "SecureUrlKey",
-                value: "17a27343a6984c7ea1e3dcaff15df255");
+                value: "73b922a8a3174f23a6ff72eafa4dcf0e");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 60,
                 column: "SecureUrlKey",
-                value: "3048fb7f22ae4d81babe5a83c25e9363");
+                value: "fa5de952f8b1469d821d0ace63486588");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 61,
                 column: "SecureUrlKey",
-                value: "cace2ef741194d9ab9a7963d46bfc5b3");
+                value: "b274eff82b514ef7a4f936ebd49cf2e7");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 62,
                 column: "SecureUrlKey",
-                value: "2f7e6cf47f984f5da1426838df74cf05");
+                value: "f5cd3081e7ed4b8a989c7e557c9db74b");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 63,
                 column: "SecureUrlKey",
-                value: "fd270af8c59b40e09abbf9a5cc364c90");
+                value: "55488e60c7ce47c790de4c51e81f31dd");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 64,
                 column: "SecureUrlKey",
-                value: "f317a648724e47758c7de0893eb475e1");
+                value: "fc5b6f75cab44168bee3759db29112be");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 65,
                 column: "SecureUrlKey",
-                value: "6249a84be8ca484e80411253b1fb3dc4");
+                value: "8271da3cd2b340418790168cbdb74c32");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 66,
                 column: "SecureUrlKey",
-                value: "2358a28725a24f9393f551524f756730");
+                value: "dfdfb0bd8670424691824714c8544a46");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 67,
                 column: "SecureUrlKey",
-                value: "3fec92d036fc41ffa8dda1a7852e77b5");
+                value: "4f1b518b2f8b430db85a9f4f6678e61e");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 68,
                 column: "SecureUrlKey",
-                value: "c4beba09fd7544acb3bc942f445576c8");
+                value: "6a8dae840f7e4673a29809d338d93215");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 69,
                 column: "SecureUrlKey",
-                value: "219303000b8f4497b0e4c7ebd4b3d4a4");
+                value: "6a7afb57d6bf4195aba7ad39d3cea8f6");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 70,
                 column: "SecureUrlKey",
-                value: "733c521ee9b146bda3c50b3f53264f03");
+                value: "ecb76042870641e49b67aa319403fcec");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 71,
                 column: "SecureUrlKey",
-                value: "b6a5b6c131194057b44f79146eeb16ec");
+                value: "2fb65f3b69824b9294806cd7d5af038b");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 72,
                 column: "SecureUrlKey",
-                value: "83007f38ddf14f2aa7c16ea7885390f1");
+                value: "23a22c9116f144989005c20b7a7b9d07");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 73,
                 column: "SecureUrlKey",
-                value: "3820a1a7d6e24bd5bc1680a9e4812176");
+                value: "f8e77e9404fd4f7bb98408450fa1d1ec");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 74,
                 column: "SecureUrlKey",
-                value: "732608f9e70e423290151fd33333ebf4");
+                value: "1af50f0d53b34320be7b3c712b188a7f");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 75,
                 column: "SecureUrlKey",
-                value: "28189c73bd4c4546b19f7b41c28436db");
+                value: "2ea8c23492a74cdf9b37005e138c7987");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 76,
                 column: "SecureUrlKey",
-                value: "042c2a0bb6ac46ed97b670b377ae4990");
+                value: "3caca9bb665b487a86f41637b8227e18");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 77,
                 column: "SecureUrlKey",
-                value: "9f996c7b248243f3b4e8f5dfb465f55a");
+                value: "a0cf5cce1e5647afa0305f4f69bf7f38");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 78,
                 column: "SecureUrlKey",
-                value: "c97b38f1c8674cf4a155413eb5dae39c");
+                value: "d2a6819e9fc24e46baf2a82a82aac857");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 79,
                 column: "SecureUrlKey",
-                value: "0f06d9fb100b4ee297a7050cb7a26d08");
+                value: "b54ae48e84c34dab85af1db39e534b04");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 80,
                 column: "SecureUrlKey",
-                value: "ab9a80d576204c0c9972a46367907e5c");
+                value: "ccf446c212f9487f913b4c75c01057ab");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 81,
                 column: "SecureUrlKey",
-                value: "89eab80682954530892acf4b9efe712a");
+                value: "3d2f8ef18db642dd9e22c4634f4f7fab");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 82,
                 column: "SecureUrlKey",
-                value: "b085d95279414531b1292f09c9669c05");
+                value: "0cc2b2c7dfa54e78afbb84f4b3f73fce");
 
             migrationBuilder.UpdateData(
                 table: "Pages",
                 keyColumn: "Id",
                 keyValue: 83,
                 column: "SecureUrlKey",
-                value: "00b7e665e9d047f2886684bc983c4f57");
+                value: "1fdd78b5e40d47789cf5ff5da290a308");
+
+            migrationBuilder.UpdateData(
+                table: "Pages",
+                keyColumn: "Id",
+                keyValue: 84,
+                column: "SecureUrlKey",
+                value: "affe8d6317174f41a23949ee05de4b03");
         }
     }
 }

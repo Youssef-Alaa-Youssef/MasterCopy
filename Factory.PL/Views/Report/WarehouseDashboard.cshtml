@@ -1,0 +1,295 @@
+﻿@using Factory.DAL.Enums.Stores
+@model Factory.PL.ViewModels.Reports.WarehouseDashboardViewModel
+
+@{
+    ViewData["Title"] = "Store Dashboard";
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header  d-flex justify-content-between align-items-center">
+                    <small>Last updated: @Model.LastUpdated.ToString("yyyy-mm-dd")</small>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card border-left-primary h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <div class="text-xs text-primary text-uppercase mb-1">Main Warehouses</div>
+                                            <div class="h5 mb-0 text-gray-800">@Model.TotalMainWarehouses</div>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <i class="fas fa-warehouse fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card border-left-success h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <div class="text-xs text-success text-uppercase mb-1">Sub Warehouses</div>
+                                            <div class="h5 mb-0 text-gray-800">@Model.TotalSubWarehouses</div>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <i class="fas fa-warehouse fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card border-left-info h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <div class="text-xs text-info text-uppercase mb-1">Total Capacity</div>
+                                            <div class="h5 mb-0 text-gray-800">@Model.TotalWarehouseCapacity.ToString("N0")</div>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <i class="fas fa-boxes fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card border-left-warning h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <div class="text-xs text-warning text-uppercase mb-1">Utilization</div>
+                                            <div class="d-flex align-items-center">
+                                                <div class="h5 mb-0 me-2 text-gray-800">@Model.UtilizationPercentage%</div>
+                                                <div class="flex-grow-1">
+                                                    <div class="progress" style="height: 5px;">
+                                                        <div class="progress-bar bg-warning" role="progressbar"
+                                                             style="width: @Model.UtilizationPercentage%"
+                                                             aria-valuenow="@Model.UtilizationPercentage"
+                                                             aria-valuemin="0"
+                                                             aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Information Row -->
+                    <div class="row g-3 mt-3">
+                        <!-- Warehouse Status Distribution -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header ">
+                                    <h6 class="mb-0 text-primary">Warehouse Status Distribution</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container" style="position: relative; height:300px;">
+                                        <canvas id="statusPieChart"></canvas>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        @foreach (var status in Model.WarehouseStatusDistribution)
+                                        {
+                                            <span class="badge me-2">
+                                                <i class="fas fa-circle @GetStatusColorClass(status.Status)"></i> @status.Status
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Top Utilized Warehouses -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h6 class="mb-0 text-primary">Top Utilized Warehouses</h6>
+                                </div>
+                                <div class="card-body">
+                                    @foreach (var warehouse in Model.TopUtilizedWarehouses)
+                                    {
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <strong>@warehouse.WarehouseName</strong>
+                                                <span>@warehouse.UtilizationPercentage%</span>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar @GetProgressBarClass(warehouse.UtilizationPercentage)"
+                                                     role="progressbar"
+                                                     style="width: @warehouse.UtilizationPercentage%"
+                                                     aria-valuenow="@warehouse.UtilizationPercentage"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Information Row -->
+                    <div class="row g-3 mt-3">
+                        <!-- Low Stock Items -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0 text-danger">Low Stock Items</h6>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" asp-action="LowStockReport">View All</a></li>
+                                            <li><a class="dropdown-item" href="#">Generate Report</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Category</th>
+                                                    <th>Stock</th>
+                                                    <th>Min</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.LowStockItems)
+                                                {
+                                                    <tr>
+                                                        <td>@item.ItemName</td>
+                                                        <td>@item.CategoryName</td>
+                                                        <td>@item.CurrentStock</td>
+                                                        <td>@item.MinimumStock</td>
+                                                        <td>
+                                                            <span class="badge @(item.CurrentStock == 0 ? "bg-danger" : "bg-warning")">
+                                                                @(item.CurrentStock == 0 ? "Out of Stock" : "Low Stock")
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activities -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h6 class="mb-0 text-primary">Recent Activities</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="list-group">
+                                        @foreach (var activity in Model.RecentActivities)
+                                        {
+                                            <a asp-action="ItemDetails" asp-route-id="@activity.ItemId"
+                                               class="list-group-item list-group-item-action">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">@activity.ItemName</h6>
+                                                    <small class="text-muted">@activity.ActivityDate.ToString("g")</small>
+                                                </div>
+                                                <p class="mb-1 text-muted">@activity.ActivityType</p>
+                                                <small class="text-muted">Click for details</small>
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById("statusPieChart");
+        var statusPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [@Html.Raw(string.Join(",", Model.WarehouseStatusDistribution.Select(s => $"'{s.Status}'")))],
+                datasets: [{
+                    data: [@string.Join(",", Model.WarehouseStatusDistribution.Select(s => s.Count))],
+                    backgroundColor: [@Html.Raw(string.Join(",", Model.WarehouseStatusDistribution.Select(s => $"'{GetStatusColor(s.Status)}'")))],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+                },
+                cutoutPercentage: 80,
+            },
+        });
+    </script>
+}
+
+@functions {
+    string GetStatusColor(WarehouseStatus status)
+    {
+        return status switch
+        {
+            WarehouseStatus.Operational => "#1cc88a",
+            WarehouseStatus.Maintenance => "#f6c23e",
+            WarehouseStatus.Overloaded => "#e74a3b",
+            WarehouseStatus.Closed => "#858796",
+            _ => "#36b9cc"
+        };
+    }
+
+    string GetStatusColorClass(WarehouseStatus status)
+    {
+        return status switch
+        {
+            WarehouseStatus.Operational => "text-success",
+            WarehouseStatus.Maintenance => "text-warning",
+            WarehouseStatus.Overloaded => "text-danger",
+            WarehouseStatus.Closed => "text-secondary",
+            _ => "text-info"
+        };
+    }
+
+    string GetProgressBarClass(int percentage)
+    {
+        if (percentage >= 90) return "bg-danger";
+        if (percentage >= 70) return "bg-warning";
+        if (percentage >= 50) return "bg-info";
+        return "bg-success";
+    }
+}
