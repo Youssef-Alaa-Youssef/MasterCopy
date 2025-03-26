@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Controllers\" />
+    <Folder Include="Resources\ViewModels\" />
     <Folder Include="Services\NavbarSettings\" />
     <Folder Include="Services\WhatsApp\" />
     <Folder Include="Services\SMS\" />

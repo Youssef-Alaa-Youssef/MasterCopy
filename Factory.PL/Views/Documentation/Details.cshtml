@@ -1,49 +1,57 @@
 ﻿@model Factory.DAL.Models.Documentation.Documentation
+@using System.Globalization
 
 @{
-    ViewData["Title"] = "Documentation Details";
+    ViewData["Title"] = Localizer["DetailsTitle"];
     Layout = "_LogedUser";
+    var isArabic = CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ar";
+    var title = isArabic && !string.IsNullOrEmpty(Model.Title) ? Model.Title : Model.TitleEn;
+    var description = isArabic && !string.IsNullOrEmpty(Model.Description) ? Model.Description : Model.DescriptionEn;
+    var content = isArabic && !string.IsNullOrEmpty(Model.Content) ? Model.Content : Model.ContentEn;
 }
 
-<div class="container-fluid card  shadow-sm p-3">
+<div class="container-fluid card shadow-sm p-3" dir="@(isArabic ? "rtl" : "ltr")">
     @await Html.PartialAsync("ErrorSummaryPartial")
-
     @await Html.PartialAsync("_PageTitle")
 
     <p class="lead text-muted">
-        <i class="bi bi-card-text me-2"></i> @Model.Description
+        <i class="bi bi-card-text me-2"></i> @description
     </p>
 
     <div class="mb-4">
         <h4 class="text-secondary">
-            <i class="bi bi-file-text me-2"></i> Content
+            <i class="bi bi-file-text me-2"></i> @Localizer["Content"]
         </h4>
-        <p class="text-dark">@Model.Content</p>
+        <p class="text-dark">@content</p>
     </div>
 
     @if (!string.IsNullOrEmpty(Model.VideoUrl))
     {
         <div class="mb-4">
             <h4 class="text-secondary">
-                <i class="bi bi-youtube me-2"></i> YouTube Video
+                <i class="bi bi-youtube me-2"></i> @Localizer["VideoTutorial"]
             </h4>
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
                     <div class="ratio ratio-16x9">
-                        <iframe src="@Model.VideoUrl.Replace("watch?v=", "embed/")" allowfullscreen></iframe>
+                        <iframe src="@Model.VideoUrl.Replace("watch?v=", "embed/")"
+                                title="@title"
+                                allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
         </div>
     }
 
-    <div class="card-footer text-center mt-2">
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">
-            <i class="bi bi-pencil-square me-2"></i> Edit
+    <div class="card-footer text-center mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning me-2">
+            <i class="bi bi-pencil-square me-2"></i> @Localizer["Edit"]
         </a>
-
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger me-2">
+            <i class="bi bi-trash me-2"></i> @Localizer["Delete"]
+        </a>
         <a asp-action="Index" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left-circle me-2"></i> Back to List
+            <i class="bi bi-arrow-left-circle me-2"></i> @Localizer["BackToList"]
         </a>
     </div>
 </div>

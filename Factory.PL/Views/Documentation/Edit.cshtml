@@ -1,57 +1,113 @@
 ﻿@model Factory.PL.ViewModels.Documentation.DocumentationViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using System.Globalization
 
 @{
-    ViewData["Title"] = Model.Id == 0 ? "Create Documentation" : "Edit Documentation";
+    ViewData["Title"] = Model.Id == 0 ? Localizer["CreateDocumentTitle"] : Localizer["EditDocumentTitle"];
     Layout = "_LogedUser";
+    var isArabic = CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ar";
 }
 
-<div class="container-fluid card  shadow-sm p-3">
+<div class="container-fluid card shadow-sm p-3" dir="@(isArabic ? "rtl" : "ltr")">
     @await Html.PartialAsync("ErrorSummaryPartial")
-
     @await Html.PartialAsync("_PageTitle")
-
 
     <form asp-action="@(Model.Id == 0 ? "Create" : "Edit")">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
 
-        <!-- Title Field -->
-        <div class="form-group mb-3">
-            <label asp-for="Title" class="form-label"></label>
-            <input asp-for="Title" class="form-control" placeholder="Enter title" />
-            <span asp-validation-for="Title" class="text-danger"></span>
+        <!-- Arabic Fields -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-translate me-2"></i> @Localizer["ArabicVersion"]
+            </div>
+            <div class="card-body">
+                <div class="form-group mb-3">
+                    <label asp-for="Title" class="form-label">
+                        <i class="bi bi-card-heading me-2"></i> @Localizer["TitleAr"]
+                    </label>
+                    <input asp-for="Title" class="form-control"
+                           placeholder="@Localizer["TitlePlaceholderAr"]" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="form-label">
+                        <i class="bi bi-text-paragraph me-2"></i> @Localizer["DescriptionAr"]
+                    </label>
+                    <input asp-for="Description" class="form-control"
+                           placeholder="@Localizer["DescriptionPlaceholderAr"]" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Content" class="form-label">
+                        <i class="bi bi-file-text me-2"></i> @Localizer["ContentAr"]
+                    </label>
+                    <textarea asp-for="Content" class="form-control" rows="5"
+                              placeholder="@Localizer["ContentPlaceholderAr"]"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+            </div>
         </div>
 
-        <!-- Description Field -->
-        <div class="form-group mb-3">
-            <label asp-for="Description" class="form-label"></label>
-            <input asp-for="Description" class="form-control" placeholder="Enter description" />
-            <span asp-validation-for="Description" class="text-danger"></span>
+        <!-- English Fields -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-translate me-2"></i> @Localizer["EnglishVersion"]
+            </div>
+            <div class="card-body">
+                <div class="form-group mb-3">
+                    <label asp-for="TitleEn" class="form-label">
+                        <i class="bi bi-card-heading me-2"></i> @Localizer["TitleEn"]
+                    </label>
+                    <input asp-for="TitleEn" class="form-control"
+                           placeholder="@Localizer["TitlePlaceholderEn"]" />
+                    <span asp-validation-for="TitleEn" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="DescriptionEn" class="form-label">
+                        <i class="bi bi-text-paragraph me-2"></i> @Localizer["DescriptionEn"]
+                    </label>
+                    <input asp-for="DescriptionEn" class="form-control"
+                           placeholder="@Localizer["DescriptionPlaceholderEn"]" />
+                    <span asp-validation-for="DescriptionEn" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="ContentEn" class="form-label">
+                        <i class="bi bi-file-text me-2"></i> @Localizer["ContentEn"]
+                    </label>
+                    <textarea asp-for="ContentEn" class="form-control" rows="5"
+                              placeholder="@Localizer["ContentPlaceholderEn"]"></textarea>
+                    <span asp-validation-for="ContentEn" class="text-danger"></span>
+                </div>
+            </div>
         </div>
 
-        <!-- Content Field -->
+        <!-- Common Fields -->
         <div class="form-group mb-3">
-            <label asp-for="Content" class="form-label"></label>
-            <textarea asp-for="Content" class="form-control" rows="5" placeholder="Enter content"></textarea>
-            <span asp-validation-for="Content" class="text-danger"></span>
-        </div>
-
-        <!-- Video URL Field -->
-        <div class="form-group mb-3">
-            <label asp-for="VideoUrl" class="form-label"></label>
-            <input asp-for="VideoUrl" class="form-control" placeholder="Enter YouTube video URL" />
+            <label asp-for="VideoUrl" class="form-label">
+                <i class="bi bi-youtube me-2"></i> @Localizer["VideoUrl"]
+            </label>
+            <input asp-for="VideoUrl" class="form-control"
+                   placeholder="@Localizer["VideoUrlPlaceholder"]" />
             <span asp-validation-for="VideoUrl" class="text-danger"></span>
         </div>
 
-        <!-- Buttons -->
-        <div class="form-group">
-            <button type="submit" class="btn btn-outline-primary">Save</button>
-            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+        <div class="card-footer text-center mt-2">
+            <button type="submit" class="btn btn-outline-primary me-2">
+                <i class="bi bi-save me-2"></i> @Localizer["Save"]
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-x-circle me-2"></i> @Localizer["Cancel"]
+            </a>
         </div>
     </form>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

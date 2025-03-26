@@ -2,11 +2,11 @@
 using Factory.DAL.Models.Auth;
 using Factory.DAL.Models.Permission;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Collections.Concurrent;
 using Factory.BLL.InterFaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace Factory.PL.Helper
 {

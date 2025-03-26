@@ -14,11 +14,23 @@ namespace Factory.DAL.Configurations.Documents
                 .IsRequired()
                 .HasMaxLength(200);
 
+            builder.Property(d => d.TitleEn)
+               .IsRequired()
+               .HasMaxLength(200);
+
             builder.Property(d => d.Description)
                 .IsRequired()
                 .HasMaxLength(500);
 
+            builder.Property(d => d.DescriptionEn)
+                .IsRequired()
+                .HasMaxLength(500);
+
             builder.Property(d => d.Content)
+                .IsRequired()
+                .HasColumnType("text");
+
+            builder.Property(d => d.ContentEn)
                 .IsRequired()
                 .HasColumnType("text");
 

@@ -4,6 +4,7 @@ using Factory.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Factory.DAL.Migrations
 {
     [DbContext(typeof(FactDdContext))]
-    partial class FactDdContextModelSnapshot : ModelSnapshot
+    [Migration("20250326074502_add name and nameEn for pages")]
+    partial class addnameandnameEnforpages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,10 +176,6 @@ namespace Factory.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ContentEn")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -187,17 +186,7 @@ namespace Factory.DAL.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("DescriptionEn")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("TitleEn")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -1687,8 +1676,8 @@ namespace Factory.DAL.Migrations
                             Controller = "PermissionManagement",
                             IsActive = true,
                             Name = "قائمة الصلاحيات",
-                            NameEn = "Permission List",
-                            SecureUrlKey = "054d6a45c74f4dbc8afef3bec222272d",
+                            NameEn = "",
+                            SecureUrlKey = "b3f88c3d04b445ad993b379d74fadc72",
                             SubmoduleId = 2
                         },
                         new
@@ -1698,8 +1687,8 @@ namespace Factory.DAL.Migrations
                             Controller = "PermissionManagement",
                             IsActive = true,
                             Name = "تعيين الصلاحيات",
-                            NameEn = "Assign Permission",
-                            SecureUrlKey = "0bb53f0ae5da41a697f884e4745237b0",
+                            NameEn = "",
+                            SecureUrlKey = "0738cce05a2d4da09ebd9e4ee3ad640e",
                             SubmoduleId = 2
                         },
                         new
@@ -1709,8 +1698,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Module",
                             IsActive = true,
                             Name = "قائمة الوحدات",
-                            NameEn = "Module List",
-                            SecureUrlKey = "1d03d4d39f5d436990c48dc6e083e152",
+                            NameEn = "",
+                            SecureUrlKey = "10ea3e10ac5c49a69e0370a080301271",
                             SubmoduleId = 3
                         },
                         new
@@ -1720,8 +1709,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Module",
                             IsActive = true,
                             Name = "إضافة وحدة",
-                            NameEn = "Add Module",
-                            SecureUrlKey = "b5fb1e9e021b44bb98fd77ab74c0035f",
+                            NameEn = "",
+                            SecureUrlKey = "1a4fffa7b8004cd1ab64d5814a8aa708",
                             SubmoduleId = 3
                         },
                         new
@@ -1731,8 +1720,8 @@ namespace Factory.DAL.Migrations
                             Controller = "SubModule",
                             IsActive = true,
                             Name = "قائمة الوحدات الفرعية",
-                            NameEn = "Submodule List",
-                            SecureUrlKey = "a30cc83a8d1f4570a6f0163d69b26704",
+                            NameEn = "",
+                            SecureUrlKey = "5b4d751232df4b1692344e0e91b48e2c",
                             SubmoduleId = 4
                         },
                         new
@@ -1742,8 +1731,8 @@ namespace Factory.DAL.Migrations
                             Controller = "SubModule",
                             IsActive = true,
                             Name = "إضافة وحدة فرعية",
-                            NameEn = "Add Submodule",
-                            SecureUrlKey = "ce09e377b95f48ffa8e6475e9d5278a7",
+                            NameEn = "",
+                            SecureUrlKey = "c0f4934e42a94f8ca7af99b6863a2137",
                             SubmoduleId = 4
                         },
                         new
@@ -1753,8 +1742,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Auth",
                             IsActive = true,
                             Name = "قائمة المستخدمين",
-                            NameEn = "User List",
-                            SecureUrlKey = "2b292468ba4046b7bb9721ba7a69677d",
+                            NameEn = "",
+                            SecureUrlKey = "e63730f8e86b4591948134d53cff04b0",
                             SubmoduleId = 1
                         },
                         new
@@ -1764,8 +1753,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Auth",
                             IsActive = true,
                             Name = "إضافة مستخدم",
-                            NameEn = "Add User",
-                            SecureUrlKey = "76190741230a4321896cf791f96efc1c",
+                            NameEn = "",
+                            SecureUrlKey = "7d1a9a061c964a938965e6027892a5f8",
                             SubmoduleId = 1
                         },
                         new
@@ -1775,8 +1764,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Role",
                             IsActive = true,
                             Name = "قائمة الأدوار",
-                            NameEn = "Role List",
-                            SecureUrlKey = "7a158e329a5243ebb39d577e6e72db04",
+                            NameEn = "",
+                            SecureUrlKey = "996a56d586224451b9c8948be4bdb2cd",
                             SubmoduleId = 3
                         },
                         new
@@ -1786,8 +1775,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Role",
                             IsActive = true,
                             Name = "إضافة دور",
-                            NameEn = "Add Role",
-                            SecureUrlKey = "ba5bb109d1c8480fbf71a8214e38cd7c",
+                            NameEn = "",
+                            SecureUrlKey = "7ea56351484948809a832f8f028fdab3",
                             SubmoduleId = 3
                         },
                         new
@@ -1797,8 +1786,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Warehouse",
                             IsActive = true,
                             Name = "قائمة المستودعات",
-                            NameEn = "Warehouse List",
-                            SecureUrlKey = "29bd1d42b6c6432a955f5daba08c58db",
+                            NameEn = "",
+                            SecureUrlKey = "9d3772d26d754dfbb57703934f8a9c82",
                             SubmoduleId = 5
                         },
                         new
@@ -1808,8 +1797,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Warehouse",
                             IsActive = true,
                             Name = "إضافة مستودع",
-                            NameEn = "Add Warehouse",
-                            SecureUrlKey = "f2e097fcb9e04f6a934757015b43b90f",
+                            NameEn = "",
+                            SecureUrlKey = "4b649d845643479995d333a2b2c3feec",
                             SubmoduleId = 5
                         },
                         new
@@ -1819,8 +1808,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Items",
                             IsActive = true,
                             Name = "قائمة العناصر",
-                            NameEn = "Item List",
-                            SecureUrlKey = "ce38af2d06a145cf82d4ee2e8b36814b",
+                            NameEn = "",
+                            SecureUrlKey = "bae2883e440d480d8dac34b422aa13f5",
                             SubmoduleId = 6
                         },
                         new
@@ -1830,8 +1819,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Items",
                             IsActive = true,
                             Name = "إضافة عنصر",
-                            NameEn = "Add Item",
-                            SecureUrlKey = "b1410420c4fb474da13d9595de0baf25",
+                            NameEn = "",
+                            SecureUrlKey = "d87d990c76ab43d2b134c6df9156bb40",
                             SubmoduleId = 6
                         },
                         new
@@ -1841,8 +1830,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Order",
                             IsActive = true,
                             Name = "إنشاء طلب",
-                            NameEn = "Create Order",
-                            SecureUrlKey = "45720ccef76b4b928cf857da4f83dcdc",
+                            NameEn = "",
+                            SecureUrlKey = "60cc242d512045609a420d996d6b89f0",
                             SubmoduleId = 7
                         },
                         new
@@ -1852,8 +1841,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Order",
                             IsActive = true,
                             Name = "قائمة الطلبات",
-                            NameEn = "Order List",
-                            SecureUrlKey = "df1b7f589e544ecca860e24be19a12af",
+                            NameEn = "",
+                            SecureUrlKey = "fc036e9524504bb18d50a22a1457d082",
                             SubmoduleId = 8
                         },
                         new
@@ -1863,8 +1852,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Settings",
                             IsActive = true,
                             Name = "الإعدادات العامة",
-                            NameEn = "General Settings",
-                            SecureUrlKey = "5146208a354d4455be05f28224bf314a",
+                            NameEn = "",
+                            SecureUrlKey = "7096079084674b7cb6e636830a461deb",
                             SubmoduleId = 17
                         },
                         new
@@ -1874,8 +1863,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Settings",
                             IsActive = true,
                             Name = "إعدادات الأمان",
-                            NameEn = "Security Settings",
-                            SecureUrlKey = "888aa571327e4130a74c675af44a7bac",
+                            NameEn = "",
+                            SecureUrlKey = "e73304e3dcbe4c1e897676c870bffc88",
                             SubmoduleId = 18
                         },
                         new
@@ -1885,8 +1874,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "لوحة الرواتب",
-                            NameEn = "Payroll Dashboard",
-                            SecureUrlKey = "89fd3d6a8bbc46739ca869b399a6b313",
+                            NameEn = "",
+                            SecureUrlKey = "24c8ec32043e43a3bb65d03bdaa4d92c",
                             SubmoduleId = 9
                         },
                         new
@@ -1896,8 +1885,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "رواتب الموظفين",
-                            NameEn = "Employee Salaries",
-                            SecureUrlKey = "bc49ec2f4f9448fba3b95ee698ba608a",
+                            NameEn = "",
+                            SecureUrlKey = "141891920be048319aa0dbf6ffde9c22",
                             SubmoduleId = 10
                         },
                         new
@@ -1907,8 +1896,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "معالجة الرواتب",
-                            NameEn = "Salary Processing",
-                            SecureUrlKey = "bb8254a687f44e6291972a8fa3d212a1",
+                            NameEn = "",
+                            SecureUrlKey = "a4f908ae7836422a8c01926a950c0190",
                             SubmoduleId = 9
                         },
                         new
@@ -1918,8 +1907,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "تقارير الرواتب",
-                            NameEn = "Payroll Reports",
-                            SecureUrlKey = "9980e5b5c3f54c8f9fce395be48a2ed4",
+                            NameEn = "",
+                            SecureUrlKey = "8196e539485d44f8b026967b75d265b3",
                             SubmoduleId = 15
                         },
                         new
@@ -1929,8 +1918,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "إدارة المكافآت",
-                            NameEn = "Bonuses Management",
-                            SecureUrlKey = "6249b37e9a7345438448581b09478c9d",
+                            NameEn = "",
+                            SecureUrlKey = "8857b91c2c0f4e23b5a683e539607883",
                             SubmoduleId = 9
                         },
                         new
@@ -1940,8 +1929,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "الخصومات",
-                            NameEn = "Deductions",
-                            SecureUrlKey = "02143e246fda440fafcdd255027f7d70",
+                            NameEn = "",
+                            SecureUrlKey = "e5906c3c661445c4898547683ec142c9",
                             SubmoduleId = 9
                         },
                         new
@@ -1951,8 +1940,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "حسابات الضرائب",
-                            NameEn = "Tax Calculations",
-                            SecureUrlKey = "07c603a6b4474b26b7a155b593a318e1",
+                            NameEn = "",
+                            SecureUrlKey = "83a472b1b68a4ca1bd9894799c774859",
                             SubmoduleId = 9
                         },
                         new
@@ -1962,8 +1951,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "إنشاء إيصال الدفع",
-                            NameEn = "Payslip Generation",
-                            SecureUrlKey = "d83bdb2df97340259bb073a278c1aca2",
+                            NameEn = "",
+                            SecureUrlKey = "9cb6dd86b0884203a764433e4f43e954",
                             SubmoduleId = 9
                         },
                         new
@@ -1973,8 +1962,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "مدفوعات العمل الإضافي",
-                            NameEn = "Overtime Payments",
-                            SecureUrlKey = "b30a4911a99941d290e25451c6182040",
+                            NameEn = "",
+                            SecureUrlKey = "1efc95ce13b24d54ae7aba80e6cae9e4",
                             SubmoduleId = 9
                         },
                         new
@@ -1984,8 +1973,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Payroll",
                             IsActive = true,
                             Name = "سجل الرواتب",
-                            NameEn = "Payroll History",
-                            SecureUrlKey = "3c4bc19cd60947e6a101459975485e53",
+                            NameEn = "",
+                            SecureUrlKey = "5ae70ad383fb42b4907ef657d2e3b924",
                             SubmoduleId = 9
                         },
                         new
@@ -1995,8 +1984,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Accountant",
                             IsActive = true,
                             Name = "الطلبات المالية",
-                            NameEn = "Financial Orders",
-                            SecureUrlKey = "458a125d8ca940ca80955c9495d0f402",
+                            NameEn = "",
+                            SecureUrlKey = "9914d73a5e1f4ffeb56e68317f0d6288",
                             SubmoduleId = 15
                         },
                         new
@@ -2006,8 +1995,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Onboarding",
                             IsActive = true,
                             Name = "ما قبل الإدماج",
-                            NameEn = "Pre-Onboarding",
-                            SecureUrlKey = "0b9e3c4d273041208977bf0e1342c81e",
+                            NameEn = "",
+                            SecureUrlKey = "06f937ff5034487781ea3aa10f233ebf",
                             SubmoduleId = 10
                         },
                         new
@@ -2017,8 +2006,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Onboarding",
                             IsActive = true,
                             Name = "إعدادات تكنولوجيا المعلومات",
-                            NameEn = "IT Setup",
-                            SecureUrlKey = "33ca822acd544cf797484a3de39ad0d9",
+                            NameEn = "",
+                            SecureUrlKey = "3701d2cb0d48466a98c158c85f7b56ac",
                             SubmoduleId = 10
                         },
                         new
@@ -2028,8 +2017,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Onboarding",
                             IsActive = true,
                             Name = "التدريب والتوجيه",
-                            NameEn = "Training & Orientation",
-                            SecureUrlKey = "aaed1d4a7eb5474d830953228d3de834",
+                            NameEn = "",
+                            SecureUrlKey = "c0691950b4b74cd0bb0a7feaf5396fc4",
                             SubmoduleId = 10
                         },
                         new
@@ -2039,8 +2028,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Offboarding",
                             IsActive = true,
                             Name = "تصفية المغادرة",
-                            NameEn = "Exit Clearance",
-                            SecureUrlKey = "50c4b4e8f59e482da182bc7f5e6afec7",
+                            NameEn = "",
+                            SecureUrlKey = "f0c28ed8b30842bf94337de6412d7b64",
                             SubmoduleId = 10
                         },
                         new
@@ -2050,8 +2039,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Offboarding",
                             IsActive = true,
                             Name = "سحب الصلاحيات",
-                            NameEn = "Access Revocation",
-                            SecureUrlKey = "b40b35e5cbb441c5a45399424da5bf2a",
+                            NameEn = "",
+                            SecureUrlKey = "58d46b4e0f1142419033c6de76d769bc",
                             SubmoduleId = 10
                         },
                         new
@@ -2061,8 +2050,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Offboarding",
                             IsActive = true,
                             Name = "الرواتب النهائية والمستندات",
-                            NameEn = "Final Payroll & Documents",
-                            SecureUrlKey = "82b04df520464561a24e49167f5fa9d7",
+                            NameEn = "",
+                            SecureUrlKey = "41bb1fdcaf0240e28993aec13f222017",
                             SubmoduleId = 10
                         },
                         new
@@ -2072,8 +2061,8 @@ namespace Factory.DAL.Migrations
                             Controller = "HR",
                             IsActive = true,
                             Name = "سجلات الموظفين",
-                            NameEn = "Employee Records",
-                            SecureUrlKey = "6f593fc64cc340c9ac78be12c5f23a39",
+                            NameEn = "",
+                            SecureUrlKey = "3fd5128d065643ff882cb6cd146f4e4d",
                             SubmoduleId = 10
                         },
                         new
@@ -2083,8 +2072,8 @@ namespace Factory.DAL.Migrations
                             Controller = "HR",
                             IsActive = true,
                             Name = "إدارة الإجازات",
-                            NameEn = "Leave Management",
-                            SecureUrlKey = "aceb57aa4bc14642bf130e9483330f21",
+                            NameEn = "",
+                            SecureUrlKey = "ba2eb7d79f754f398a55fac34d20387e",
                             SubmoduleId = 10
                         },
                         new
@@ -2094,8 +2083,8 @@ namespace Factory.DAL.Migrations
                             Controller = "HR",
                             IsActive = true,
                             Name = "معالجة الرواتب",
-                            NameEn = "Payroll Processing",
-                            SecureUrlKey = "1c0f4396bd7246f29f958c87091acc4e",
+                            NameEn = "",
+                            SecureUrlKey = "1c3f7e5dd03e4b1796dead19ed63b269",
                             SubmoduleId = 9
                         },
                         new
@@ -2105,8 +2094,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Performance",
                             IsActive = true,
                             Name = "تقييمات الأداء",
-                            NameEn = "Performance Reviews",
-                            SecureUrlKey = "88d7058ce2874e77b1aa08455bcafccb",
+                            NameEn = "",
+                            SecureUrlKey = "998bda5da6d44cc8a2e9ae383b26e8e2",
                             SubmoduleId = 10
                         },
                         new
@@ -2116,8 +2105,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Performance",
                             IsActive = true,
                             Name = "تتبع مؤشرات الأداء",
-                            NameEn = "KPI Tracking",
-                            SecureUrlKey = "8a2810479cfd499ab00d29f2ee7df32b",
+                            NameEn = "",
+                            SecureUrlKey = "2d55216be10b489a8fddf6e04fe01f4d",
                             SubmoduleId = 10
                         },
                         new
@@ -2127,8 +2116,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Performance",
                             IsActive = true,
                             Name = "التغذية الراجعة والتقدير",
-                            NameEn = "Feedback & Recognition",
-                            SecureUrlKey = "5d3c8b3639924e73bfe7cfd76aa91376",
+                            NameEn = "",
+                            SecureUrlKey = "0aa158976faa4a02b9b188cb313b0b37",
                             SubmoduleId = 10
                         },
                         new
@@ -2138,8 +2127,8 @@ namespace Factory.DAL.Migrations
                             Controller = "ITService",
                             IsActive = true,
                             Name = "إدارة التذاكر",
-                            NameEn = "Ticket Management",
-                            SecureUrlKey = "ae12c516ef83446f8c6a6420d7b2abc7",
+                            NameEn = "",
+                            SecureUrlKey = "44ba5e457cc14d1194d81916cdb66aff",
                             SubmoduleId = 11
                         },
                         new
@@ -2149,8 +2138,8 @@ namespace Factory.DAL.Migrations
                             Controller = "ITService",
                             IsActive = true,
                             Name = "مراقبة النظام",
-                            NameEn = "System Monitoring",
-                            SecureUrlKey = "7849beaae2ff420cbe349c96f45c961c",
+                            NameEn = "",
+                            SecureUrlKey = "441c79954f364a43979f0675cbd39cd8",
                             SubmoduleId = 12
                         },
                         new
@@ -2160,8 +2149,8 @@ namespace Factory.DAL.Migrations
                             Controller = "ITService",
                             IsActive = true,
                             Name = "جرد الأجهزة",
-                            NameEn = "Hardware Inventory",
-                            SecureUrlKey = "33ee81999b2d43c29375cea3205c44fb",
+                            NameEn = "",
+                            SecureUrlKey = "e6f57f486a304d41a10e33af7733bf41",
                             SubmoduleId = 5
                         },
                         new
@@ -2171,8 +2160,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Support",
                             IsActive = true,
                             Name = "تذاكر الدعم",
-                            NameEn = "Support Tickets",
-                            SecureUrlKey = "2025e891027d48e3ba09a060e9bc88a9",
+                            NameEn = "",
+                            SecureUrlKey = "e775bffa914a4ef2a83d4189228f6e07",
                             SubmoduleId = 13
                         },
                         new
@@ -2182,8 +2171,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Support",
                             IsActive = true,
                             Name = "الدردشة المباشرة",
-                            NameEn = "Live Chat",
-                            SecureUrlKey = "c78b2dce67364453bd38d6e5273df34a",
+                            NameEn = "",
+                            SecureUrlKey = "c717e00741484c0e86ca1f18ebe3f91f",
                             SubmoduleId = 14
                         },
                         new
@@ -2193,8 +2182,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Support",
                             IsActive = true,
                             Name = "الأسئلة الشائعة ومركز المساعدة",
-                            NameEn = "FAQ & Help Center",
-                            SecureUrlKey = "76f94d95bad7428f96d1a58836c7be6b",
+                            NameEn = "",
+                            SecureUrlKey = "d4528f578d584981b660f0fa7151a12a",
                             SubmoduleId = 13
                         },
                         new
@@ -2204,8 +2193,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Reports",
                             IsActive = true,
                             Name = "التقارير المالية",
-                            NameEn = "Financial Reports",
-                            SecureUrlKey = "3395d23fc8ef4c509bbce5a8b04d36ae",
+                            NameEn = "",
+                            SecureUrlKey = "1936f15595fb4fbcb3e395358849aa36",
                             SubmoduleId = 15
                         },
                         new
@@ -2215,8 +2204,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Reports",
                             IsActive = true,
                             Name = "تحليلات الموظفين",
-                            NameEn = "Employee Insights",
-                            SecureUrlKey = "c39f953246a4437ab3dbbf9ced660b3b",
+                            NameEn = "",
+                            SecureUrlKey = "204ce2feb9494ee98f8ef382104eac5f",
                             SubmoduleId = 15
                         },
                         new
@@ -2226,8 +2215,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Reports",
                             IsActive = true,
                             Name = "المبيعات والإيرادات",
-                            NameEn = "Sales & Revenue",
-                            SecureUrlKey = "1965acee6d63473f983375e4bd94cd90",
+                            NameEn = "",
+                            SecureUrlKey = "a40b1fc5385e463bbe40bbd4af186125",
                             SubmoduleId = 15
                         },
                         new
@@ -2237,8 +2226,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Support",
                             IsActive = true,
                             Name = "لوحة الدعم",
-                            NameEn = "Support Dashboard",
-                            SecureUrlKey = "3ca38beabae64f89b94e21d9fbe2b3e3",
+                            NameEn = "",
+                            SecureUrlKey = "477ee195ef1e4d3cbc677684f8df6e9a",
                             SubmoduleId = 13
                         },
                         new
@@ -2248,8 +2237,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Report",
                             IsActive = true,
                             Name = "لوحة الطلبات",
-                            NameEn = "Orders Dashboard",
-                            SecureUrlKey = "bd11333cd5c84cc486933252d7730c80",
+                            NameEn = "",
+                            SecureUrlKey = "35f71886be204d4e8534a5b1cc6224f5",
                             SubmoduleId = 8
                         },
                         new
@@ -2259,8 +2248,8 @@ namespace Factory.DAL.Migrations
                             Controller = "ExportImport",
                             IsActive = true,
                             Name = "إدارة البيانات",
-                            NameEn = "Data Management",
-                            SecureUrlKey = "d3b462a958e5444d9890d99317ca1dc6",
+                            NameEn = "",
+                            SecureUrlKey = "84d2cf59dc744dfe925c8eaa006d503a",
                             SubmoduleId = 17
                         },
                         new
@@ -2270,8 +2259,8 @@ namespace Factory.DAL.Migrations
                             Controller = "ExportImport",
                             IsActive = true,
                             Name = "تصدير البيانات",
-                            NameEn = "Data Export",
-                            SecureUrlKey = "eec9eb4425b841009a96fbb7636228be",
+                            NameEn = "",
+                            SecureUrlKey = "030acd90b34840f89690435422502249",
                             SubmoduleId = 17
                         },
                         new
@@ -2281,8 +2270,8 @@ namespace Factory.DAL.Migrations
                             Controller = "ExportImport",
                             IsActive = true,
                             Name = "استيراد البيانات",
-                            NameEn = "Data Import",
-                            SecureUrlKey = "64e0c3bda38d4fcbad75b33f3911cfbd",
+                            NameEn = "",
+                            SecureUrlKey = "fcf72d8cdb3c4f68bc6624a391b19408",
                             SubmoduleId = 17
                         },
                         new
@@ -2292,8 +2281,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Report",
                             IsActive = true,
                             Name = "لوحة الطلبات",
-                            NameEn = "Order Dashboard",
-                            SecureUrlKey = "c22ebe39a52645359b9a970f497ef97c",
+                            NameEn = "",
+                            SecureUrlKey = "dfed669abe254660971f126a63fe3e3e",
                             SubmoduleId = 16
                         },
                         new
@@ -2303,8 +2292,8 @@ namespace Factory.DAL.Migrations
                             Controller = "warehouse",
                             IsActive = true,
                             Name = "المستودعات",
-                            NameEn = "Stores",
-                            SecureUrlKey = "4b95b0c565c4490892150522b6745a24",
+                            NameEn = "",
+                            SecureUrlKey = "4ea68c9549f8497d9a97f893e448b42f",
                             SubmoduleId = 15
                         },
                         new
@@ -2314,8 +2303,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Country",
                             IsActive = true,
                             Name = "الدول",
-                            NameEn = "Countries",
-                            SecureUrlKey = "33d82bf124dd47c5a0ff181f05acd54a",
+                            NameEn = "",
+                            SecureUrlKey = "4cc097cd126145f0821ea973f965ced2",
                             SubmoduleId = 17
                         },
                         new
@@ -2325,8 +2314,8 @@ namespace Factory.DAL.Migrations
                             Controller = "items",
                             IsActive = true,
                             Name = "الدول وعناصرها",
-                            NameEn = "Countries and Their Items",
-                            SecureUrlKey = "52b53feb16954c6b86c65952fe4cb247",
+                            NameEn = "",
+                            SecureUrlKey = "f4a29d141e4440878d3801744353ef19",
                             SubmoduleId = 15
                         },
                         new
@@ -2336,8 +2325,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Onboarding",
                             IsActive = true,
                             Name = "قائمة الإدماج",
-                            NameEn = "Onboarding List",
-                            SecureUrlKey = "8c0f1f2ff08b49159aa6fa3e428ffcc9",
+                            NameEn = "",
+                            SecureUrlKey = "cd8026e671144cf3932a955da7ff4332",
                             SubmoduleId = 19
                         },
                         new
@@ -2347,8 +2336,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Onboarding",
                             IsActive = true,
                             Name = "إنشاء إدماج",
-                            NameEn = "Create Onboarding",
-                            SecureUrlKey = "c2e2dda6a24e4ad1bc326869452494f8",
+                            NameEn = "",
+                            SecureUrlKey = "7a59e4699bc44433844a1dc13ca1b893",
                             SubmoduleId = 19
                         },
                         new
@@ -2358,8 +2347,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Offboarding",
                             IsActive = true,
                             Name = "قائمة إنهاء الخدمة",
-                            NameEn = "Offboarding List",
-                            SecureUrlKey = "f5de3780e4064fda9ab64bb89153fa73",
+                            NameEn = "",
+                            SecureUrlKey = "0a0b6d834f3f489ba2b6724bee5a6d95",
                             SubmoduleId = 20
                         },
                         new
@@ -2369,8 +2358,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Offboarding",
                             IsActive = true,
                             Name = "إنهاء خدمة",
-                            NameEn = "Create Offboarding",
-                            SecureUrlKey = "9fcd026d5338435aa13391401a44e523",
+                            NameEn = "",
+                            SecureUrlKey = "21793eacde5c4726858913615fa0153f",
                             SubmoduleId = 20
                         },
                         new
@@ -2380,8 +2369,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Performance",
                             IsActive = true,
                             Name = "تقييمات الأداء",
-                            NameEn = "Performance Reviews",
-                            SecureUrlKey = "57d585389707437694b2aa46bd7e4af4",
+                            NameEn = "",
+                            SecureUrlKey = "506507757278439d9f4c500671928213",
                             SubmoduleId = 21
                         },
                         new
@@ -2391,8 +2380,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Performance",
                             IsActive = true,
                             Name = "إضافة تقييم أداء",
-                            NameEn = "Add Performance Review",
-                            SecureUrlKey = "459820709c1848e2ab2670b26f65cfd2",
+                            NameEn = "",
+                            SecureUrlKey = "1684a5015e224459a701f30cd70ea759",
                             SubmoduleId = 21
                         },
                         new
@@ -2402,8 +2391,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Supervisor",
                             IsActive = true,
                             Name = "قائمة المشرفين",
-                            NameEn = "Supervisors List",
-                            SecureUrlKey = "a3d0f8c1fc604a06b78bc8de859c6b10",
+                            NameEn = "",
+                            SecureUrlKey = "7e44f71f03264037a444f3c21f124e42",
                             SubmoduleId = 22
                         },
                         new
@@ -2413,8 +2402,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Supervisor",
                             IsActive = true,
                             Name = "إضافة مشرف",
-                            NameEn = "Add Supervisor",
-                            SecureUrlKey = "3d4d4d7d44fa4ff6b580a807a5b43c5d",
+                            NameEn = "",
+                            SecureUrlKey = "ecfc438651a148d8b1dbcbf6a0f7f062",
                             SubmoduleId = 22
                         },
                         new
@@ -2424,8 +2413,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Position",
                             IsActive = true,
                             Name = "مناصب الموظفين",
-                            NameEn = "Employee Positions",
-                            SecureUrlKey = "3a73318269c6406d95a1464748c4c588",
+                            NameEn = "",
+                            SecureUrlKey = "f0d600fabd7b407e9b98cc49203ea4a8",
                             SubmoduleId = 23
                         },
                         new
@@ -2435,8 +2424,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Position",
                             IsActive = true,
                             Name = "إنشاء منصب موظف",
-                            NameEn = "Create Employee Position",
-                            SecureUrlKey = "cec843f217694708b27892a5c5aa5b92",
+                            NameEn = "",
+                            SecureUrlKey = "3434033cc3aa41cdb34003b22ba943ac",
                             SubmoduleId = 23
                         },
                         new
@@ -2446,8 +2435,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Department",
                             IsActive = true,
                             Name = "قائمة الأقسام",
-                            NameEn = "Departments List",
-                            SecureUrlKey = "2eb6c57e028d40f7a158a88c8ce1096a",
+                            NameEn = "",
+                            SecureUrlKey = "3e2326d5b5cf45849b11073b8e0656b5",
                             SubmoduleId = 24
                         },
                         new
@@ -2457,8 +2446,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Department",
                             IsActive = true,
                             Name = "إضافة قسم",
-                            NameEn = "Add Department",
-                            SecureUrlKey = "bf17d675faeb41599794bd1259288863",
+                            NameEn = "",
+                            SecureUrlKey = "dbf00471938745d8a4c47a20a560b2af",
                             SubmoduleId = 24
                         },
                         new
@@ -2468,8 +2457,8 @@ namespace Factory.DAL.Migrations
                             Controller = "LeaveRequest",
                             IsActive = true,
                             Name = "طلبات الإجازة",
-                            NameEn = "Leave Requests",
-                            SecureUrlKey = "fb30a8e7a30a42d99a061392f107252c",
+                            NameEn = "",
+                            SecureUrlKey = "a95a2d6e10994e43b43ad97e615a1d93",
                             SubmoduleId = 25
                         },
                         new
@@ -2479,8 +2468,8 @@ namespace Factory.DAL.Migrations
                             Controller = "LeaveRequest",
                             IsActive = true,
                             Name = "تقديم طلب إجازة",
-                            NameEn = "Submit Leave Request",
-                            SecureUrlKey = "0af90862cce44c27850c296e1e8cd55f",
+                            NameEn = "",
+                            SecureUrlKey = "c888f064d024427ea61576171c24cd1e",
                             SubmoduleId = 25
                         },
                         new
@@ -2490,8 +2479,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Employee",
                             IsActive = true,
                             Name = "قائمة الموظفين",
-                            NameEn = "Employee List",
-                            SecureUrlKey = "9b2e4a6df5ff4f9b93dcfe3441c51556",
+                            NameEn = "",
+                            SecureUrlKey = "58d1270f911348aa893100872f5a2428",
                             SubmoduleId = 26
                         },
                         new
@@ -2501,8 +2490,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Employee",
                             IsActive = true,
                             Name = "إضافة موظف",
-                            NameEn = "Add Employee",
-                            SecureUrlKey = "e120a90566714b0c9a1672760b90d9a3",
+                            NameEn = "",
+                            SecureUrlKey = "aea5d8b0856249ec84ab192ca48c2d91",
                             SubmoduleId = 26
                         },
                         new
@@ -2512,8 +2501,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Notification",
                             IsActive = true,
                             Name = "قائمة الإشعارات",
-                            NameEn = "Notification List",
-                            SecureUrlKey = "5e3f55e560d3457ebb3eb866e0a812d7",
+                            NameEn = "",
+                            SecureUrlKey = "4743178c5ea544ebb131c71c9bc3b075",
                             SubmoduleId = 27
                         },
                         new
@@ -2523,8 +2512,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Notification",
                             IsActive = true,
                             Name = "إنشاء إشعار",
-                            NameEn = "Create Notification",
-                            SecureUrlKey = "8f4c9e90426a48aaa77cef3740fb4162",
+                            NameEn = "",
+                            SecureUrlKey = "a08b376a3d884f55a8af8107942de2b3",
                             SubmoduleId = 27
                         },
                         new
@@ -2534,8 +2523,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Notification",
                             IsActive = true,
                             Name = "إعدادات الإشعارات",
-                            NameEn = "Notification Settings",
-                            SecureUrlKey = "8dcc8665bf7b448cb7cd5aba8675f211",
+                            NameEn = "",
+                            SecureUrlKey = "965daca1cc114aacbc1c4207836b1363",
                             SubmoduleId = 28
                         },
                         new
@@ -2545,8 +2534,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Notification",
                             IsActive = true,
                             Name = "تعديل الإعدادات",
-                            NameEn = "Edit Settings",
-                            SecureUrlKey = "88d058ce3b69412bad7a2174c20cf3af",
+                            NameEn = "",
+                            SecureUrlKey = "d39d71b5523a47d48851bf196aa2105f",
                             SubmoduleId = 28
                         },
                         new
@@ -2556,8 +2545,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Order",
                             IsActive = false,
                             Name = "تفاصيل الطلب",
-                            NameEn = "Order Details",
-                            SecureUrlKey = "d7452f67768148ee944007e2ea306ebf",
+                            NameEn = "",
+                            SecureUrlKey = "dac232efaaf94e228709cfc612b32fe6",
                             SubmoduleId = 7
                         },
                         new
@@ -2567,8 +2556,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Order",
                             IsActive = false,
                             Name = "تحسين الطلب",
-                            NameEn = "Order Optimization",
-                            SecureUrlKey = "5c98c58e37f14877898a25fa41272718",
+                            NameEn = "",
+                            SecureUrlKey = "4ac45de0f2bf4270a870f85c2b7b9b18",
                             SubmoduleId = 7
                         },
                         new
@@ -2578,8 +2567,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Order",
                             IsActive = false,
                             Name = "ملصق الزجاج",
-                            NameEn = "Order GlassLabel",
-                            SecureUrlKey = "f683db2dffe047a2b7f0158790649ca3",
+                            NameEn = "",
+                            SecureUrlKey = "f8efa388211446ee97dccf96a43ef075",
                             SubmoduleId = 7
                         },
                         new
@@ -2589,8 +2578,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Order",
                             IsActive = false,
                             Name = "حذف الطلب",
-                            NameEn = "Order Delete",
-                            SecureUrlKey = "87e9466563c14bf09a9bcd38b60fc7fb",
+                            NameEn = "",
+                            SecureUrlKey = "06e78eb6908d4daf8b4d80533eae7b53",
                             SubmoduleId = 7
                         },
                         new
@@ -2600,8 +2589,8 @@ namespace Factory.DAL.Migrations
                             Controller = "Report",
                             IsActive = true,
                             Name = "لوحة المتجر",
-                            NameEn = "Store Dashboard",
-                            SecureUrlKey = "1b693442764c4f1b8587984512ca14a7",
+                            NameEn = "",
+                            SecureUrlKey = "2e8c5ca5150743b0b6eec61b014e563d",
                             SubmoduleId = 16
                         });
                 });

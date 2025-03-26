@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Factory.DAL.Models.Documentation.Documentation>
 
 @{
-    ViewData["Title"] = "Platform Documentation";
+    ViewData["Title"] = Localizer["PlatformDocumentation"];
     Layout = "_LogedUser";
 }
 
@@ -12,13 +12,15 @@
     @if (Model == null || !Model.Any())
     {
         <div class="alert alert-info" role="alert">
-            <i class="bi bi-info-circle me-2"></i> No documentation available at the moment.
+            <i class="bi bi-info-circle me-2"></i> @Localizer["NoDocumentationAvailable"]
         </div>
     }
     else
     {
         <div class="mb-4">
-            <input type="text" class="form-control" id="searchInput" placeholder="Search documentation..." aria-label="Search">
+            <input type="text" class="form-control" id="searchInput"
+                   placeholder="@Localizer["SearchPlaceholder"]"
+                   aria-label="@Localizer["SearchLabel"]">
         </div>
 
         <div class="accordion" id="documentationAccordion">
@@ -26,31 +28,43 @@
             {
                 <div class="accordion-item mb-3 border rounded">
                     <h2 class="accordion-header" id="heading-@item.Id">
-                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.Id" aria-expanded="false" aria-controls="collapse-@item.Id">
+                        <button class="accordion-button collapsed fw-bold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse-@item.Id"
+                                aria-expanded="false" aria-controls="collapse-@item.Id">
                             <i class="bi bi-file-earmark-text me-2"></i> @item.Title
                             @if (!string.IsNullOrEmpty(item.VideoUrl))
                             {
-                                <span class="badge bg-success ms-2"><i class="bi bi-play-circle me-1"></i> Video</span>
+                                <span class="badge bg-success ms-2">
+                                    <i class="bi bi-play-circle me-1"></i> @Localizer["VideoBadge"]
+                                </span>
                             }
                         </button>
                     </h2>
 
-                    <div id="collapse-@item.Id" class="accordion-collapse collapse" aria-labelledby="heading-@item.Id" data-bs-parent="#documentationAccordion">
+                    <div id="collapse-@item.Id" class="accordion-collapse collapse"
+                         aria-labelledby="heading-@item.Id" data-bs-parent="#documentationAccordion">
                         <div class="accordion-body">
-                            <h5 class="mb-3"><i class="bi bi-card-text me-2"></i> Description</h5>
+                            <h5 class="mb-3">
+                                <i class="bi bi-card-text me-2"></i> @Localizer["DescriptionLabel"]
+                            </h5>
                             <p>@item.Description</p>
 
                             @if (!string.IsNullOrEmpty(item.Content))
                             {
-                                <h5 class="mb-3"><i class="bi bi-file-text me-2"></i> Content</h5>
+                                <h5 class="mb-3">
+                                    <i class="bi bi-file-text me-2"></i> @Localizer["ContentLabel"]
+                                </h5>
                                 <p>@item.Content</p>
                             }
 
                             @if (!string.IsNullOrEmpty(item.VideoUrl))
                             {
-                                <h5 class="mb-3"><i class="bi bi-play-circle me-2"></i> Video Tutorial</h5>
+                                <h5 class="mb-3">
+                                    <i class="bi bi-play-circle me-2"></i> @Localizer["VideoTutorialLabel"]
+                                </h5>
                                 <div class="ratio ratio-16x9">
-                                    <iframe src="https://www.youtube.com/embed/@item.VideoUrl.Split('=').Last()" title="@item.Title" allowfullscreen></iframe>
+                                    <iframe src="https://www.youtube.com/embed/@item.VideoUrl.Split('=').Last()"
+                                            title="@item.Title" allowfullscreen></iframe>
                                 </div>
                             }
                         </div>

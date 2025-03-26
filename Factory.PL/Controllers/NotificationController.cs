@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Factory.DAL.Models.Notifications;
 using Factory.PL.Services.Notify;
 using Factory.BLL.InterFaces;
@@ -17,12 +18,19 @@ namespace Factory.PL.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly IStringLocalizer<NotificationController> _localizer;
 
-        public NotificationController(IHubContext<NotificationHub> hubContext,INotificationService notificationService, IUnitOfWork unitOfWork)
+        public NotificationController(
+            IHubContext<NotificationHub> hubContext,
+            INotificationService notificationService,
+            IUnitOfWork unitOfWork,
+            IStringLocalizer<NotificationController> localizer)
         {
             _unitOfWork = unitOfWork;
             _hubContext = hubContext;
+            _localizer = localizer;
         }
+
         public async Task<IActionResult> Index()
         {
             var users = await _unitOfWork.GetRepository<ApplicationUser>().GetAllAsync();
@@ -44,8 +52,6 @@ namespace Factory.PL.Controllers
 
             return View(notifications);
         }
-
-
 
         [HttpGet]
         [CheckPermission(Permissions.Create)]
@@ -95,17 +101,17 @@ namespace Factory.PL.Controllers
 
                     await _unitOfWork.SaveChangesAsync();
 
-                    TempData["Success"] = "Notifications added successfully!";
+                    TempData["Success"] = nameof(_localizer["NotificationsAddedSuccessfully"]);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
-                    TempData["Error"] = "An error occurred while adding the notifications: " + ex.Message;
+                    TempData["Error"] = nameof(_localizer["ErrorAddingNotifications", ex.Message]);
                 }
             }
             else
             {
-                TempData["Error"] = "There were errors in your submission. Please check the form and try again.";
+                TempData["Error"] = nameof(_localizer["SubmissionError"]);
             }
 
             // Reload users for the form
@@ -114,6 +120,7 @@ namespace Factory.PL.Controllers
 
             return View(model);
         }
+
         [HttpGet("api/notification/unread")]
         [Authorize]
         public async Task<IActionResult> GetUnreadNotifications()
@@ -122,12 +129,12 @@ namespace Factory.PL.Controllers
 
             if (string.IsNullOrEmpty(userId))
             {
-                return Unauthorized(); 
+                return Unauthorized();
             }
 
             var notifications = await _unitOfWork.GetRepository<Notification>()
                 .Query()
-                .Where(n => !n.IsRead && n.UserId == userId) 
+                .Where(n => !n.IsRead && n.UserId == userId)
                 .OrderBy(n => n.CreatedAt)
                 .Select(n => new
                 {
@@ -158,7 +165,6 @@ namespace Factory.PL.Controllers
             return Ok();
         }
 
-        //[CheckPermission(Permissions.Read)]
         [Authorize]
         public async Task<IActionResult> Details(int id)
         {
@@ -174,7 +180,6 @@ namespace Factory.PL.Controllers
             return View(notification);
         }
 
-        //[CheckPermission(Permissions.Read)]
         [Authorize]
         public async Task<IActionResult> AllNotifications()
         {
@@ -188,8 +193,8 @@ namespace Factory.PL.Controllers
             var notifications = await _unitOfWork.GetRepository<Notification>()
                 .Query()
                 .Where(n => n.UserId == userId)
-                .OrderBy(n => n.IsRead) 
-                .ThenByDescending(n => n.CreatedAt) 
+                .OrderBy(n => n.IsRead)
+                .ThenByDescending(n => n.CreatedAt)
                 .ToListAsync();
 
             return View(notifications);

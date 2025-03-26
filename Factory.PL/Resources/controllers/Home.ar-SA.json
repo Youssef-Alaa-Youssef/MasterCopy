@@ -1,0 +1,15 @@
+﻿{
+  "AdminDashboardTitle": "لوحة تحكم المدير",
+  "GMDashboardTitle": "لوحة تحكم المدير العام",
+  "AccountantDashboardTitle": "لوحة تحكم المحاسب",
+  "DashboardTitle": "لوحة التحكم",
+  "AddNewButton": "إضافة جديد",
+  "SettingsButton": "الإعدادات",
+  "SystemStatusHeader": "حالة النظام: مثالية",
+  "SystemStatusMessage": "جميع الأنظمة تعمل بشكل سليم. آخر تحديث:",
+  "chartModalLabel": "نظرة عامة على التحليلات",
+  "closeButton": "إغلاق",
+  "recentActivitiesTitle": "الأنشطة الأخيرة",
+  "quickActionsTitle": "الإجراءات السريعة"
+
+}

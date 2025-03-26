@@ -6,19 +6,29 @@ namespace Factory.PL.ViewModels.Documentation
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Title is required.")]
-        [StringLength(100, ErrorMessage = "Title cannot exceed 100 characters.")]
+        [Required(ErrorMessage = "TitleRequired")]
+        [StringLength(100, ErrorMessage = "TitleLength")]
         public string Title { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Description is required.")]
-        [StringLength(200, ErrorMessage = "Description cannot exceed 200 characters.")]
+        [Required(ErrorMessage = "TitleRequired")]
+        [StringLength(100, ErrorMessage = "TitleLength")]
+        public string TitleEn { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "DescriptionRequired")]
+        [StringLength(200, ErrorMessage = "DescriptionLength")]
         public string Description { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Content is required.")]
+        [Required(ErrorMessage = "DescriptionRequired")]
+        [StringLength(200, ErrorMessage = "DescriptionLength")]
+        public string DescriptionEn { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "ContentRequired")]
         public string Content { get; set; } = string.Empty;
 
-        [Display(Name = "YouTube Video URL")]
-        [Url(ErrorMessage = "Please enter a valid URL.")]
+        public string? ContentEn { get; set; } = string.Empty;
+
+        [Display(Name = "VideoUrlDisplay")]
+        [Url(ErrorMessage = "VideoUrlInvalid")]
         public string VideoUrl { get; set; } = string.Empty;
 
         public DateTime CreatedAt { get; set; }

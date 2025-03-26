@@ -1,0 +1,15 @@
+{
+  "AdminDashboardTitle": "Administrator Dashboard",
+  "GMDashboardTitle": "General Manager Dashboard",
+  "AccountantDashboardTitle": "Accounting Dashboard",
+  "DashboardTitle": "Dashboard",
+  "AddNewButton": "Add New",
+  "SettingsButton": "Settings",
+  "SystemStatusHeader": "System Status: Optimal",
+  "SystemStatusMessage": "All systems operational. Last updated:",
+  "chartModalLabel": "Analytics Overview",
+  "closeButton": "Close",
+  "recentActivitiesTitle": "Recent Activities",
+  "quickActionsTitle": "Quick Actions"
+}
+

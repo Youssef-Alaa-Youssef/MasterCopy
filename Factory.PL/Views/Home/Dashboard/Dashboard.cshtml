@@ -3,9 +3,9 @@
 
 @{
     Layout = "_LogedUser";
-    ViewData["Title"] = User.IsInRole(UserRole.SuperAdmin.ToString()) ? "Administrator Dashboard" :
-                        User.IsInRole(UserRole.Owner.ToString()) || User.IsInRole(UserRole.GM.ToString()) ? "General Manager Dashboard" :
-                        User.IsInRole(UserRole.Accountant.ToString()) ? "Accounting Dashboard" : "Dashboard";
+    ViewData["Title"] = User.IsInRole(UserRole.SuperAdmin.ToString()) ? Localizer["AdminDashboardTitle"] :
+                        User.IsInRole(UserRole.Owner.ToString()) || User.IsInRole(UserRole.GM.ToString()) ? Localizer["GMDashboardTitle"] :
+                        User.IsInRole(UserRole.Accountant.ToString()) ? Localizer["AccountantDashboardTitle"] : Localizer["DashboardTitle"];
 }
 <div class="container-fluid card shadow-sm p-3">
     @await Html.PartialAsync("ErrorSummaryPartial")
@@ -16,10 +16,10 @@
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
             <div class="d-flex flex-column flex-md-row align-items-center">
                 <a class="btn btn-outline-primary mb-2 mb-md-0 me-md-2" asp-action="Add" asp-controller="Auth">
-                    Add New
+                    @Localizer["AddNewButton"]
                 </a>
                 <button class="btn btn-outline-primary" asp-action="Index" asp-controller="Setting">
-                    Settings
+                    @Localizer["SettingsButton"]
                 </button>
             </div>
         </div>
@@ -46,8 +46,8 @@
         <div class="d-flex align-items-center">
             <i class="bi bi-check-circle-fill text-success me-3 fs-4"></i>
             <div>
-                <h5 class="alert-heading mb-2">System Status: Optimal</h5>
-                <p class="mb-0">All systems operational. Last updated: @DateTime.Now.ToString("t")</p>
+                <h5 class="alert-heading mb-2">@Localizer["SystemStatusHeader"]</h5>
+                <p class="mb-0">@Localizer["SystemStatusMessage"] @DateTime.Now.ToString("t")</p>
             </div>
         </div>
     </div>

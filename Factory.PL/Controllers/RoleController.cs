@@ -170,7 +170,7 @@ namespace Factory.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CheckPermission(Permissions.Create)]
-        public async Task<IActionResult> Create(ApplicationRoles role)
+        public async Task<IActionResult> Create(IdentityRole role)
         {
             if (ModelState.IsValid)
             {
