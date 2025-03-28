@@ -8,7 +8,7 @@ using Factory.PL.Services.Permssions;
 
 namespace Factory.PL.Controllers.Permission
 {
-    [Authorize(Roles = nameof(UserRole.SuperAdmin))]
+    [Authorize(Roles = nameof(UserRole.MasterCopy))]
     public class AssignPermissionController : Controller
     {
         private readonly IRolePermissionService _rolePermissionService;

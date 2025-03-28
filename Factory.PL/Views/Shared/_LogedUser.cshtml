@@ -70,7 +70,7 @@
                             @Localizer["Help"]
                         </a>
                     </li>
-                    @if (User.IsInRole(UserRole.SuperAdmin.ToString()) ||
+                    @if (User.IsInRole(UserRole.MasterCopy.ToString()) ||
                     User.IsInRole(UserRole.GM.ToString()) ||
                     User.IsInRole(UserRole.Owner.ToString()))
                     {
@@ -268,8 +268,8 @@
                 @foreach (var module in modules)
                 {
                     <li class="nav-item mb-1">
-                        <div class="module d-flex justify-content-between align-items-center p-2 rounded cursor-pointer "
-                             data-bs-toggle="collapse" href="#@($"menu{module.Id}")" aria-expanded="false" aria-controls="@($"menu{module.Id}")">
+                        <div class="module d-flex justify-content-between align-items-center p-2 rounded cursor-pointer"
+                             data-bs-toggle="collapse" href="#menu-@module.Id" aria-expanded="false" aria-controls="menu-@module.Id">
                             <div class="d-flex align-items-center">
                                 <i class="bi @module.IconClass fs-5 me-2"></i>
                                 <span class="fw-semibold">@module.Name</span>
@@ -277,29 +277,31 @@
                             <i class="bi bi-chevron-down fs-6 transition-rotate text-muted"></i>
                         </div>
 
-                        <!-- Submodules -->
-                        <ul class="collapse nav flex-column mt-2 ps-3" id="@($"menu{module.Id}")">
+                        <ul class="collapse nav flex-column mt-2 ps-0" id="menu-@module.Id">
                             @foreach (var subModule in module.SubModules)
                             {
-                                <li class="nav-item mb-2">
-                                    <!-- Submodule Header -->
-                                    <div class="submodule d-flex justify-content-between align-items-center p-2 rounded cursor-pointer "
-                                         data-bs-toggle="collapse" href="#@($"submenu{subModule.Id}")" aria-expanded="false" aria-controls="@($"submenu{subModule.Id}")">
-                                        <div class="d-flex align-items-center">
-                                            <i class="bi @subModule.IconClass fs-4 me-2"></i>
+                                <li class="nav-item mb-1 ms-3 border-start">
+                                    <!-- Submodule Level -->
+                                    <div class="d-flex cursor-pointer justify-content-between align-items-center p-2 ps-3 rounded"
+                                         data-bs-toggle="collapse" href="#submenu-@subModule.Id" aria-expanded="false" aria-controls="submenu-@subModule.Id">
+                                        <div class="d-flex  align-items-center">
+                                            <div class="me-2">
+                                                <i class="bi @subModule.IconClass"></i>
+                                            </div>
                                             <span class="fw-medium">@subModule.Name</span>
                                         </div>
-                                        <i class="bi bi-chevron-down fs-6 transition-rotate text-muted"></i>
+                                        <i class="bi bi-chevron-down"></i>
                                     </div>
 
-                                    <!-- Pages -->
-                                    <ul class="collapse nav flex-column mt-1 ps-2" id="@($"submenu{subModule.Id}")">
+                                    <!-- Pages Level -->
+                                    <ul class="collapse nav flex-column mt-1 ps-3" id="submenu-@subModule.Id">
                                         @foreach (var pages in subModule.Pages)
                                         {
-                                            <li class="nav-item d-flex align-items-center mb-1">
-                                                <a href="@UrlHelper.GetSecureUrl(pages)" class="nav-link submodule text-decoration-none" title="@pages.Name">
-                                                    <i class="bi bi-dash fs-6 me-2 text-muted"></i>
-                                                    @pages.Name
+                                            <li class="nav-item cursor-pointer mb-1">
+                                                <a href="@UrlHelper.GetSecureUrl(pages)"
+                                                   class="d-flex align-items-center p-2 ps-4 rounded text-decoration-none">
+                                                    <i class="bi bi-dot me-2"></i>
+                                                    <span>@pages.Name</span>
                                                 </a>
                                             </li>
                                         }
@@ -307,6 +309,7 @@
                                 </li>
                             }
                         </ul>
+
                     </li>
                 }
             </ul>
@@ -323,6 +326,7 @@
             </div>
         </div>
     </div>
+
     <div class="overlay" id="overlay"></div>
 
     <main class="main-content" id="mainContent">

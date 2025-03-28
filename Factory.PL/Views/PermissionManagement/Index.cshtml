@@ -1,7 +1,7 @@
 ﻿@model Factory.PL.ViewModels.Permissions.PermissionManagementViewModel
 
 @{
-    ViewData["Title"] = "Permission Management";
+    ViewData["Title"] = Localizer["Permission Management"].Value;
     Layout = "_LogedUser";
 }
 
@@ -11,12 +11,13 @@
 
     <!-- Statistics Cards -->
     <div class="row mb-4">
+        <!-- Total Users Card -->
         <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-primary  h-100 py-2">
+            <div class="card border-left-primary h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-uppercase mb-1">Total Users</div>
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">@Localizer["Total Users"]</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Users.Count()</div>
                         </div>
                         <div class="col-auto">
@@ -27,12 +28,13 @@
             </div>
         </div>
 
+        <!-- Total Modules Card -->
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-success h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Modules</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">@Localizer["Total Modules"]</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Modules.Count()</div>
                         </div>
                         <div class="col-auto">
@@ -43,12 +45,13 @@
             </div>
         </div>
 
+        <!-- Total Permissions Card -->
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-info h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Permissions</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">@Localizer["Total Permissions"]</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Permissions.Count()</div>
                         </div>
                         <div class="col-auto">
@@ -64,17 +67,17 @@
     <div class="row">
         <!-- Users Table -->
         <div class="col-md-6 mb-4">
-            <div class="card  h-100">
+            <div class="card h-100">
                 <div class="card-header">
-                    <h6 class="m-0 font-weight-bold">Users</h6>
+                    <h6 class="m-0 font-weight-bold">@Localizer["Users"]</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
-                            <thead class="thead-light">
+                            <thead>
                                 <tr>
-                                    <th>Username</th>
-                                    <th>Roles</th>
+                                    <th>@Localizer["Username"]</th>
+                                    <th>@Localizer["Roles"]</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,8 +88,7 @@
                                         <td>
                                             @foreach (var role in user.Roles)
                                             {
-                                                <span class="badge badge-primary mr-1">@role</span>
-                                            }
+                                                @role                                            }
                                         </td>
                                     </tr>
                                 }
@@ -101,14 +103,14 @@
         <div class="col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h6 class="m-0 font-weight-bold">Permissions</h6>
+                    <h6 class="m-0 font-weight-bold">@Localizer["Permissions"]</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
-                            <thead class="thead-light">
+                            <thead>
                                 <tr>
-                                    <th>Permission Name</th>
+                                    <th>@Localizer["Permission Name"]</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,7 +130,7 @@
 
     <div class="card-footer text-center mt-2">
         <a asp-action="Index" asp-controller="AssignPermission" class="btn btn-outline-primary">
-            Assign Permissions
+            @Localizer["Assign Permissions"]
         </a>
     </div>
 </div>

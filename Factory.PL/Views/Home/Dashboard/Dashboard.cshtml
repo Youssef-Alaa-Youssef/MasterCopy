@@ -3,15 +3,15 @@
 
 @{
     Layout = "_LogedUser";
-    ViewData["Title"] = User.IsInRole(UserRole.SuperAdmin.ToString()) ? Localizer["AdminDashboardTitle"] :
-                        User.IsInRole(UserRole.Owner.ToString()) || User.IsInRole(UserRole.GM.ToString()) ? Localizer["GMDashboardTitle"] :
-                        User.IsInRole(UserRole.Accountant.ToString()) ? Localizer["AccountantDashboardTitle"] : Localizer["DashboardTitle"];
+    ViewData["Title"] = User.IsInRole(UserRole.MasterCopy.ToString()) ? Localizer["AdminDashboardTitle"].Value :
+                        User.IsInRole(UserRole.Owner.ToString()) || User.IsInRole(UserRole.GM.ToString()) ? Localizer["GMDashboardTitle"].Value :
+                        User.IsInRole(UserRole.Accountant.ToString()) ? Localizer["AccountantDashboardTitle"].Value : Localizer["DashboardTitle"].Value;
 }
 <div class="container-fluid card shadow-sm p-3">
     @await Html.PartialAsync("ErrorSummaryPartial")
     @await Html.PartialAsync("_PageTitle")
 
-    @if (User.IsInRole(UserRole.SuperAdmin.ToString()) || User.IsInRole(UserRole.Owner.ToString()) || User.IsInRole(UserRole.GM.ToString()))
+    @if (User.IsInRole(UserRole.MasterCopy.ToString()) || User.IsInRole(UserRole.Owner.ToString()) || User.IsInRole(UserRole.GM.ToString()))
     {
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
             <div class="d-flex flex-column flex-md-row align-items-center">
@@ -32,7 +32,7 @@
         }
     </div>
 
-    @if (User.IsInRole(UserRole.SuperAdmin.ToString()) || User.IsInRole(UserRole.Owner.ToString()) || User.IsInRole(UserRole.GM.ToString()))
+    @if (User.IsInRole(UserRole.MasterCopy.ToString()) || User.IsInRole(UserRole.Owner.ToString()) || User.IsInRole(UserRole.GM.ToString()))
     {
         @await Html.PartialAsync("DashBoard/_AdminContent", Model)
     }

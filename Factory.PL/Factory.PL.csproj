@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
-    <Content Remove="Resources\Controllers\ar-SA.json" />
-    <Content Remove="Resources\Controllers\en-US.json" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\ar-SA.json" />
     <EmbeddedResource Include="Resources\en-US.json" />
   </ItemGroup>
@@ -22,6 +18,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" />
+    <PackageReference Include="Microsoft.Extensions.Localization" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <PackageReference Include="MimeKit" />
     <PackageReference Include="Newtonsoft.Json" />
@@ -43,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\ViewModels\" />
     <Folder Include="Services\NavbarSettings\" />
     <Folder Include="Services\WhatsApp\" />
     <Folder Include="Services\SMS\" />
@@ -62,6 +58,6 @@
     </Content>
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/architectfx.json" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/architectfx.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

@@ -78,6 +78,8 @@
 
     <form asp-controller="Auth" asp-action="LogIn" method="POST" class="needs-validation" novalidate>
         @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="ReturnUrl" />
+
         <div class="mb-4">
             <label asp-for="Email" class="form-label fw-medium mb-2">Email Address</label>
             <div class="input-group input-group-lg">

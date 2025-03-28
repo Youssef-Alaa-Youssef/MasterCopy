@@ -1,0 +1,14 @@
+{
+  "Assign Permission": "Assign Permission",
+  "Module": "Module",
+  "Select Module": "Select Module",
+  "SubModule": "SubModule",
+  "Select SubModule": "Select SubModule",
+  "Role": "Role",
+  "Select Role": "Select Role",
+  "Permission Types": "Permission Types",
+  "Pages": "Pages",
+  "Error loading existing permissions:": "Error loading existing permissions:",
+  "Error loading submodules:": "Error loading submodules:",
+  "Error loading pages:": "Error loading pages:"
+}

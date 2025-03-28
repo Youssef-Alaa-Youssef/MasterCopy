@@ -4,7 +4,7 @@
 @using System.Globalization
 
 @{
-    ViewData["Title"] = Model.Id == 0 ? Localizer["CreateDocumentTitle"] : Localizer["EditDocumentTitle"];
+    ViewData["Title"] = Model.Id == 0 ? Localizer["CreateDocumentTitle"].Value : Localizer["EditDocumentTitle"].Value;
     Layout = "_LogedUser";
     var isArabic = CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ar";
 }

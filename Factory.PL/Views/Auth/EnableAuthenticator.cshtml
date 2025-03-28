@@ -1,6 +1,6 @@
 ﻿@model Factory.PL.ViewModels.Auth.EnableAuthenticatorViewModel
 @{
-    ViewData["Title"] = "Enable Authenticator";
+    ViewData["Title"] = Localizer["Enable Authenticator"].Value;
     Layout = "_LogedUser";
 }
 
@@ -68,18 +68,18 @@
         margin-top: 1rem;
     }
 </style>
+
 <div class="container-fluid card shadow-sm mt-2">
     @await Html.PartialAsync("ErrorSummaryPartial")
     @await Html.PartialAsync("_PageTitle")
-@if (!(bool)ViewData["Is2faEnabled"] && ViewData["Is2faEnabled"] is not null)
-{
- 
 
+    @if (!(bool)ViewData["Is2faEnabled"] && ViewData["Is2faEnabled"] is not null)
+    {
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-info" role="alert">
                     <i class="bi bi-info-circle me-2"></i>
-                    Two-factor authentication adds an extra layer of security to your account. Once enabled, you'll need both your password and an authentication code from your mobile device to log in.
+                    @Localizer["Two-factor authentication adds an extra layer of security to your account. Once enabled, you'll need both your password and an authentication code from your mobile device to log in."]
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
             <div class="col-md-12">
                 <div class="alert alert-warning" role="alert">
                     <i class="bi bi-exclamation-triangle me-2"></i>
-                    <strong>Important:</strong> After enabling two-factor authentication, store <strong>your recovery codes</strong> in a safe place. These codes will allow you to recover access to your account if you lose your mobile device.
+                    <strong>@Localizer["Important:"]</strong> @Localizer["After enabling two-factor authentication, store your recovery codes in a safe place. These codes will allow you to recover access to your account if you lose your mobile device."]
                 </div>
             </div>
         </div>
@@ -96,21 +96,21 @@
                 <div class="step-card">
                     <div class="step-title">
                         <span class="step-number">1</span>
-                        Download an authenticator app
+                        @Localizer["Download an authenticator app"]
                     </div>
-                    <p class="text-muted">Download and install a two-factor authenticator app on your mobile device:</p>
+                    <p class="text-muted">@Localizer["Download and install a two-factor authenticator app on your mobile device:"]</p>
                     <div class="app-buttons">
                         <a href="https://go.microsoft.com/fwlink/?Linkid=825072" class="btn btn-outline-primary" target="_blank">
-                            <i class="bi bi-microsoft"></i> Microsoft (Android)
+                            <i class="bi bi-microsoft"></i> @Localizer["Microsoft (Android)"]
                         </a>
                         <a href="https://go.microsoft.com/fwlink/?Linkid=825073" class="btn btn-outline-primary" target="_blank">
-                            <i class="bi bi-microsoft"></i> Microsoft (iOS)
+                            <i class="bi bi-microsoft"></i> @Localizer["Microsoft (iOS)"]
                         </a>
                         <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" class="btn btn-outline-danger" target="_blank">
-                            <i class="bi bi-google"></i> Google (Android)
+                            <i class="bi bi-google"></i> @Localizer["Google (Android)"]
                         </a>
                         <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605" class="btn btn-outline-danger" target="_blank">
-                            <i class="bi bi-google"></i> Google (iOS)
+                            <i class="bi bi-google"></i> @Localizer["Google (iOS)"]
                         </a>
                     </div>
                 </div>
@@ -120,33 +120,33 @@
                 <div class="step-card">
                     <div class="step-title">
                         <span class="step-number">2</span>
-                        Scan QR code or enter key
+                        @Localizer["Scan QR code or enter key"]
                     </div>
                     <div class="qr-card">
                         <div class="text-center mb-2">
                             <i class="bi bi-qr-code-scan me-2"></i>
-                            <span class="fw-bold">Scan this QR Code</span>
+                            <span class="fw-bold">@Localizer["Scan this QR Code"]</span>
                         </div>
                         <div id="qrCode" style="min-height: 200px; min-width: 200px;"></div>
                         <div id="qrCodeData" data-url="@ViewData["AuthenticatorUri"]" hidden></div>
                         <p class="text-center text-muted mt-2 small">
-                            Point your authenticator app camera at the QR code
+                            @Localizer["Point your authenticator app camera at the QR code"]
                         </p>
                     </div>
 
                     <div class="mt-3">
                         <div class="text-center mb-2">
                             <i class="bi bi-key me-2"></i>
-                            <span class="fw-bold">Or enter this key manually</span>
+                            <span class="fw-bold">@Localizer["Or enter this key manually"]</span>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control font-monospace" value="@ViewData["SharedKey"]" id="sharedKey" readonly>
-                            <button class="btn btn-outline-secondary" type="button" id="copyKeyBtn">
-                                <i class="bi bi-clipboard"></i> Copy
+                            <button class="btn btn-outline-secondary" type="button" id="copyKeyBtn" title="@Localizer["Copy to clipboard"]">
+                                <i class="bi bi-clipboard"></i> @Localizer["Copy"]
                             </button>
                         </div>
                         <p class="text-muted small mt-2 text-center">
-                            If you can't scan the QR code, enter this key into your app
+                            @Localizer["If you can't scan the QR code, enter this key into your app"]
                         </p>
                     </div>
                 </div>
@@ -156,22 +156,22 @@
                 <div class="step-card">
                     <div class="step-title">
                         <span class="step-number">3</span>
-                        Verify and enable
+                        @Localizer["Verify and enable"]
                     </div>
                     <div class="verification-card">
                         <p class="mb-3 text-center">
                             <i class="bi bi-check-circle me-2"></i>
-                            Enter the verification code from your app
+                            @Localizer["Enter the verification code from your app"]
                         </p>
                         <form method="post">
                             <div class="form-floating mb-3">
                                 <input asp-for="Code" class="form-control" placeholder=" " autocomplete="off">
-                                <label asp-for="Code">Verification Code</label>
+                                <label asp-for="Code">@Localizer["Verification Code"]</label>
                                 <span asp-validation-for="Code" class="text-danger"></span>
                             </div>
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-shield-check"></i> Verify & Enable
+                                    <i class="bi bi-shield-check"></i> @Localizer["Verify & Enable"]
                                 </button>
                             </div>
                             <div asp-validation-summary="ModelOnly" class="text-danger mt-2"></div>
@@ -180,17 +180,18 @@
                 </div>
             </div>
         </div>
-}
-else
-{
-    <div class="container-fluid mt-3">
-        <div class="alert alert-success" role="alert">
-            <i class="bi bi-shield-check me-2"></i>
-            Two-factor authentication is already enabled for your account.
+    }
+    else
+    {
+        <div class="container-fluid mt-3">
+            <div class="alert alert-success" role="alert">
+                <i class="bi bi-shield-check me-2"></i>
+                @Localizer["Two-factor authentication is already enabled for your account."]
+            </div>
         </div>
-    </div>
-}
+    }
 </div>
+
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
             integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
@@ -202,7 +203,7 @@ else
             function generateQRCode() {
                 try {
                     if (typeof QRCode === 'undefined') {
-                        document.getElementById("qrCode").innerHTML = '<div class="alert alert-danger">QR Code library failed to load. Please refresh the page.</div>';
+                        document.getElementById("qrCode").innerHTML = '<div class="alert alert-danger">@Localizer["QR Code library failed to load. Please refresh the page."]</div>';
                         return;
                     }
 
@@ -231,7 +232,7 @@ else
                 } catch (error) {
                     const qrContainer = document.getElementById("qrCode");
                     if (qrContainer) {
-                        qrContainer.innerHTML = '<div class="alert alert-danger">Error generating QR code: ' + error.message + '</div>';
+                        qrContainer.innerHTML = '<div class="alert alert-danger">@Localizer["Error generating QR code:"] ' + error.message + '</div>';
                     }
                 }
             }
@@ -246,7 +247,7 @@ else
                             document.execCommand("copy");
 
                             const originalText = this.innerHTML;
-                            this.innerHTML = '<i class="bi bi-check2"></i> Copied!';
+                            this.innerHTML = '<i class="bi bi-check2"></i> @Localizer["Copied!"]';
 
                             setTimeout(() => {
                                 this.innerHTML = originalText;

@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Factory.Controllers
 {
-    [Authorize(Roles = nameof(UserRole.SuperAdmin))]
+    [Authorize(Roles = nameof(UserRole.MasterCopy))]
 
     public class PagesController : Controller
     {

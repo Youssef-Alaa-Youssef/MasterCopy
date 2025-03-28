@@ -1,27 +1,26 @@
 ﻿@model PaginationViewModel<UserViewModel>
-
 @{
-    ViewData["Title"] = "User Management";
+    ViewData["Title"] = Localizer["User Management"].Value;
     Layout = "_LogedUser";
 }
 
-<div class="container-fluid card shadow-sm mt-2 p-3">
+<div class="container-fluid card shadow-sm ">
     @await Html.PartialAsync("ErrorSummaryPartial")
     @await Html.PartialAsync("_PageTitle")
 
     <!-- Search Form -->
     <form method="get" class="mb-3">
         <div class="input-group">
-            <input type="text" name="query" class="form-control" placeholder="Search by username..." value="@Model.Query" />
+            <input type="text" name="query" class="form-control" placeholder="@Localizer["Search by username..."]" value="@Model.Query" />
             <button class="btn btn-outline-primary" type="submit">
-                <i class="fas fa-search"></i> Search
+                <i class="fas fa-search"></i> @Localizer["Search"]
             </button>
         </div>
     </form>
 
     @if (Model.ActiveUsers.Count == 0 && Model.LockedUsers.Count == 0)
     {
-        <div class="alert alert-warning">No users found matching your search criteria.</div>
+        <div class="alert alert-warning">@Localizer["No users found matching your search criteria."]</div>
     }
     else
     {
@@ -29,7 +28,7 @@
         {
             <div class="d-flex align-items-center gap-2 py-3 border-bottom mb-3">
                 <i class="bi bi-stars text-warning fs-4"></i>
-                <h4 class="fw-semibold mb-0">Active Users</h4>
+                <h4 class="fw-semibold mb-0">@Localizer["Active Users"]</h4>
             </div>
             @await Html.PartialAsync("_UserTablePartial", Model.ActiveUsers)
         }
@@ -38,7 +37,7 @@
         {
             <div class="d-flex align-items-center gap-2 py-3 border-bottom mb-3">
                 <i class="bi bi-stars text-warning fs-4"></i>
-                <h4 class="fw-semibold mb-0">Locked Users</h4>
+                <h4 class="fw-semibold mb-0">@Localizer["Locked Users"]</h4>
             </div>
             @await Html.PartialAsync("_UserTablePartial", Model.LockedUsers)
         }
@@ -46,11 +45,17 @@
 
     <div class="d-flex justify-content-between">
         <div>
-            <span>Page @Model.Page of @Math.Ceiling((double)Model.TotalItems / Model.PageSize)</span>
+            <span>@Localizer["Page {0} of {1}", Model.Page, Math.Ceiling((double)Model.TotalItems / Model.PageSize)]</span>
         </div>
         <div>
-            <a href="@Url.Action("Index", new { query = Model.Query, page = Model.Page - 1, pageSize = Model.PageSize })" class="btn btn-outline-primary @((Model.Page <= 1) ? "disabled" : "")">Previous</a>
-            <a href="@Url.Action("Index", new { query = Model.Query, page = Model.Page + 1, pageSize = Model.PageSize })" class="btn btn-outline-primary @((Model.Page >= Math.Ceiling((double)Model.TotalItems / Model.PageSize)) ? "disabled" : "")">Next</a>
+            <a href="@Url.Action("Index", new { query = Model.Query, page = Model.Page - 1, pageSize = Model.PageSize })"
+               class="btn btn-outline-primary @((Model.Page <= 1) ? "disabled" : "")">
+                @Localizer["Previous"]
+            </a>
+            <a href="@Url.Action("Index", new { query = Model.Query, page = Model.Page + 1, pageSize = Model.PageSize })"
+               class="btn btn-outline-primary @((Model.Page >= Math.Ceiling((double)Model.TotalItems / Model.PageSize)) ? "disabled" : "")">
+                @Localizer["Next"]
+            </a>
         </div>
     </div>
 </div>

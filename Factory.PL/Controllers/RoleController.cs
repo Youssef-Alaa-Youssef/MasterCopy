@@ -43,7 +43,7 @@ namespace Factory.Controllers
                 {
                     var roles = await _userManager.GetRolesAsync(user);
 
-                    var filteredRoles = roles.Where(role => role != nameof(UserRole.SuperAdmin)).ToList();
+                    var filteredRoles = roles.Where(role => role != nameof(UserRole.MasterCopy)).ToList();
 
                     var userModel = new ApplicationUserViewModel
                     {
@@ -57,7 +57,7 @@ namespace Factory.Controllers
                 }
 
                 ViewBag.Roles = _roleManager.Roles
-                    .Where(r => r.Name != nameof(UserRole.SuperAdmin)) 
+                    .Where(r => r.Name != nameof(UserRole.MasterCopy)) 
                     .Select(r => new SelectListItem
                     {
                         Value = r.Name,
@@ -78,7 +78,7 @@ namespace Factory.Controllers
         //[CheckPermission(Permissions.Read)]
         public async Task<IActionResult> AllRoles(string query)
         {
-            IQueryable<IdentityRole> rolesQuery = _roleManager.Roles.Where(r => r.Name != nameof(UserRole.SuperAdmin));
+            IQueryable<IdentityRole> rolesQuery = _roleManager.Roles.Where(r => r.Name != nameof(UserRole.MasterCopy));
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -108,7 +108,7 @@ namespace Factory.Controllers
                 Roles = (await _userManager.GetRolesAsync(user)).ToList()
             };
 
-            ViewBag.Roles = _roleManager.Roles.Where(r => r.Name != nameof(UserRole.SuperAdmin)).Select(r => new SelectListItem
+            ViewBag.Roles = _roleManager.Roles.Where(r => r.Name != nameof(UserRole.MasterCopy)).Select(r => new SelectListItem
             {
                 Value = r.Name,
                 Text = r.Name

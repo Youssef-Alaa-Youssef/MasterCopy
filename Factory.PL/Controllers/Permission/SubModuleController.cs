@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Factory.Controllers
 {
-    [Authorize(Roles = nameof(UserRole.SuperAdmin))]
+    [Authorize(Roles = nameof(UserRole.MasterCopy))]
 
     public class SubModuleController : Controller
     {

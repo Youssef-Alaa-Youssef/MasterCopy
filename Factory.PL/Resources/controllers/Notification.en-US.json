@@ -39,5 +39,13 @@
   "WarningIcon": "Exclamation Triangle",
   "ErrorIcon": "X Circle",
   "SelectUsersLabel": "Select Users",
-  "AddButton": "Add Notification"
+  "AddButton": "Add Notification",
+  "All Notifications": "All Notifications",
+  "No notifications found.": "No notifications found.",
+  "#": "#",
+  "No Notifications Available": "No Notifications Available",
+  "You don't have any notifications at this moment.": "You don't have any notifications at this moment.",
+  "Notification Details": "Notification Details",
+  "Failed to mark notification as read": "Failed to mark notification as read",
+  "Error marking notification as read": "Error marking notification as read"
 }

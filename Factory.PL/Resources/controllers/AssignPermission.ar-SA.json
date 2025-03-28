@@ -1,0 +1,14 @@
+﻿{
+  "Assign Permission": "تعيين الصلاحيات",
+  "Module": "وحدة",
+  "Select Module": "اختر وحدة",
+  "SubModule": "وحدة فرعية",
+  "Select SubModule": "اختر وحدة فرعية",
+  "Role": "دور",
+  "Select Role": "اختر دور",
+  "Permission Types": "أنواع الصلاحيات",
+  "Pages": "صفحات",
+  "Error loading existing permissions:": "خطأ في تحميل الصلاحيات الموجودة:",
+  "Error loading submodules:": "خطأ في تحميل الوحدات الفرعية:",
+  "Error loading pages:": "خطأ في تحميل الصفحات:"
+}

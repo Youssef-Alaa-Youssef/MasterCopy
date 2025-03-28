@@ -39,5 +39,13 @@
   "WarningIcon": "أيقونة تحذير",
   "ErrorIcon": "أيقونة خطأ",
   "SelectUsersLabel": "اختر المستخدمين",
-  "AddButton": "إضافة إشعار"
+  "AddButton": "إضافة إشعار",
+  "All Notifications": "جميع الإشعارات",
+  "No notifications found.": "لا توجد إشعارات.",
+  "#": "#",
+  "No Notifications Available": "لا توجد إشعارات",
+  "You don't have any notifications at this moment.": "ليس لديك أي إشعارات في الوقت الحالي.",
+  "Notification Details": "تفاصيل الإشعار",
+  "Failed to mark notification as read": "فشل تعليم الإشعار كمقروء",
+  "Error marking notification as read": "خطأ في تعليم الإشعار كمقروء"
 }

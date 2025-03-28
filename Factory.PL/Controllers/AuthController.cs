@@ -104,23 +104,32 @@ namespace Factory.Controllers
             }
         }
        
-        public IActionResult LogIn()
+        public IActionResult LogIn(string returnUrl = null)
         {
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Dashboard", "Home");
             }
-            return View();
+            var model = new LogInViewModel
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogIn(LogInViewModel model, CancellationToken cancellationToken, string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
-
             if (!ModelState.IsValid)
                 return View(model);
+
+            returnUrl = model.ReturnUrl ?? Url.Content("~/");
+
+            if (!string.IsNullOrEmpty(returnUrl) && !Url.IsLocalUrl(returnUrl))
+            {
+                returnUrl = Url.Content("~/");
+            }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
@@ -1149,12 +1158,16 @@ namespace Factory.Controllers
         }
         private async Task<List<SelectListItem>> GetRolesAsync()
         {
-            var roles = await _roleManager.Roles.ToListAsync();
-            return roles.Select(r => new SelectListItem
-            {
-                Value = r.Name, 
-                Text = r.Name
-            }).ToList();
+            var roles = await _roleManager.Roles
+                .Where(r => r.Name != UserRole.MasterCopy.ToString())
+                .Select(r => new SelectListItem
+                {
+                    Value = r.Name,
+                    Text = r.Name
+                })
+                .ToListAsync();
+
+            return roles;
         }
         private async Task<IdentityResult> CreateUserAsync(UserCreateViewModel model)
         {

@@ -1,9 +1,11 @@
 ﻿using Factory.BLL.InterFaces;
+using Factory.Controllers;
 using Factory.DAL.Enums;
 using Factory.DAL.Models.Auth;
 using Factory.DAL.Models.Home;
 using Factory.PL.ViewModels.Home.Dashboard;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 
 namespace Factory.PL.Services.Dashboard
@@ -12,11 +14,16 @@ namespace Factory.PL.Services.Dashboard
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IStringLocalizer<HomeController> _localizer;
 
-        public DashboardService(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        public DashboardService(
+            IUnitOfWork unitOfWork,
+            IHttpContextAccessor httpContextAccessor,
+            IStringLocalizer<HomeController> localizer)
         {
             _unitOfWork = unitOfWork;
             _httpContextAccessor = httpContextAccessor;
+            _localizer = localizer;
         }
 
         public async Task<AdminDashboardViewModel> GetDashboardDataAsync()
@@ -42,58 +49,58 @@ namespace Factory.PL.Services.Dashboard
             // Role-specific data
             switch (userRole)
             {
-                case nameof(UserRole.SuperAdmin):
+                case nameof(UserRole.MasterCopy):
                 case nameof(UserRole.Owner):
                 case nameof(UserRole.GM):
                     dashboardItems = new List<DashboardItem>
                     {
                         new DashboardItem
                         {
-                            Title = "Users",
+                            Title = _localizer["Users"],
                             Value = userCount,
                             IconClass = "bi-people-fill",
-                            Description = "Active users in system",
-                            TrendText = "12% from last month",
+                            Description = _localizer["Active users in system"],
+                            TrendText = _localizer["12% from last month"],
                             TrendClass = "text-success",
                             TrendIcon = "bi-arrow-up",
                             ChartId = "UserCount",
-                            ChartTitle = "Users Over Time"
+                            ChartTitle = _localizer["Users Over Time"]
                         },
                         new DashboardItem
                         {
-                            Title = "Team Members",
+                            Title = _localizer["Team Members"],
                             Value = teamMemberCount,
                             IconClass = "bi-person-badge-fill",
-                            Description = "Managed team members",
-                            TrendText = "5% from last month",
+                            Description = _localizer["Managed team members"],
+                            TrendText = _localizer["5% from last month"],
                             TrendClass = "text-danger",
                             TrendIcon = "bi-arrow-down",
                             ChartId = "TeamMemberCount",
-                            ChartTitle = "Team Members Over Time"
+                            ChartTitle = _localizer["Team Members Over Time"]
                         },
                         new DashboardItem
                         {
-                            Title = "Contacts",
+                            Title = _localizer["Contacts"],
                             Value = contactCount,
                             IconClass = "bi-envelope-fill",
-                            Description = "Recent communications",
-                            TrendText = "8% from last month",
+                            Description = _localizer["Recent communications"],
+                            TrendText = _localizer["8% from last month"],
                             TrendClass = "text-success",
                             TrendIcon = "bi-arrow-up",
                             ChartId = "ContactCount",
-                            ChartTitle = "Contacts Over Time"
+                            ChartTitle = _localizer["Contacts Over Time"]
                         },
                         new DashboardItem
                         {
-                            Title = "Roles",
+                            Title = _localizer["Roles"],
                             Value = roleCount,
                             IconClass = "bi-shield-lock-fill",
-                            Description = "System access roles",
-                            TrendText = "3% from last month",
+                            Description = _localizer["System access roles"],
+                            TrendText = _localizer["3% from last month"],
                             TrendClass = "text-success",
                             TrendIcon = "bi-arrow-up",
                             ChartId = "RoleCount",
-                            ChartTitle = "Roles Over Time"
+                            ChartTitle = _localizer["Roles Over Time"]
                         }
                     };
 
@@ -101,15 +108,15 @@ namespace Factory.PL.Services.Dashboard
                     {
                         new RecentActivity
                         {
-                            Title = "New user registered",
-                            Time = "2 mins ago",
-                            Description = "John Doe joined the system"
+                            Title = _localizer["New user registered"],
+                            Time = _localizer["2 mins ago"],
+                            Description = _localizer["John Doe joined the system"]
                         },
                         new RecentActivity
                         {
-                            Title = "System update",
-                            Time = "15 mins ago",
-                            Description = "Version 2.3.1 deployed"
+                            Title = _localizer["System update"],
+                            Time = _localizer["15 mins ago"],
+                            Description = _localizer["Version 2.3.1 deployed"]
                         }
                     };
 
@@ -117,12 +124,12 @@ namespace Factory.PL.Services.Dashboard
                     {
                         new QuickAction
                         {
-                            Title = "Add New User",
+                            Title = _localizer["Add New User"],
                             IconClass = "bi-person-plus"
                         },
                         new QuickAction
                         {
-                            Title = "Create Report",
+                            Title = _localizer["Create Report"],
                             IconClass = "bi-file-earmark-plus"
                         }
                     };
@@ -138,51 +145,51 @@ namespace Factory.PL.Services.Dashboard
                     {
                         new DashboardItem
                         {
-                            Title = "Financial Summary",
+                            Title = _localizer["Financial Summary"],
                             Value = (int)financialSummary,
                             IconClass = "bi-cash-coin",
-                            Description = "Total revenue this month",
-                            TrendText = "10% from last month",
+                            Description = _localizer["Total revenue this month"],
+                            TrendText = _localizer["10% from last month"],
                             TrendClass = "text-success",
                             TrendIcon = "bi-arrow-up",
                             ChartId = "FinancialSummary",
-                            ChartTitle = "Financial Summary Over Time"
+                            ChartTitle = _localizer["Financial Summary Over Time"]
                         },
                         new DashboardItem
                         {
-                            Title = "Invoices",
+                            Title = _localizer["Invoices"],
                             Value = invoiceCount,
                             IconClass = "bi-receipt",
-                            Description = "Invoices generated this month",
-                            TrendText = "5% from last month",
+                            Description = _localizer["Invoices generated this month"],
+                            TrendText = _localizer["5% from last month"],
                             TrendClass = "text-danger",
                             TrendIcon = "bi-arrow-down",
                             ChartId = "InvoiceCount",
-                            ChartTitle = "Invoices Over Time"
+                            ChartTitle = _localizer["Invoices Over Time"]
                         },
                         new DashboardItem
                         {
-                            Title = "Expenses",
+                            Title = _localizer["Expenses"],
                             Value = (int)expenses,
                             IconClass = "bi-currency-dollar",
-                            Description = "Total expenses this month",
-                            TrendText = "8% from last month",
+                            Description = _localizer["Total expenses this month"],
+                            TrendText = _localizer["8% from last month"],
                             TrendClass = "text-success",
                             TrendIcon = "bi-arrow-up",
                             ChartId = "Expenses",
-                            ChartTitle = "Expenses Over Time"
+                            ChartTitle = _localizer["Expenses Over Time"]
                         },
                         new DashboardItem
                         {
-                            Title = "Profit",
+                            Title = _localizer["Profit"],
                             Value = (int)profit,
                             IconClass = "bi-graph-up",
-                            Description = "Net profit this month",
-                            TrendText = "15% from last month",
+                            Description = _localizer["Net profit this month"],
+                            TrendText = _localizer["15% from last month"],
                             TrendClass = "text-success",
                             TrendIcon = "bi-arrow-up",
                             ChartId = "Profit",
-                            ChartTitle = "Profit Over Time"
+                            ChartTitle = _localizer["Profit Over Time"]
                         }
                     };
 
@@ -190,15 +197,15 @@ namespace Factory.PL.Services.Dashboard
                     {
                         new RecentActivity
                         {
-                            Title = "Invoice Paid",
-                            Time = "2 mins ago",
-                            Description = "Invoice #1234 paid by John Doe"
+                            Title = _localizer["Invoice Paid"],
+                            Time = _localizer["2 mins ago"],
+                            Description = _localizer["Invoice #1234 paid by John Doe"]
                         },
                         new RecentActivity
                         {
-                            Title = "Expense Recorded",
-                            Time = "15 mins ago",
-                            Description = "Office supplies purchase recorded"
+                            Title = _localizer["Expense Recorded"],
+                            Time = _localizer["15 mins ago"],
+                            Description = _localizer["Office supplies purchase recorded"]
                         }
                     };
 
@@ -206,12 +213,12 @@ namespace Factory.PL.Services.Dashboard
                     {
                         new QuickAction
                         {
-                            Title = "Create Invoice",
+                            Title = _localizer["Create Invoice"],
                             IconClass = "bi-file-earmark-plus"
                         },
                         new QuickAction
                         {
-                            Title = "Record Payment",
+                            Title = _localizer["Record Payment"],
                             IconClass = "bi-cash-coin"
                         }
                     };
@@ -222,27 +229,27 @@ namespace Factory.PL.Services.Dashboard
                     {
                         new DashboardItem
                         {
-                            Title = "Leads",
+                            Title = _localizer["Leads"],
                             Value = 50,
                             IconClass = "bi-person-lines-fill",
-                            Description = "Active leads in system",
-                            TrendText = "20% from last month",
+                            Description = _localizer["Active leads in system"],
+                            TrendText = _localizer["20% from last month"],
                             TrendClass = "text-success",
                             TrendIcon = "bi-arrow-up",
                             ChartId = "Leads",
-                            ChartTitle = "Leads Over Time"
+                            ChartTitle = _localizer["Leads Over Time"]
                         },
                         new DashboardItem
                         {
-                            Title = "Deals Closed",
+                            Title = _localizer["Deals Closed"],
                             Value = 10,
                             IconClass = "bi-check-circle-fill",
-                            Description = "Deals closed this month",
-                            TrendText = "15% from last month",
+                            Description = _localizer["Deals closed this month"],
+                            TrendText = _localizer["15% from last month"],
                             TrendClass = "text-success",
                             TrendIcon = "bi-arrow-up",
                             ChartId = "DealsClosed",
-                            ChartTitle = "Deals Closed Over Time"
+                            ChartTitle = _localizer["Deals Closed Over Time"]
                         }
                     };
 
@@ -250,15 +257,15 @@ namespace Factory.PL.Services.Dashboard
                     {
                         new RecentActivity
                         {
-                            Title = "New Lead Added",
-                            Time = "2 mins ago",
-                            Description = "John Doe added as a new lead"
+                            Title = _localizer["New Lead Added"],
+                            Time = _localizer["2 mins ago"],
+                            Description = _localizer["John Doe added as a new lead"]
                         },
                         new RecentActivity
                         {
-                            Title = "Deal Closed",
-                            Time = "15 mins ago",
-                            Description = "Deal #1234 closed with Client A"
+                            Title = _localizer["Deal Closed"],
+                            Time = _localizer["15 mins ago"],
+                            Description = _localizer["Deal #1234 closed with Client A"]
                         }
                     };
 
@@ -266,12 +273,12 @@ namespace Factory.PL.Services.Dashboard
                     {
                         new QuickAction
                         {
-                            Title = "Add New Lead",
+                            Title = _localizer["Add New Lead"],
                             IconClass = "bi-person-plus"
                         },
                         new QuickAction
                         {
-                            Title = "Create Proposal",
+                            Title = _localizer["Create Proposal"],
                             IconClass = "bi-file-earmark-plus"
                         }
                     };

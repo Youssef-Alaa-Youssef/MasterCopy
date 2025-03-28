@@ -1,7 +1,6 @@
 ﻿@model Factory.PL.ViewModels.Permissions.RolePermissionV2ViewModel
-
 @{
-    ViewData["Title"] = "Assign Permission";
+    ViewData["Title"] = Localizer["Assign Permission"].Value;
     Layout = "_LogedUser";
 }
 
@@ -14,18 +13,18 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label asp-for="ModuleId">Module</label>
+                    <label asp-for="ModuleId">@Localizer["Module"]</label>
                     <select asp-for="ModuleId" asp-items="Model.Modules.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.Name })" class="form-control">
-                        <option value="">Select Module</option>
+                        <option value="">@Localizer["Select Module"]</option>
                     </select>
                     <span asp-validation-for="ModuleId" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label asp-for="SubModuleId">SubModule</label>
+                    <label asp-for="SubModuleId">@Localizer["SubModule"]</label>
                     <select asp-for="SubModuleId" class="form-control">
-                        <option value="">Select SubModule</option>
+                        <option value="">@Localizer["Select SubModule"]</option>
                     </select>
                     <span asp-validation-for="SubModuleId" class="text-danger"></span>
                 </div>
@@ -34,16 +33,16 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label asp-for="RoleId">Role</label>
+                    <label asp-for="RoleId">@Localizer["Role"]</label>
                     <select asp-for="RoleId" asp-items="Model.Roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name })" class="form-control">
-                        <option value="">Select Role</option>
+                        <option value="">@Localizer["Select Role"]</option>
                     </select>
                     <span asp-validation-for="RoleId" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Permission Types</label>
+                    <label>@Localizer["Permission Types"]</label>
                     <div class="d-flex flex-wrap">
                         @foreach (var permission in Model.PermissionTypes)
                         {
@@ -60,15 +59,14 @@
         </div>
 
         <div class="form-group">
-            <label>Pages</label>
+            <label>@Localizer["Pages"]</label>
             <div id="PageIds" class="d-flex flex-wrap">
-
             </div>
             <span asp-validation-for="PageIds" class="text-danger"></span>
         </div>
 
         <div class="card-footer text-center mt-2">
-            <button type="submit" class="btn btn-outline-primary">Assign Permission</button>
+            <button type="submit" class="btn btn-outline-primary">@Localizer["Assign Permission"]</button>
         </div>
     </form>
 </div>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Factory.PL.ViewModels.Auth
 {
@@ -17,5 +18,7 @@ namespace Factory.PL.ViewModels.Auth
 
         [Display(Name = "Remember Me")]
         public bool RememberMe { get; set; }
+        public string? ReturnUrl { get; set; }
+
     }
 }

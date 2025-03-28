@@ -114,7 +114,7 @@ namespace Factory.DAL.Configurations
                 {
                     var newRolePermissions = new List<RolePermission>();
 
-                    if (roleName == UserRole.SuperAdmin.ToString())
+                    if (roleName == UserRole.MasterCopy.ToString())
                     {
                         foreach (var module in allModules)
                         {

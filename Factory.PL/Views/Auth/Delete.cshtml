@@ -1,7 +1,7 @@
 ﻿@model UserDetailsViewModel
 
 @{
-    ViewData["Title"] = "Delete User";
+    ViewData["Title"] = Localizer["Delete User"].Value;
     Layout = "_LogedUser";
 }
 
@@ -9,28 +9,33 @@
     @await Html.PartialAsync("ErrorSummaryPartial")
     @await Html.PartialAsync("_PageTitle")
 
-    <h3 class="text-center mb-4">Delete User Confirmation</h3>
+    <h3 class="text-center mb-4">@Localizer["Delete User Confirmation"]</h3>
 
     <div class="row mb-4">
         <div class="col-md-6">
-            <p><strong>User Name:</strong> @Model.UserName</p>
+            <p><strong>@Localizer["User Name:"]</strong> @Model.UserName</p>
         </div>
         <div class="col-md-6">
-            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>@Localizer["Email:"]</strong> @Model.Email</p>
         </div>
         <div class="col-md-6">
-            <p><strong>Phone Number:</strong> @Model.PhoneNumber</p>
+            <p><strong>@Localizer["Phone Number:"]</strong> @(string.IsNullOrEmpty(Model.PhoneNumber) ? Localizer["Not provided"] : Model.PhoneNumber)</p>
         </div>
     </div>
 
     <div class="alert alert-warning text-center mb-4">
-        <strong>Warning!</strong> Deleting this user cannot be undone. Are you sure you want to proceed?
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <strong>@Localizer["Warning!"]</strong> @Localizer["Deleting this user cannot be undone. Are you sure you want to proceed?"]
     </div>
 
     <form method="post" action="@Url.Action("DeleteConfirmed", "Auth", new { id = Model.Id })">
         <div class="d-flex justify-content-center mt-4">
-            <button type="submit" class="btn btn-outline-danger btn-lg me-2">Delete</button>
-            <a href="@Url.Action("Index", "Auth")" class="btn btn-outline-secondary btn-lg">Cancel</a>
+            <button type="submit" class="btn btn-outline-danger btn-lg me-2">
+                <i class="bi bi-trash-fill me-1"></i> @Localizer["Delete"]
+            </button>
+            <a href="@Url.Action("Index", "Auth")" class="btn btn-outline-secondary btn-lg">
+                <i class="bi bi-x-circle me-1"></i> @Localizer["Cancel"]
+            </a>
         </div>
     </form>
 </div>

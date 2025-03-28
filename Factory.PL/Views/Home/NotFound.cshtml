@@ -1,10 +1,11 @@
 ﻿@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = $"Page Not Found | {appSettings.Value.CompanyName}";
+    ViewData["Title"] = $"{Localizer["Page Not Found"].Value} | {appSettings.Value.CompanyName}";
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="@(System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr")">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,18 +50,15 @@
         }
 
         @@keyframes fadeIn {
-            from
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-        {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .error-code {
@@ -126,47 +124,53 @@
         }
 
         @@media (max-width: 576px) {
-            .error-content
+            .error-content {
+                margin: 0 20px;
+                padding: 30px 20px;
+            }
 
-        {
-            margin: 0 20px;
-            padding: 30px 20px;
+            .error-code {
+                font-size: 80px;
+            }
+
+            .error-title {
+                font-size: 24px;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
 
-        .error-code {
-            font-size: 80px;
+        [dir="rtl"] .buttons-container {
+            flex-direction: row-reverse;
         }
 
-        .error-title {
-            font-size: 24px;
-        }
-
-        .buttons-container {
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        [dir="rtl"] .me-2 {
+            margin-right: 0 !important;
+            margin-left: 0.5rem !important;
         }
     </style>
 </head>
 <body>
     <div class="error-content">
         <h1 class="error-code">404</h1>
-        <h2 class="error-title">Page Not Found</h2>
+        <h2 class="error-title">@Localizer["Page Not Found"]</h2>
         <p class="error-message">
-            We're sorry, the page you are looking for might have been removed,
-            had its name changed, or is temporarily unavailable.
+            @Localizer["We're sorry, the page you are looking for might have been removed,"]
+            @Localizer["had its name changed, or is temporarily unavailable."]
         </p>
         <div class="buttons-container">
             <a href="/" class="btn-home">
-                <i class="fas fa-home me-2"></i> Back to Home
+                <i class="fas fa-home me-2"></i> @Localizer["Back to Home"]
             </a>
             <a href="javascript:history.back()" class="btn-back">
-                <i class="fas fa-arrow-left me-2"></i> Go Back
+                <i class="fas fa-arrow-left me-2"></i> @Localizer["Go Back"]
             </a>
         </div>
         <div class="company-info">
-            &copy; @DateTime.Now.Year <strong>@appSettings.Value.CompanyName</strong>. All rights reserved.
+            &copy; @DateTime.Now.Year <strong>@appSettings.Value.CompanyName</strong>. @Localizer["All rights reserved."]
         </div>
     </div>
 </body>

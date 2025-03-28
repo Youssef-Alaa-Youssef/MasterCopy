@@ -1,6 +1,7 @@
 ﻿@model UserCreateViewModel
+
 @{
-    ViewData["Title"] = "Add New User";
+    ViewData["Title"] = Localizer["Add New User"].Value;
     Layout = "_LogedUser";
 }
 
@@ -10,43 +11,38 @@
 
     <form asp-action="Add" method="post">
         <div class="row g-3">
-            <!-- Username -->
             <div class="col-md-6">
-                <label asp-for="UserName" class="form-label"></label>
-                <input asp-for="UserName" class="form-control" />
+                <label asp-for="UserName" class="form-label">@Localizer["Username"]</label>
+                <input asp-for="UserName" class="form-control" placeholder="@Localizer["Enter username"]" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
 
-            <!-- Email -->
             <div class="col-md-6">
-                <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <label asp-for="Email" class="form-label">@Localizer["Email"]</label>
+                <input asp-for="Email" class="form-control" placeholder="@Localizer["Enter email"]" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
         </div>
 
         <div class="row g-3 mt-2">
-            <!-- Phone Number -->
             <div class="col-md-6">
-                <label asp-for="PhoneNumber" class="form-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
+                <label asp-for="PhoneNumber" class="form-label">@Localizer["Phone Number"]</label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="@Localizer["Enter phone number"]" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
 
-            <!-- Password -->
             <div class="col-md-6">
-                <label asp-for="Password" class="form-label"></label>
-                <input asp-for="Password" type="password" class="form-control" />
+                <label asp-for="Password" class="form-label">@Localizer["Password"]</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="@Localizer["Enter password"]" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
         </div>
 
         <div class="row g-3 mt-2">
-            <!-- Role -->
             <div class="col-md-6">
-                <label asp-for="SelectedRole" class="form-label"></label>
+                <label asp-for="SelectedRole" class="form-label">@Localizer["Role"]</label>
                 <select asp-for="SelectedRole" class="form-control" asp-items="Model.Roles">
-                    <option value="">-- Select Role --</option>
+                    <option value="">@Localizer["-- Select Role --"]</option>
                 </select>
                 <span asp-validation-for="SelectedRole" class="text-danger"></span>
             </div>
@@ -55,17 +51,16 @@
             <div class="col-md-6">
                 <div class="form-check mt-4">
                     <input asp-for="IsActive" class="form-check-input" type="checkbox" />
-                    <label asp-for="IsActive" class="form-check-label">Active</label>
+                    <label asp-for="IsActive" class="form-check-label">@Localizer["Active"]</label>
                 </div>
             </div>
         </div>
 
-        <!-- Form Footer -->
-        <div class="card-footer text-center mt-2">
+        <div class="card-footer text-center mt-1">
             <button type="submit" class="btn btn-outline-primary">
-                <i class="fas fa-user-plus"></i> Add User
+                <i class="fas fa-user-plus"></i> @Localizer["Add User"]
             </button>
-            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            <a asp-action="Index" class="btn btn-secondary">@Localizer["Back to List"]</a>
         </div>
     </form>
 </div>

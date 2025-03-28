@@ -5,6 +5,7 @@ using Factory.DAL.Models.Auth;
 using Factory.DAL.Models.Settings;
 using Factory.DAL.Services;
 using Factory.PL.Helper;
+using Factory.PL.Helper.Lang;
 using Factory.PL.Options;
 using Factory.PL.Services;
 using Factory.PL.Services.AI;
@@ -23,6 +24,7 @@ using Factory.PL.Services.UploadFile;
 using Factory.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -58,14 +60,14 @@ public static class ServiceConfiguration
         services.AddLocalization(options => options.ResourcesPath = "Resources");
         var supportedCultures = new[]
         {
-            new CultureInfo("en-US"), 
-            new CultureInfo("ar-SA"), 
-            new CultureInfo("fr-FR"), 
+            new CultureInfo("en-US"),
+            new CultureInfo("ar-SA"),
+            new CultureInfo("fr-FR"),
         };
 
         services.AddControllersWithViews()
-            .AddDataAnnotationsLocalization() 
-            .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix); 
+            .AddDataAnnotationsLocalization()
+            .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
     }
     private static void ConfigureApplicationServices(IServiceCollection services, IConfiguration configuration)
     {

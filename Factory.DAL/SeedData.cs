@@ -121,7 +121,7 @@ namespace Factory.DAL
                 CreatePage(53, "إدارة البيانات", "Data Management", "Settings", "ExportImport", true, 17),
                 CreatePage(54, "تصدير البيانات", "Data Export", "Export", "ExportImport", true, 17),
                 CreatePage(55, "استيراد البيانات", "Data Import", "Import", "ExportImport", true, 17),
-                CreatePage(56, "لوحة الطلبات", "Order Dashboard", "Index", "Report", true, 16),
+                //CreatePage(56, "لوحة الطلبات", "Order Dashboard", "Index", "Report", true, 16),
                 CreatePage(57, "المستودعات", "Stores", "WarehouseReport", "warehouse", true, 15),
                 CreatePage(58, "الدول", "Countries", "Index", "Country", true, 17),
                 CreatePage(59, "الدول وعناصرها", "Countries and Their Items", "countries", "items", true, 15),

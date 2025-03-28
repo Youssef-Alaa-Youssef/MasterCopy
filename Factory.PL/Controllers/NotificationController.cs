@@ -101,17 +101,17 @@ namespace Factory.PL.Controllers
 
                     await _unitOfWork.SaveChangesAsync();
 
-                    TempData["Success"] = nameof(_localizer["NotificationsAddedSuccessfully"]);
+                    TempData["Success"] = _localizer["NotificationsAddedSuccessfully"].ToString();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
-                    TempData["Error"] = nameof(_localizer["ErrorAddingNotifications", ex.Message]);
+                    TempData["Error"] = _localizer["ErrorAddingNotifications", ex.Message].ToString();
                 }
             }
             else
             {
-                TempData["Error"] = nameof(_localizer["SubmissionError"]);
+                TempData["Error"] = _localizer["SubmissionError"].ToString();
             }
 
             // Reload users for the form

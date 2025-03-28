@@ -2,7 +2,7 @@
 @using System.Globalization
 
 @{
-    ViewData["Title"] = Localizer["DeleteDocumentTitle"];
+    ViewData["Title"] = Localizer["DeleteDocumentTitle"].Value;
     Layout = "_LogedUser";
     var isArabic = CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ar";
 }

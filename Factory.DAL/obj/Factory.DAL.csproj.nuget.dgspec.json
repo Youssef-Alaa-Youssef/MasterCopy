@@ -10,7 +10,7 @@
         "projectUniqueName": "F:\\MasterCopy\\Factory.DAL\\Factory.DAL.csproj",
         "projectName": "Factory.DAL",
         "projectPath": "F:\\MasterCopy\\Factory.DAL\\Factory.DAL.csproj",
-        "packagesPath": "C:\\Users\\LastOS\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\yalaa\\.nuget\\packages\\",
         "outputPath": "F:\\MasterCopy\\Factory.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "centralPackageVersionsManagementEnabled": true,
@@ -18,7 +18,7 @@
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LastOS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yalaa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -101,6 +101,7 @@
             "Microsoft.AspNetCore.Authentication.MicrosoftAccount": "8.0.8",
             "Microsoft.AspNetCore.Authorization": "8.0.8",
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.8",
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "8.0.14",
             "Microsoft.AspNetCore.ResponseCompression": "2.3.0",
             "Microsoft.AspNetCore.SignalR": "1.2.0",
             "Microsoft.AspNetCore.SignalR.Client": "9.0.2",
@@ -108,6 +109,7 @@
             "Microsoft.EntityFrameworkCore.Proxies": "8.0.8",
             "Microsoft.EntityFrameworkCore.SqlServer": "8.0.8",
             "Microsoft.EntityFrameworkCore.Tools": "8.0.8",
+            "Microsoft.Extensions.Localization": "8.0.14",
             "Microsoft.NET.Test.Sdk": "17.12.0",
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": "8.0.4",
             "MimeKit": "4.7.1",
@@ -144,7 +146,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.104/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

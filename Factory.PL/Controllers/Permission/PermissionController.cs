@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Factory.Web.Controllers
 {
-    [Authorize(Roles = nameof(UserRole.SuperAdmin))]
+    [Authorize(Roles = nameof(UserRole.MasterCopy))]
     public class PermissionController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
