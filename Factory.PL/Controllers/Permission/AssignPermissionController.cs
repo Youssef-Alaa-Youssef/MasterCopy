@@ -59,7 +59,7 @@ namespace Factory.PL.Controllers.Permission
             var simplifiedSubModules = subModules.Select(sm => new
             {
                 id = sm.Id,
-                name = sm.Name
+                name = sm.NameEn
             });
 
             return Json(simplifiedSubModules);

@@ -54,7 +54,7 @@ namespace Factory.DAL.Services
                 .Select(sm => new SubModule
                 {
                     Id = sm.Id,
-                    Name = sm.Name,
+                    Name = sm.NameEn,
                     ModuleId = sm.ModuleId
                 })
                 .ToList();
@@ -71,7 +71,7 @@ namespace Factory.DAL.Services
                 .Select(p => new Page
                 {
                     Id = p.Id,
-                    Name = p.Name,
+                    Name = p.NameEn,
                     SubmoduleId = p.SubmoduleId
                 })
                 .ToList();

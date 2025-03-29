@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label asp-for="ModuleId">@Localizer["Module"]</label>
-                    <select asp-for="ModuleId" asp-items="Model.Modules.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.Name })" class="form-control">
+                    <select asp-for="ModuleId" asp-items="Model.Modules.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.NameEn })" class="form-control">
                         <option value="">@Localizer["Select Module"]</option>
                     </select>
                     <span asp-validation-for="ModuleId" class="text-danger"></span>
