@@ -1,0 +1,76 @@
+name: .NET Build and FTP Deploy
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:  
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  BUILD_CONFIGURATION: 'Release'
+  PUBLISH_FOLDER: 'publish'
+  FTP_REMOTE_DIR: '/'
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Setup .NET
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    # Restore dependencies
+    - name: Restore NuGet packages
+      run: dotnet restore
+
+    # Build project
+    - name: Build solution
+      run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+    # Run tests (optional)
+    - name: Run unit tests
+      run: dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --verbosity normal
+
+    # Publish application
+    - name: Publish application
+      run: |
+        dotnet publish \
+          --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --output ${{ env.PUBLISH_FOLDER }} \
+          --no-build \
+          --no-restore
+
+    # FTP Deployment
+    - name: Deploy to FTP server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ${{ env.PUBLISH_FOLDER }}/
+        server-dir: ${{ env.FTP_REMOTE_DIR }}
+        dangerous-clean-slate: false
+        exclude: |
+          **/.DS_Store
+          **/.git*
+          **/*.pdb
+          **/*.config
+          **/*.json
+      timeout-minutes: 15
+
+    # Post-deployment verification (optional)
+    - name: Verify deployment
+      run: |
+        echo "Deployment completed successfully"
+        echo "Publish folder: ${{ env.PUBLISH_FOLDER }}"
+        echo "FTP Server: ${{ secrets.FTP_SERVER }}"
