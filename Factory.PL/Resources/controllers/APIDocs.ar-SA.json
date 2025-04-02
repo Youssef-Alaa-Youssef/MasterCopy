@@ -1,0 +1,18 @@
+﻿{
+  "APIDocsIndexTitle": "توثيق API",
+  "AllAPIDocs": "كل توثيقات API",
+  "APIDocDetailsTitle": "تفاصيل توثيق API",
+  "CreateAPIDocTitle": "إنشاء توثيق API",
+  "CreateNewAPIDoc": "إنشاء توثيق API جديد",
+  "EditAPIDocTitle": "تعديل توثيق API",
+  "EditAPIDoc": "تعديل توثيق API",
+  "DeleteAPIDocTitle": "حذف توثيق API",
+  "APIDocCreatedSuccess": "تم إنشاء توثيق API بنجاح!",
+  "APIDocUpdatedSuccess": "تم تحديث توثيق API بنجاح!",
+  "APIDocDeletedSuccess": "تم حذف توثيق API بنجاح!",
+  "APIDocNotFound": "لم يتم العثور على توثيق API.",
+  "APIDocIdMismatch": "عدم تطابق معرف توثيق API.",
+  "APIDocCreateError": "خطأ في إنشاء توثيق API: {0}",
+  "APIDocUpdateError": "خطأ في تحديث توثيق API: {0}",
+  "APIDocDeleteError": "خطأ في حذف توثيق API: {0}"
+}

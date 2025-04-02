@@ -1,0 +1,18 @@
+{
+  "APIDocsIndexTitle": "API Documentation",
+  "AllAPIDocs": "All API Documentation",
+  "APIDocDetailsTitle": "API Documentation Details",
+  "CreateAPIDocTitle": "Create API Documentation",
+  "CreateNewAPIDoc": "Create New API Documentation",
+  "EditAPIDocTitle": "Edit API Documentation",
+  "EditAPIDoc": "Edit API Documentation",
+  "DeleteAPIDocTitle": "Delete API Documentation",
+  "APIDocCreatedSuccess": "API documentation created successfully!",
+  "APIDocUpdatedSuccess": "API documentation updated successfully!",
+  "APIDocDeletedSuccess": "API documentation deleted successfully!",
+  "APIDocNotFound": "API documentation not found.",
+  "APIDocIdMismatch": "API documentation ID mismatch.",
+  "APIDocCreateError": "Error creating API documentation: {0}",
+  "APIDocUpdateError": "Error updating API documentation: {0}",
+  "APIDocDeleteError": "Error deleting API documentation: {0}"
+}

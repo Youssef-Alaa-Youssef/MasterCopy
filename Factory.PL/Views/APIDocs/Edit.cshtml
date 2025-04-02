@@ -1,0 +1,99 @@
+﻿@model Factory.PL.ViewModels.Documentation.APIDocViewModel
+
+@{
+    ViewData["Title"] = ViewData["PageHeader"];
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+    <div class="col text-end">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> @Localizer["BackToList"]
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Edit">
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Method" class="form-label"></label>
+                        <select asp-for="Method" class="form-select">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="PATCH">PATCH</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                        <span asp-validation-for="Method" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Endpoint" class="form-label"></label>
+                    <input asp-for="Endpoint" class="form-control" />
+                    <span asp-validation-for="Endpoint" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DescriptionEn" class="form-label"></label>
+                    <textarea asp-for="DescriptionEn" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="DescriptionEn" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Parameters" class="form-label"></label>
+                    <textarea asp-for="Parameters" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Parameters" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RequestExample" class="form-label"></label>
+                    <textarea asp-for="RequestExample" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="RequestExample" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ResponseExample" class="form-label"></label>
+                    <textarea asp-for="ResponseExample" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="ResponseExample" class="text-danger"></span>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> @Localizer["Save"]
+                    </button>
+                </div>
+            </form>
+        </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -11,11 +11,40 @@
     var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     var modules = await ModuleService.GetModulesForUserAsync(userId);
 }
+
 <!DOCTYPE html>
 <html lang="@System.Globalization.CultureInfo.CurrentCulture.Name" dir="@(System.Globalization.CultureInfo.CurrentCulture.Name == "ar-SA" ? "rtl" : "ltr")" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
+    <meta name="google-site-verification" content="db91qmV7FHmKq5nZ3xpAW4rNdlCOVxVZloYDpbhnW3A" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>MasterCopy | Glass Factory Management Software | Employee Training & Project Solutions</title>
+    <meta name="description" content="AI-powered glass factory management software. Streamline production, train employees, and manage projects seamlessly. Boost efficiency in glass manufacturing, cutting & installation.">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="MasterCopy - Smart Glass Factory Management & Training Software">
+    <meta property="og:description" content="End-to-end software solution for glass factories: production tracking, employee training & project management. Reduce costs by 30%.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mastercopy.runasp.net/">
+    <meta property="og:image" content="https://mastercopy.runasp.net/images/machines/two.jpg">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Glass Factory Management System | MasterCopy Software">
+    <meta name="twitter:description" content="Automate glass manufacturing processes with training & real-time project tracking.">
+    <meta name="twitter:image" content="https://mastercopy.runasp.net/images/machines/two.jpg">
+
+    <!-- Keyword-Rich Meta Tags -->
+    <meta name="keywords" content="glass factory management software, employee training platform, glass manufacturing ERP, production optimization, cutting automation, project tracking, part-time project solutions, glass industry software">
+    <meta name="subject" content="Glass Manufacturing Technology Solutions">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Mobile & Performance Optimization -->
+    <meta name="theme-color" content="#0054a6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="canonical" href="https://mastercopy.runasp.net/">
+
     <title>@Localizer["DashboardTitle"] - @ViewData["Title"]</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
@@ -33,7 +62,15 @@
     <link rel="stylesheet" href="~/assets/css/ChatStyles.css" />
     <link href="~/assets/css/Dashboard.css" rel="stylesheet">
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z342BZD4Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-2Z342BZD4Q');
+</script>
 <body data-bs-theme="light">
     <div id="loader" class="spinner-container">
         @await Html.PartialAsync("_Loader")

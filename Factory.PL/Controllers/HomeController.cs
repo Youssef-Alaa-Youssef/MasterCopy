@@ -1,6 +1,7 @@
 using Factory.BLL.InterFaces;
 using Factory.DAL.Enums;
 using Factory.DAL.Models.Auth;
+using Factory.DAL.Models.Documentation;
 using Factory.DAL.Models.Home;
 using Factory.DAL.Models.Support;
 using Factory.PL.Options;
@@ -30,9 +31,18 @@ namespace Factory.Controllers
         public async Task<IActionResult> Index()
         {
             var Partners = await _unitOfWork.GetRepository<Partner>().GetAllAsync();
-            return RedirectToAction("Login", "Auth");
+            //return RedirectToAction("Login", "Auth");
+            return View();
         }
-
+        public async Task<IActionResult> Partners()
+        {
+            return View();
+        }
+        public async Task<IActionResult> APIDocs()
+        {
+            var publicApis = await _unitOfWork.GetRepository<APIDoc>().FindAsync(p=>p.IsPublic == true); 
+            return View(publicApis);
+        }
         public async Task<IActionResult> FAQ()
         {
             var faqs = await _unitOfWork.GetRepository<FAQS>().GetAllAsync();
@@ -48,7 +58,9 @@ namespace Factory.Controllers
 
         public IActionResult Contact()
         {
-            return RedirectToAction("Login", "Auth");
+            //return RedirectToAction("Login", "Auth");
+            return View();
+
         }
         public IActionResult UnderConstruction()
         {

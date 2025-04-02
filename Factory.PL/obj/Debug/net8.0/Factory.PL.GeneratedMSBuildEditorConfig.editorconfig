@@ -60,6 +60,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudGFudFxQYXltZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/MasterCopy/Factory.PL/Views/APIDocs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQVBJRG9jc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/MasterCopy/Factory.PL/Views/APIDocs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQVBJRG9jc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/MasterCopy/Factory.PL/Views/APIDocs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQVBJRG9jc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/MasterCopy/Factory.PL/Views/APIDocs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQVBJRG9jc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/MasterCopy/Factory.PL/Views/APIDocs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQVBJRG9jc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/MasterCopy/Factory.PL/Views/AssignPermission/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzaWduUGVybWlzc2lvblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -248,6 +268,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dFVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/MasterCopy/Factory.PL/Views/Home/APIDocs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBUElEb2NzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/MasterCopy/Factory.PL/Views/Home/contact.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxjb250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -294,6 +318,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/MasterCopy/Factory.PL/Views/Home/NotFound.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxOb3RGb3VuZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/MasterCopy/Factory.PL/Views/Home/Partners.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQYXJ0bmVycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/MasterCopy/Factory.PL/Views/Home/Privacy.cshtml]
@@ -702,6 +730,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/MasterCopy/Factory.PL/Views/Shared/_LogedUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dlZFVzZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/MasterCopy/Factory.PL/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/MasterCopy/Factory.PL/Views/Shared/_OnboardingLayout.cshtml]

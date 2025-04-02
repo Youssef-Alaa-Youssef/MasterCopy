@@ -1,0 +1,765 @@
+﻿@using Factory.DAL.Models.Documentation
+@model IEnumerable<APIDoc>
+@{
+    ViewData["Title"] = "API Documentation | GlassFactory Pro";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Comprehensive API documentation for GlassFactory Pro">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- CSS Assets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #005B9F;
+            --primary-light: rgba(0, 91, 159, 0.1);
+            --secondary-color: #00A8E8;
+            --accent-color: #FF6B35;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --light-bg: #F8F9FA;
+            --dark-bg: #1A2B4A;
+            --text-color: #2D3748;
+            --text-muted: #6c757d;
+            --light-text: #F8F9FA;
+            --code-bg: #282c34;
+            --sidebar-width: 300px;
+            --transition-speed: 0.25s;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+        }
+
+        /* Layout Components */
+        .glass-nav {
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            transition: all var(--transition-speed) ease;
+            z-index: 1030;
+        }
+
+            .glass-nav.scrolled {
+                padding: 0.75rem 0;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        /* Sidebar */
+        .api-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            padding: 5rem 1.5rem 2rem;
+            overflow-y: auto;
+            z-index: 1020;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .sidebar-header {
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Navigation */
+        .nav-item {
+            margin: 0.25rem 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 0.375rem;
+            transition: all var(--transition-speed) ease;
+            font-weight: 500;
+        }
+
+            .nav-link:hover {
+                background-color: var(--primary-light);
+                color: var(--primary-color);
+            }
+
+            .nav-link.active {
+                background-color: var(--primary-light);
+                color: var(--primary-color);
+                font-weight: 600;
+                border-left: 3px solid var(--primary-color);
+            }
+
+        /* Main Content */
+        .api-main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2.5rem;
+            transition: margin var(--transition-speed) ease;
+        }
+
+        /* API Endpoint Cards */
+        .endpoint-card {
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            background: white;
+            border-left: 4px solid var(--primary-color);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .endpoint-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            }
+
+        .endpoint-header {
+            padding: 1.25rem 1.5rem;
+            background: rgba(0, 91, 159, 0.03);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .endpoint-method {
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-right: 0.75rem;
+            color: white;
+        }
+
+        .method-get {
+            background-color: var(--success-color);
+        }
+
+        .method-post {
+            background-color: var(--secondary-color);
+        }
+
+        .method-put {
+            background-color: var(--warning-color);
+        }
+
+        .method-delete {
+            background-color: var(--danger-color);
+        }
+
+        .method-patch {
+            background-color: #50e3c2;
+        }
+
+        .endpoint-path {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .endpoint-description {
+            padding: 1.5rem;
+        }
+
+        .endpoint-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--code-bg);
+            color: #abb2bf;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+
+        .code-key {
+            color: #e06c75;
+        }
+
+        .code-string {
+            color: #98c379;
+        }
+
+        .code-number {
+            color: #d19a66;
+        }
+
+        .code-boolean {
+            color: #56b6c2;
+        }
+
+        .code-comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        /* Tables */
+        .parameters-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+            .parameters-table th {
+                background: #f8f9fa;
+                text-align: left;
+                padding: 0.75rem;
+                font-weight: 600;
+                border-bottom: 2px solid #dee2e6;
+            }
+
+            .parameters-table td {
+                padding: 0.75rem;
+                border-bottom: 1px solid #eee;
+                vertical-align: top;
+            }
+
+        .parameter-name {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .parameter-required {
+            color: var(--danger-color);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @@media (max-width: 992px) {
+            .api-sidebar {
+                transform: translateX(-100%);
+            }
+
+                .api-sidebar.show {
+                    transform: translateX(0);
+                }
+
+            .api-main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Mobile Toggle */
+        .sidebar-toggle {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1040;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            display: none;
+        }
+
+            .sidebar-toggle:hover {
+                transform: scale(1.1);
+            }
+
+        @@media (max-width: 992px) {
+            .sidebar-toggle {
+                display: flex;
+            }
+        }
+
+        /* Utility Classes */
+        .transition-all {
+            transition: all var(--transition-speed) ease;
+        }
+
+        .badge-sm {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.4rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top glass-nav" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="/" aria-label="GlassFactory Pro Home">
+                    <span class="logo-text">GlassFactory <span class="text-primary">Pro</span></span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/" aria-current="page">
+                                <i class="fas fa-home me-1"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/features">
+                                <i class="fas fa-star me-1"></i> Features
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/api">
+                                <i class="fas fa-code me-1"></i> API
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/documentation">
+                                <i class="fas fa-book me-1"></i> Docs
+                            </a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            <a class="btn btn-primary px-3" href="/developer-portal">
+                                <i class="fas fa-user-cog me-1"></i> Developer Portal
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="api-sidebar" id="apiSidebar">
+        <div class="sidebar-header">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h5 class="mb-0">API Reference</h5>
+                <span class="badge bg-primary rounded-pill">v2.1</span>
+            </div>
+            <div class="input-group input-group-sm">
+                <span class="input-group-text bg-transparent">
+                    <i class="fas fa-search text-muted"></i>
+                </span>
+                <input type="text" class="form-control form-control-sm border-start-0"
+                       placeholder="Search endpoints..." id="apiSearch"
+                       aria-label="Search API endpoints">
+            </div>
+        </div>
+        <ul class="nav flex-column" id="apiMenu">
+            <li class="nav-item">
+                <a class="nav-link active" href="#authentication">
+                    <i class="fas fa-key me-2"></i> Authentication
+                </a>
+            </li>
+
+            @foreach (var api in Model.Where(a => a.IsPublic))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="#@($"api-{api.Id}")" data-api-id="@api.Id">
+                        <i class="@GetMethodIcon(api.Method) me-2"></i> @api.Title
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <!-- Mobile Toggle -->
+    <div class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Main Content -->
+    <main class="api-main-content">
+        <!-- Authentication Section -->
+        <section id="authentication" class="endpoint-section mb-5">
+            <div class="endpoint-card">
+                <div class="endpoint-header">
+                    <h3 class="mb-0">
+                        <i class="fas fa-key me-2"></i> Authentication
+                    </h3>
+                </div>
+                <div class="endpoint-description">
+                    <p class="lead">All API requests require authentication via API keys or OAuth tokens.</p>
+
+                    <div class="mb-4">
+                        <h5 class="endpoint-title">
+                            <i class="fas fa-id-card me-2"></i> API Keys
+                        </h5>
+                        <p>Generate and manage your API keys in the <a href="/developer-portal">Developer Portal</a>. Each key has specific permissions and can be restricted to certain IP addresses.</p>
+                        <div class="code-block mb-4">
+                            <span class="code-comment">// Include in request headers</span><br>
+                            <span class="code-key">Authorization</span>: Bearer <span class="code-string">your_api_key_here</span>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning d-flex align-items-center">
+                        <i class="fas fa-exclamation-triangle me-2 fs-4"></i>
+                        <div>
+                            <strong>Security Notice:</strong> Never expose API keys in client-side code. Use environment variables or secure storage.
+                        </div>
+                    </div>
+
+                    <h5 class="endpoint-title mt-4">
+                        <i class="fas fa-shield-alt me-2"></i> OAuth 2.0
+                    </h5>
+                    <p>For more secure access, use OAuth 2.0 with the authorization code flow.</p>
+                    <div class="code-block">
+                        <span class="code-comment">// OAuth token request</span><br>
+                        POST /oauth/token<br>
+                        <span class="code-key">grant_type</span>=<span class="code-string">authorization_code</span><br>
+                        <span class="code-key">client_id</span>=<span class="code-string">your_client_id</span><br>
+                        <span class="code-key">client_secret</span>=<span class="code-string">your_client_secret</span><br>
+                        <span class="code-key">code</span>=<span class="code-string">authorization_code</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Endpoints -->
+        @foreach (var api in Model.Where(a => a.IsPublic))
+        {
+            <section id="@($"api-{api.Id}")" class="endpoint-section mb-5" data-api-id="@api.Id">
+                <div class="endpoint-card">
+                    <div class="endpoint-header d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <span class="endpoint-method method-@api.Method.ToLower() me-3">
+                                @api.Method.ToUpper()
+                            </span>
+                            <span class="endpoint-path font-monospace">@api.Endpoint</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary copy-btn"
+                                data-clipboard-text="@api.Method.ToUpper() @api.Endpoint"
+                                title="Copy endpoint">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="endpoint-description">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="endpoint-title mb-0">@api.Title</h5>
+                            <span class="badge bg-light text-dark border">
+                                <i class="fas fa-clock me-1"></i> Updated @api.CreatedAt.ToString("MMMM d, yyyy")
+                            </span>
+                        </div>
+
+                        <p class="text-muted mb-4">@api.Description</p>
+
+                        @if (!string.IsNullOrEmpty(api.Parameters))
+                        {
+                            <div class="mb-4">
+                                <h6 class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-list-ul me-2"></i> Parameters
+                                </h6>
+                                <div class="table-responsive">
+                                    <table class="parameters-table table table-hover">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Required</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var param in ParseParameters(api.Parameters))
+                                            {
+                                                <tr>
+                                                    <td class="parameter-name font-monospace">@param.Name</td>
+                                                    <td class="font-monospace">@param.Type</td>
+                                                    <td>
+                                                        @if (param.Required)
+                                                        {
+                                                            <span class="badge bg-danger bg-opacity-10 text-danger parameter-required">
+                                                                <i class="fas fa-check-circle me-1"></i> Required
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-secondary bg-opacity-10 text-secondary">
+                                                                Optional
+                                                            </span>
+                                                        }
+                                                    </td>
+                                                    <td>@param.Description</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="mb-4">
+                            <h6 class="d-flex align-items-center mb-3">
+                                <i class="fas fa-exchange-alt me-2"></i> Request/Response
+                            </h6>
+
+                            <ul class="nav nav-tabs" id="@($"api-{api.Id}-tab")" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="@($"request-{api.Id}-tab")"
+                                            data-bs-toggle="tab" data-bs-target="#@($"request-{api.Id}")"
+                                            type="button" role="tab">
+                                        <i class="fas fa-paper-plane me-1"></i> Request
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="@($"response-{api.Id}-tab")"
+                                            data-bs-toggle="tab" data-bs-target="#@($"response-{api.Id}")"
+                                            type="button" role="tab">
+                                        <i class="fas fa-reply me-1"></i> Response
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content border-start border-end border-bottom p-0"
+                                 id="@($"api-{api.Id}-tab-content")">
+                                <div class="tab-pane fade show active p-3" id="@($"request-{api.Id}")" role="tabpanel">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <small class="text-muted">Example Request</small>
+                                        <button class="btn btn-sm btn-outline-secondary copy-btn"
+                                                data-clipboard-text="@api.RequestExample"
+                                                title="Copy request">
+                                            <i class="far fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <div class="code-block">
+                                        @Html.Raw(FormatCodeExample(api.RequestExample))
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade p-3" id="@($"response-{api.Id}")" role="tabpanel">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <small class="text-muted">Example Response</small>
+                                        <button class="btn btn-sm btn-outline-secondary copy-btn"
+                                                data-clipboard-text="@api.ResponseExample"
+                                                title="Copy response">
+                                            <i class="far fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <div class="code-block">
+                                        @Html.Raw(FormatCodeExample(api.ResponseExample))
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+    </main>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navbar scroll effect
+            const navbar = document.getElementById('mainNav');
+            window.addEventListener('scroll', function() {
+                navbar.classList.toggle('scrolled', window.scrollY > 100);
+            });
+
+            // Mobile sidebar toggle
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const apiSidebar = document.getElementById('apiSidebar');
+
+            sidebarToggle.addEventListener('click', function() {
+                apiSidebar.classList.toggle('show');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // Smooth scrolling and active link highlighting
+            const sidebarLinks = document.querySelectorAll('.api-sidebar .nav-link');
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Update active state
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Scroll to section
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+
+                    // Close sidebar on mobile
+                    if (window.innerWidth < 992) {
+                        apiSidebar.classList.remove('show');
+                        sidebarToggle.querySelector('i').classList.remove('fa-times');
+                        sidebarToggle.querySelector('i').classList.add('fa-bars');
+                    }
+                });
+            });
+
+            // Highlight current section on scroll
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('.endpoint-section');
+                let currentSection = '';
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 150;
+                    if (window.scrollY >= sectionTop) {
+                        currentSection = '#' + section.getAttribute('id');
+                    }
+                });
+
+                sidebarLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Initialize Bootstrap tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            // Initialize clipboard.js for copy buttons
+            new ClipboardJS('.copy-btn').on('success', function(e) {
+                const originalTitle = e.trigger.getAttribute('title');
+                e.trigger.innerHTML = '<i class="fas fa-check me-1"></i> Copied!';
+
+                setTimeout(function() {
+                    e.trigger.innerHTML = '<i class="far fa-copy"></i>' +
+                        (e.trigger.textContent.includes('Copy') ? ' Copy' : '');
+                    e.trigger.setAttribute('title', originalTitle);
+                }, 2000);
+            });
+
+            // API Search functionality
+            const apiSearch = document.getElementById('apiSearch');
+            if (apiSearch) {
+                apiSearch.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const menuItems = document.querySelectorAll('#apiMenu .nav-link:not([href="#authentication"])');
+
+                    menuItems.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        item.style.display = text.includes(searchTerm) ? 'flex' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+@functions {
+    string GetMethodIcon(string method)
+    {
+        return method.ToUpper() switch
+        {
+            "GET" => "fas fa-download",
+            "POST" => "fas fa-upload",
+            "PUT" => "fas fa-edit",
+            "DELETE" => "fas fa-trash",
+            "PATCH" => "fas fa-pen-square",
+            _ => "fas fa-code"
+        };
+    }
+
+    List<APIParameter> ParseParameters(string parameters)
+    {
+        var result = new List<APIParameter>();
+        if (string.IsNullOrEmpty(parameters))
+            return result;
+
+        try
+        {
+            // Try to parse as JSON first
+            if (parameters.Trim().StartsWith("["))
+            {
+                return System.Text.Json.JsonSerializer.Deserialize<List<APIParameter>>(parameters) ?? result;
+            }
+
+            // Fallback to legacy format parsing
+            var lines = parameters.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                var parts = line.Split(':');
+                if (parts.Length < 1) continue;
+
+                var param = new APIParameter
+                    {
+                        Name = parts[0].Trim(),
+                        Type = parts.Length > 1 ? parts[1].Split('(')[0].Trim() : "string",
+                        Required = line.Contains("(required)"),
+                        Description = parts.Length > 1 ?
+                            parts[1].Contains('(') ?
+                                parts[1].Substring(parts[1].IndexOf('(') + 1).Replace(")", "").Trim() :
+                                parts[1].Trim() :
+                            ""
+                    };
+                result.Add(param);
+            }
+        }
+        catch
+        {
+            // If parsing fails, return empty list
+            return new List<APIParameter>();
+        }
+
+        return result;
+    }
+
+    string FormatCodeExample(string code)
+    {
+        if (string.IsNullOrEmpty(code))
+            return string.Empty;
+
+        // Simple formatting for demonstration
+        return code.Replace("\n", "<br>")
+                  .Replace("\"", "<span class=\"code-string\">\"</span>")
+                  .Replace("{", "<span class=\"code-key\">{</span>")
+                  .Replace("}", "<span class=\"code-key\">}</span>");
+    }
+}

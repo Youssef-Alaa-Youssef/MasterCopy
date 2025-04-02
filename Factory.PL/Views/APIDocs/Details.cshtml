@@ -1,0 +1,61 @@
+﻿@model Factory.DAL.Models.Documentation.APIDoc
+
+@{
+    ViewData["Title"] = ViewData["PageHeader"];
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+    <div class="col text-end">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> @Localizer["BackToList"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h3>@Model.Title</h3>
+                    <p class="text-muted">@Model.Description</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <span class="badge bg-primary">@Model.Method</span>
+                    <code>@Model.Endpoint</code>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>@Localizer["Parameters"]</h5>
+                    <div class="card bg-light mb-3">
+                        <div class="card-body">
+                            <pre>@Model.Parameters</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5>@Localizer["RequestExample"]</h5>
+                    <div class="card bg-dark text-white mb-3">
+                        <div class="card-body">
+                            <pre class="text-white">@Model.RequestExample</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h5>@Localizer["ResponseExample"]</h5>
+                    <div class="card bg-dark text-white">
+                        <div class="card-body">
+                            <pre class="text-white">@Model.ResponseExample</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

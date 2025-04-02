@@ -1,0 +1,42 @@
+﻿@model Factory.DAL.Models.Documentation.APIDoc
+
+@{
+    ViewData["Title"] = ViewData["PageHeader"];
+    Layout = "_LogedUser";
+}
+
+<div class="container-fluid card  shadow-sm p-3">
+    @await Html.PartialAsync("ErrorSummaryPartial")
+    @await Html.PartialAsync("_PageTitle")
+    <div class="col text-end">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> @Localizer["BackToList"]
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3>@Localizer["AreYouSureDelete"]</h3>
+            <div class="alert alert-warning">
+                <strong>@Model.Title</strong> (@Model.Method @Model.Endpoint)
+            </div>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <div class="text-end">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> @Localizer["Delete"]
+                    </button>
+                </div>
+            </form>
+        </div>
+</div>
