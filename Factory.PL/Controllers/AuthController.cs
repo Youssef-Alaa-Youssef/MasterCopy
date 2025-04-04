@@ -193,7 +193,7 @@ namespace Factory.Controllers
                 }
 
                 TempData["Success"] = "Login Successful!";
-                return LocalRedirect(returnUrl);
+                return RedirectToAction("Dashboard", "Home");
             }
             else if (result.RequiresTwoFactor)
             {

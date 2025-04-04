@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject Microsoft.Extensions.Options.IOptions<Factory.PL.Options.Names> appSettings
+
+@{
     ViewData["Title"] = "Home";
     Layout = null;
 }
@@ -7,18 +9,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GlassFactory Pro | End-to-End Glass Manufacturing Management</title>
+    <title>@appSettings.Value.CompanyName | Complete Enterprise Solution for Glass Industry</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #005B9F;
-            --secondary-color: #00A8E8;
+            --primary-color: #006699;
+            --secondary-color: #006699;
             --accent-color: #FF6B35;
             --light-bg: #F8F9FA;
-            --dark-bg: #1A2B4A;
-            --text-color: #2D3748;
+            --dark-bg: #006699;
+            --text-color: #334155;
             --light-text: #F8F9FA;
         }
 
@@ -158,7 +161,7 @@
             .module-card .icon-wrapper {
                 width: 80px;
                 height: 80px;
-                background: rgba(0, 91, 159, 0.1);
+                background: rgba(30, 58, 138, 0.1);
                 border-radius: 16px;
                 display: flex;
                 align-items: center;
@@ -238,7 +241,7 @@
         }
 
         .feature-highlight {
-            background: rgba(0, 168, 232, 0.05);
+            background: rgba(37, 99, 235, 0.05);
             border-radius: 12px;
             padding: 30px;
             border-left: 4px solid var(--primary-color);
@@ -294,7 +297,7 @@
             border-radius: 12px;
             padding: 40px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            height: 100%;
+            height: 73%;
         }
 
         .contact-form {
@@ -379,7 +382,7 @@
 
             .form-control:focus {
                 border-color: var(--primary-color);
-                box-shadow: 0 0 0 0.25rem rgba(0, 91, 159, 0.25);
+                box-shadow: 0 0 0 0.25rem rgba(30, 58, 138, 0.25);
             }
 
         .lead {
@@ -427,47 +430,402 @@
                 height: 100%;
             }
 
-        @@media (max-width: 768px) {
-            .hero-section
+        .pricing-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+            margin-top: 30px;
+            height: calc(100% - 30px);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+            .pricing-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+                border-color: var(--primary-color);
+            }
+
+            .pricing-card.popular {
+                border: 2px solid var(--primary-color);
+                z-index: 2;
+            }
+
+                .pricing-card.popular:before {
+                    content: 'MOST POPULAR';
+                    position: absolute;
+                    top: -15px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--primary-color);
+                    color: white;
+                    padding: 8px 20px;
+                    border-radius: 20px;
+                    font-weight: 600;
+                    font-size: 0.75rem;
+                    letter-spacing: 1px;
+                }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+
+            .price small {
+                font-size: 1rem;
+                color: var(--text-color);
+                opacity: 0.7;
+            }
+
+        .feature-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+            .feature-list li {
+                margin-bottom: 15px;
+                position: relative;
+                padding-left: 30px;
+            }
+
+                .feature-list li:before {
+                    content: '\f00c';
+                    font-family: 'Font Awesome 5 Free';
+                    font-weight: 900;
+                    position: absolute;
+                    left: 0;
+                    color: var(--primary-color);
+                }
+
+                .feature-list li.disabled {
+                    opacity: 0.5;
+                }
+
+                    .feature-list li.disabled:before {
+                        content: '\f00d';
+                        color: #dc3545;
+                    }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            margin-top: 40px;
+            transition: all 0.3s ease;
+        }
+
+            .testimonial-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: absolute;
+            top: -40px;
+            left: 30px;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-content {
+            padding-top: 50px;
+            position: relative;
+        }
+
+            .testimonial-content:before {
+                content: '\f10d';
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                font-size: 2rem;
+                color: rgba(30, 58, 138, 0.1);
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+        .about-img {
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s ease;
+        }
+
+            .about-img:hover {
+                transform: scale(1.02);
+            }
+
+        .team-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+            .team-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .team-card img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 50%;
+                margin: 0 auto 20px;
+                border: 5px solid rgba(37, 99, 235, 0.1);
+            }
+
+        .mission-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 12px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .mission-card:before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+                animation: pulse 8s infinite linear;
+            }
+
+        /* Hero Video Background */
+        .video-hero {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* Floating Animation */
+        @@keyframes floating {
+            0%
 
         {
-            min-height: auto;
-            padding: 100px 0;
-            height: auto;
+            transform: translateY(0px);
         }
 
-        .section-title {
-            font-size: 2rem;
+        50% {
+            transform: translateY(-15px);
         }
 
-        .display-4 {
-            font-size: 2.5rem;
+        100% {
+            transform: translateY(0px);
         }
 
-        .flow-step {
-            margin-left: 20px;
-            margin-right: 20px;
         }
 
-        .flow-line {
-            left: 30px;
+        .floating-animation {
+            animation: floating 6s ease-in-out infinite;
         }
 
-        .step-number {
-            left: 30px;
-            transform: none;
+        /* Pulse Animation */
+        @@keyframes pulse {
+            0%
+
+        {
+            transform: rotate(0deg);
         }
 
+        100% {
+            transform: rotate(360deg);
+        }
+
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+            .scroll-indicator span {
+                display: block;
+                width: 20px;
+                height: 20px;
+                border-bottom: 2px solid white;
+                border-right: 2px solid white;
+                transform: rotate(45deg);
+                margin: -10px;
+                animation: scroll-down 2s infinite;
+            }
+
+                .scroll-indicator span:nth-child(2) {
+                    animation-delay: -0.2s;
+                }
+
+                .scroll-indicator span:nth-child(3) {
+                    animation-delay: -0.4s;
+                }
+
+        @@keyframes scroll-down {
+            0%
+
+        {
+            opacity: 0;
+            transform: rotate(45deg) translate(-20px, -20px);
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+            transform: rotate(45deg) translate(20px, 20px);
+        }
+
+        }
+
+        /* Particle Background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Glow Effect */
+        .glow {
+            position: relative;
+        }
+
+            .glow:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at center, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
+                z-index: -1;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .glow:hover:after {
+                opacity: 1;
+            }
+
+        /* Hover Effects */
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+            .hover-scale:hover {
+                transform: scale(1.05);
+            }
+
+        /* Animated Underline */
+        .animated-underline {
+            position: relative;
+            display: inline-block;
+        }
+
+            .animated-underline:after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -5px;
+                left: 0;
+                background-color: var(--primary-color);
+                transition: width 0.3s ease;
+            }
+
+            .animated-underline:hover:after {
+                width: 100%;
+            }
+
+        /* Responsive Adjustments */
+        @@media (max-width: 768px) {
+            .hero-section {
+                min-height: auto;
+                padding: 100px 0;
+                height: auto;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .display-4 {
+                font-size: 2.5rem;
+            }
+
+            .flow-step {
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+
+            .flow-line {
+                left: 30px;
+            }
+
+            .step-number {
+                left: 30px;
+                transform: none;
+            }
+
+            .team-card {
+                margin-bottom: 30px;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z342BZD4Q"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-2Z342BZD4Q');
+    </script>
+
 </head>
 <body>
+    <div class="particles" id="particles-js"></div>
+
     <header>
         <nav class="navbar navbar-expand-lg navbar-light fixed-top glass-nav" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <span class="logo-text">GlassFactory <span style="color: var(--primary-color);">Pro</span></span>
+                    <span class="logo-text">@appSettings.Value.CompanyName
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -478,28 +836,41 @@
                             <a class="nav-link" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#modules">Modules</a>
+                            <a class="nav-link" href="#about">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#process">Workflow</a>
+                            <a class="nav-link" href="#modules">Solutions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#features">Features</a>
+                            <a class="nav-link" href="#pricing">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#testimonials">Testimonials</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#contact">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="APIDocs">
-                                <i class="fas fa-code me-2"></i>
+                            <a class="nav-link" asp-action="APIDocs" asp-controller="Home" target="_blank">
                                 API Docs
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Auth" asp-action="Login"><strong>Login Now</strong></a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link" asp-action="Dashboard" asp-controller="Home" target="_blank">
+                                    <strong>Dashboard</strong>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="nav-link" asp-action="Login" asp-controller="Auth" target="_blank">
+                                    <strong>Login</strong>
+                                </a>
+                            }
                         </li>
                         <li class="nav-item ms-2">
-                            <a class="btn btn-outline-primary" href="#demo">Book a Demo</a>
+                            <a class="btn btn-outline-primary" href="#demo">Free Trial</a>
                         </li>
                     </ul>
                 </div>
@@ -509,35 +880,52 @@
 
     <div class="content-wrapper">
         <main role="main">
-            <!-- Hero Section -->
+            <!-- Hero Section with Video Background -->
             <section class="hero-section d-flex align-items-center">
-                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Glass manufacturing automation" class="hero-bg" />
+                <video autoplay muted loop playsinline class="video-hero">
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-factory-worker-checking-glass-production-15682-large.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
                 <div class="hero-overlay"></div>
                 <div class="container hero-content">
                     <div class="row align-items-center">
                         <div class="col-lg-6 animate__animated animate__fadeInLeft">
-                            <h1 class="display-4 fw-bold mb-4">Transform Your Glass Factory Operations</h1>
-                            <p class="lead mb-4">End-to-end digital management platform that automates production, inventory, orders, and quality control for glass manufacturers.</p>
-                            <div class="d-flex flex-wrap gap-3">
-                                <a href="#demo" class="btn btn-primary btn-lg">View Live Demo</a>
-                                <a href="#contact" class="btn btn-outline-light btn-lg">Request Pricing</a>
+                            <h1 class="display-4 fw-bold mb-4" data-aos="fade-up" data-aos-delay="100">Complete Glass Industry Software Solution</h1>
+                            <p class="lead mb-4" data-aos="fade-up" data-aos-delay="200">All-in-one platform integrating glass production system, glass warehouse management, financial management and human resources specifically designed for glass companies.</p>
+                            <div class="d-flex flex-wrap gap-3" data-aos="fade-up" data-aos-delay="300">
+                                <a href="#demo" class="btn btn-primary btn-lg glow">Start Free Trial</a>
+                                <a href="#pricing" class="btn btn-outline-light btn-lg">View Pricing</a>
                             </div>
-                            <div class="tech-stack">
+                            <div class="tech-stack" data-aos="fade-up" data-aos-delay="400">
                                 <div class="tech-item">
-                                    <i class="fas fa-robot"></i> Production Automation
+                                    <i class="fas fa-warehouse"></i> Production Control
                                 </div>
                                 <div class="tech-item">
-                                    <i class="fas fa-warehouse"></i> Smart Warehouse
+                                    <i class="fas fa-warehouse"></i> Warehouse Management
                                 </div>
                                 <div class="tech-item">
-                                    <i class="fas fa-chart-network"></i> Real-time Analytics
+                                    <i class="fas fa-users"></i> financial management
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-users"></i> HR Solutions
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-chart-line"></i> Business Analytics
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 d-none d-lg-block animate__animated animate__fadeInRight">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="GlassFactory Pro dashboard" class="img-fluid rounded-3 shadow dashboard-preview" />
+                        <div class="col-lg-6 d-none d-lg-block animate__animated animate__fadeInRight" data-aos="zoom-in" data-aos-delay="500">
+                            <div class="ratio ratio-16x9">
+                                <img src="~/assets/images/Login.jpg" alt="@appSettings.Value.CompanyName dashboard"
+                                     class="img-fluid rounded-4 shadow-sm dashboard-preview floating-animation object-fit-cover">
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="scroll-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </section>
 
@@ -545,22 +933,22 @@
             <section id="modules" class="py-5 my-5">
                 <div class="container">
                     <div class="text-center mb-5">
-                        <h2 class="section-title text-center">Comprehensive Management Modules</h2>
-                        <p class="lead text-muted">Integrated solutions covering every aspect of your glass manufacturing business</p>
+                        <h2 class="section-title text-center">Comprehensive Glass Industry Solutions</h2>
+                        <p class="lead text-muted">Flexible software modules for glass factories</p>
                     </div>
 
                     <div class="row g-4">
                         <div class="col-md-6 col-lg-4">
                             <div class="module-card">
                                 <div class="icon-wrapper">
-                                    <i class="fas fa-industry"></i>
+                                    <i class="fas fa-clipboard-list"></i>
                                 </div>
-                                <h4>Production Control</h4>
-                                <p>Real-time monitoring and automation of glass melting, forming, cutting, and finishing processes with predictive maintenance alerts.</p>
+                                <h4>Order Management</h4>
+                                <p>Streamlined order processing from quote to delivery with specialized handling for custom glass specifications.</p>
                                 <ul class="list-unstyled mt-3">
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Batch tracking</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Equipment monitoring</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Quality thresholds</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Custom glass configurator</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Automatic scheduling</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Real-time status updates</li>
                                 </ul>
                             </div>
                         </div>
@@ -570,27 +958,12 @@
                                 <div class="icon-wrapper">
                                     <i class="fas fa-warehouse"></i>
                                 </div>
-                                <h4>Smart Warehouse</h4>
-                                <p>Automated inventory management with barcode/RFID tracking for raw materials, work-in-progress, and finished goods.</p>
+                                <h4>Warehouse Management</h4>
+                                <p>Complete inventory control system designed specifically for fragile glass products with specialized storage requirements.</p>
                                 <ul class="list-unstyled mt-3">
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Location tracking</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Automated replenishment</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Damage control</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-lg-4">
-                            <div class="module-card">
-                                <div class="icon-wrapper">
-                                    <i class="fas fa-clipboard-list"></i>
-                                </div>
-                                <h4>Order Management</h4>
-                                <p>End-to-end order processing from quotation to delivery with automated scheduling and real-time customer updates.</p>
-                                <ul class="list-unstyled mt-3">
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Custom configurations</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Production scheduling</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Shipping integration</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Barcode/RFID tracking</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Optimized storage layouts</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Breakage prevention</li>
                                 </ul>
                             </div>
                         </div>
@@ -600,12 +973,12 @@
                                 <div class="icon-wrapper">
                                     <i class="fas fa-search"></i>
                                 </div>
-                                <h4>Quality Assurance</h4>
-                                <p>Automated defect detection with machine vision and comprehensive quality control documentation.</p>
+                                <h4>Quality Control</h4>
+                                <p>Automated quality assurance processes with machine vision for detecting imperfections in glass products.</p>
                                 <ul class="list-unstyled mt-3">
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> AI-powered inspection</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Compliance tracking</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Traceability reports</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Defect detection</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Quality standards tracking</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Compliance reporting</li>
                                 </ul>
                             </div>
                         </div>
@@ -613,14 +986,29 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="module-card">
                                 <div class="icon-wrapper">
-                                    <i class="fas fa-truck"></i>
+                                    <i class="fas fa-file-invoice-dollar"></i>
                                 </div>
-                                <h4>Logistics Automation</h4>
-                                <p>Optimized loading, routing, and delivery scheduling for fragile glass products with damage prevention analytics.</p>
+                                <h4>Financial Management</h4>
+                                <p>Integrated accounting and financial reporting tailored for glass manufacturing businesses.</p>
                                 <ul class="list-unstyled mt-3">
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Load optimization</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Carrier integration</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Delivery tracking</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Cost tracking</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Profit analysis</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Budget forecasting</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="module-card">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h4>HR Management</h4>
+                                <p>Specialized human resources system for glass industry workers, including safety certifications and skills tracking.</p>
+                                <ul class="list-unstyled mt-3">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Safety training records</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Shift optimization</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Performance analytics</li>
                                 </ul>
                             </div>
                         </div>
@@ -631,14 +1019,15 @@
                                     <i class="fas fa-chart-line"></i>
                                 </div>
                                 <h4>Business Intelligence</h4>
-                                <p>Real-time dashboards and predictive analytics for production efficiency, inventory turns, and order fulfillment.</p>
+                                <p>Give A Help To Finish Your Project, Advanced analytics and reporting tools to optimize your glass business operations and profitability.</p>
                                 <ul class="list-unstyled mt-3">
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Custom reports</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> KPI monitoring</li>
-                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Predictive insights</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Performance dashboards</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Trend analysis</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Strategic forecasting</li>
                                 </ul>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </section>
@@ -648,19 +1037,19 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-6 mb-4 mb-lg-0">
-                            <h2 class="section-title">Experience GlassFactory Pro</h2>
-                            <p class="lead mb-4">See how our platform transforms glass manufacturing operations with a personalized demo.</p>
+                            <h2 class="section-title">" @appSettings.Value.CompanyName " for </h2>
+                            <p class="lead mb-4">See how our complete enterprise solution transforms glass businesses with a free 14-day trial.</p>
                             <div class="feature-highlight mb-4">
-                                <h4><i class="fas fa-desktop me-2 text-primary"></i> Interactive Demo</h4>
-                                <p class="mb-0">Explore our sandbox environment with sample data from a typical glass production facility.</p>
+                                <h4><i class="fas fa-desktop me-2 text-primary"></i> Full-featured Trial</h4>
+                                <p class="mb-0">Access all modules and features with your own data for two weeks.</p>
                             </div>
                             <div class="feature-highlight mb-4">
-                                <h4><i class="fas fa-calendar-check me-2 text-primary"></i> Live Walkthrough</h4>
-                                <p class="mb-0">Schedule a 1-on-1 session with our implementation specialists.</p>
+                                <h4><i class="fas fa-headset me-2 text-primary"></i> Guided Onboarding</h4>
+                                <p class="mb-0">Our team helps you set up your account and import your data.</p>
                             </div>
                             <div class="feature-highlight">
-                                <h4><i class="fas fa-cog me-2 text-primary"></i> Custom Scenario</h4>
-                                <p class="mb-0">Configure the demo to match your specific production workflow.</p>
+                                <h4><i class="fas fa-rocket me-2 text-primary"></i> Quick Implementation</h4>
+                                <p class="mb-0">Get up and running in less than a day with our streamlined setup process.</p>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -672,378 +1061,720 @@
                 </div>
             </section>
 
-            <!-- Process Flow Section -->
+            <!-- Workflow Section -->
             <section id="process" class="py-5 my-5">
                 <div class="container">
                     <div class="text-center mb-5">
-                        <h2 class="section-title text-center">Automated Order-to-Production Workflow</h2>
-                        <p class="lead text-muted">Seamless integration across your entire glass manufacturing process</p>
+                        <h2 class="section-title text-center">Streamlined Glass Business Workflow</h2>
+                        <p class="lead text-muted">See how @appSettings.Value.CompanyName streamlines every aspect of your glass business operations</p>
                     </div>
 
-                    <div class="process-flow">
+                    <div class="process-flow position-relative">
                         <div class="flow-line"></div>
-
-                        <div class="flow-step">
-                            <div class="step-number">1</div>
-                            <h4 class="text-center">Order Intake</h4>
-                            <p class="text-center">Customer orders automatically flow into production scheduling with all specifications and requirements.</p>
+                        <div class="row">
+                            <div class="col-md-8 mx-auto">
+                                <div class="flow-step">
+                                    <div class="step-number">1</div>
+                                    <h4>Order Processing</h4>
+                                    <p>Customer orders are received and processed through our intuitive order management system. Glass specifications, quantities, and delivery requirements are automatically recorded and validated.</p>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="flow-step">
-                            <div class="step-number">2</div>
-                            <h4 class="text-center">Material Allocation</h4>
-                            <p class="text-center">System checks inventory and allocates raw materials based on glass type, thickness, and coating requirements.</p>
+                        <div class="row">
+                            <div class="col-md-8 mx-auto">
+                                <div class="flow-step">
+                                    <div class="step-number">2</div>
+                                    <h4>Production Planning</h4>
+                                    <p>Orders are scheduled for production with optimal resource allocation. The system automatically checks for material availability and suggests the most efficient cutting patterns to minimize waste.</p>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="flow-step">
-                            <div class="step-number">3</div>
-                            <h4 class="text-center">Production Scheduling</h4>
-                            <p class="text-center">Smart algorithms optimize furnace loading, cutting patterns, and production sequencing.</p>
+                        <div class="row">
+                            <div class="col-md-8 mx-auto">
+                                <div class="flow-step">
+                                    <div class="step-number">3</div>
+                                    <h4>Manufacturing Execution</h4>
+                                    <p>Production teams receive detailed work instructions with real-time updates. Quality control checkpoints are integrated throughout the manufacturing process to ensure standards are maintained.</p>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="flow-step">
-                            <div class="step-number">4</div>
-                            <h4 class="text-center">Quality Assurance</h4>
-                            <p class="text-center">Automated inspections at each stage with real-time quality data integration.</p>
+                        <div class="row">
+                            <div class="col-md-8 mx-auto">
+                                <div class="flow-step">
+                                    <div class="step-number">4</div>
+                                    <h4>Logistics & Delivery</h4>
+                                    <p>Finished products are tracked with our warehouse management system, and shipping is coordinated with optimized routes. Fragile glass products are handled with specialized care procedures.</p>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="flow-step">
-                            <div class="step-number">5</div>
-                            <h4 class="text-center">Warehouse Automation</h4>
-                            <p class="text-center">Finished products are automatically tracked, stored, and prepared for shipment.</p>
-                        </div>
-
-                        <div class="flow-step">
-                            <div class="step-number">6</div>
-                            <h4 class="text-center">Delivery Coordination</h4>
-                            <p class="text-center">System schedules fragile glass shipments with optimized loading and routing.</p>
+                        <div class="row">
+                            <div class="col-md-8 mx-auto">
+                                <div class="flow-step">
+                                    <div class="step-number">5</div>
+                                    <h4>Reporting & Analytics</h4>
+                                    <p>Comprehensive data analytics provide insights into business performance, helping you make informed decisions and identify areas for improvement.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Features Section -->
-            <section id="features" class="py-5 my-5 bg-light">
+            <!-- Integration Section -->
+            <section id="integrations" class="py-5 my-5 bg-light d-none">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <h2 class="section-title">Seamless Integration Capabilities</h2>
+                            <p class="lead mb-4">@appSettings.Value.CompanyName connects with your existing tools and systems for a unified workflow</p>
+                            <div class="d-flex flex-wrap mt-4">
+                                <div class="integration-badge">
+                                    <i class="fab fa-cc-visa me-2 text-primary"></i> Payment Gateways
+                                </div>
+                                <div class="integration-badge">
+                                    <i class="fas fa-shipping-fast me-2 text-primary"></i> Shipping Providers
+                                </div>
+                                <div class="integration-badge">
+                                    <i class="fab fa-salesforce me-2 text-primary"></i> CRM Systems
+                                </div>
+                                <div class="integration-badge">
+                                    <i class="fas fa-file-invoice me-2 text-primary"></i> Accounting Software
+                                </div>
+                                <div class="integration-badge">
+                                    <i class="fas fa-robot me-2 text-primary"></i> Manufacturing Equipment
+                                </div>
+                                <div class="integration-badge">
+                                    <i class="fas fa-barcode me-2 text-primary"></i> Scanning Hardware
+                                </div>
+                                <div class="integration-badge">
+                                    <i class="fas fa-truck me-2 text-primary"></i> Logistics Platforms
+                                </div>
+                                <div class="integration-badge">
+                                    <i class="fas fa-calendar-alt me-2 text-primary"></i> Scheduling Tools
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="py-4 px-4 bg-white rounded-3 shadow">
+                                <h4 class="mb-4">Open API Architecture</h4>
+                                <p>Our comprehensive RESTful API allows for seamless integration with third-party applications and services.</p>
+                                <pre class="bg-light p-3 rounded"><code>
+// Sample API call to retrieve inventory data
+fetch('https://api.@@appSettings.Value.CompanyName.com/v1/inventory', {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer YOUR_API_KEY',
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+                                </code></pre>
+                                <p class="mt-3 mb-0">
+                                    <a href="#api-docs" class="text-decoration-none">
+                                        <i class="fas fa-book me-2"></i> Explore our complete API documentation
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="py-5 my-5">
                 <div class="container">
                     <div class="text-center mb-5">
-                        <h2 class="section-title text-center">Key Differentiators</h2>
-                        <p class="lead text-muted">What makes GlassFactory Pro the ideal choice for glass manufacturers</p>
+                        <h2 class="section-title text-center">Trusted by Glass Industry Leaders</h2>
+                        <p class="lead text-muted">Join hundreds of glass manufacturers and suppliers who rely on @appSettings.Value.CompanyName</p>
                     </div>
 
                     <div class="row g-4">
                         <div class="col-md-6 col-lg-3">
                             <div class="stats-card">
-                                <div class="stat-value">100%</div>
-                                <h5>Traceability</h5>
-                                <p>Full batch-to-order tracking with digital genealogy</p>
+                                <i class="fas fa-building mb-3 fa-2x text-primary"></i>
+                                <div class="stat-value">350+</div>
+                                <h5 class="mt-3">Companies</h5>
+                                <p class="text-muted">Glass businesses across 28 countries</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="stats-card">
-                                <div class="stat-value">30%</div>
-                                <h5>Efficiency Gain</h5>
-                                <p>Average reduction in production waste</p>
+                                <i class="fas fa-users mb-3 fa-2x text-primary"></i>
+                                <div class="stat-value">12K+</div>
+                                <h5 class="mt-3">Users</h5>
+                                <p class="text-muted">Active daily system users</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="stats-card">
-                                <div class="stat-value">24/7</div>
-                                <h5>Monitoring</h5>
-                                <p>Real-time equipment and process tracking</p>
+                                <i class="fas fa-chart-line mb-3 fa-2x text-primary"></i>
+                                <div class="stat-value">97%</div>
+                                <h5 class="mt-3">Efficiency</h5>
+                                <p class="text-muted">Average productivity increase</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="stats-card">
-                                <div class="stat-value">50+</div>
-                                <h5>Integrations</h5>
-                                <p>ERP, CRM, and logistics systems supported</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5 pt-4">
-                        <h4 class="text-center mb-4">Seamless Integrations</h4>
-                        <div class="d-flex flex-wrap justify-content-center">
-                            <div class="integration-badge">
-                                <img src="https://logo.clearbit.com/sap.com" alt="SAP" width="20" class="me-2">
-                                SAP
-                            </div>
-                            <div class="integration-badge">
-                                <img src="https://logo.clearbit.com/oracle.com" alt="Oracle" width="20" class="me-2">
-                                Oracle
-                            </div>
-                            <div class="integration-badge">
-                                <img src="https://logo.clearbit.com/salesforce.com" alt="Salesforce" width="20" class="me-2">
-                                Salesforce
-                            </div>
-                            <div class="integration-badge">
-                                <img src="https://logo.clearbit.com/tableau.com" alt="Tableau" width="20" class="me-2">
-                                Tableau
-                            </div>
-                            <div class="integration-badge">
-                                <img src="https://logo.clearbit.com/fedex.com" alt="FedEx" width="20" class="me-2">
-                                FedEx
-                            </div>
-                            <div class="integration-badge">
-                                <img src="https://logo.clearbit.com/ups.com" alt="UPS" width="20" class="me-2">
-                                UPS
-                            </div>
-                            <div class="integration-badge">
-                                <img src="https://logo.clearbit.com/quickbooks.intuit.com" alt="QuickBooks" width="20" class="me-2">
-                                QuickBooks
-                            </div>
-                            <div class="integration-badge">
-                                <img src="https://logo.clearbit.com/shopify.com" alt="Shopify" width="20" class="me-2">
-                                Shopify
+                                <i class="fas fa-clock mb-3 fa-2x text-primary"></i>
+                                <div class="stat-value">99.9%</div>
+                                <h5 class="mt-3">Uptime</h5>
+                                <p class="text-muted">System reliability</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <!-- Pricing Section -->
+            <section id="pricing" class="py-5 my-5 bg-light">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="section-title text-center">Simple, Transparent Pricing</h2>
+                        <p class="lead text-muted">Choose the plan that fits your glass business needs</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="pricing-card">
+                                <h3>Standard</h3>
+                                <div class="price">$499<small>/month</small></div>
+                                <p>Perfect for small glass businesses</p>
+                                <ul class="feature-list list-unstyled">
+                                    <li>Up to 10 users</li>
+                                    <li>Core modules included</li>
+                                    <li>5,000 orders per month</li>
+                                    <li>Standard support</li>
+                                    <li class="disabled">Advanced analytics</li>
+                                    <li class="disabled">Custom integrations</li>
+                                    <li class="disabled">Dedicated account manager</li>
+                                </ul>
+                                <a href="#demo" class="btn btn-outline-primary w-100">Start Free Trial</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="pricing-card popular">
+                                <h3>Professional</h3>
+                                <div class="price">$999<small>/month</small></div>
+                                <p>Ideal for growing glass manufacturers</p>
+                                <ul class="feature-list list-unstyled">
+                                    <li>Up to 25 users</li>
+                                    <li>All modules included</li>
+                                    <li>15,000 orders per month</li>
+                                    <li>Priority support</li>
+                                    <li>Advanced analytics</li>
+                                    <li>Basic custom integrations</li>
+                                    <li class="disabled">Dedicated account manager</li>
+                                </ul>
+                                <a href="#demo" class="btn btn-primary w-100">Start Free Trial</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="pricing-card">
+                                <h3>Enterprise</h3>
+                                <div class="price">$1,999<small>/month</small></div>
+                                <p>For large glass industry operations</p>
+                                <ul class="feature-list list-unstyled">
+                                    <li>Unlimited users</li>
+                                    <li>All modules included</li>
+                                    <li>Unlimited orders</li>
+                                    <li>24/7 premium support</li>
+                                    <li>Advanced analytics with custom reports</li>
+                                    <li>Advanced custom integrations</li>
+                                    <li>Dedicated account manager</li>
+                                </ul>
+                                <a href="#contact" class="btn btn-outline-primary w-100">Contact Sales</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-5">
+                        <p>Need a custom solution? <a href="#contact" class="text-decoration-none">Contact our sales team</a> for personalized pricing.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section id="testimonials" class="py-5 my-5">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="section-title text-center">What Our Clients Say</h2>
+                        <p class="lead text-muted">Hear from glass industry professionals who use @appSettings.Value.CompanyName every day</p>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="testimonial-card">
+                                <div class="testimonial-avatar">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="John Smith" class="img-fluid" />
+                                </div>
+                                <div class="testimonial-content">
+                                    <p>"@appSettings.Value.CompanyName has transformed how we manage our glass manufacturing plant. The inventory tracking alone has saved us thousands in reduced breakage."</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="mb-0">John Smith</h5>
+                                            <p class="text-muted mb-0">Operations Manager, ClearVue Glass</p>
+                                        </div>
+                                        <div class="text-warning">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="testimonial-card">
+                                <div class="testimonial-avatar">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Sarah Johnson" class="img-fluid" />
+                                </div>
+                                <div class="testimonial-content">
+                                    <p>"The custom glass configurator has revolutionized our order processing. What used to take hours now takes minutes, with fewer errors and happier customers."</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="mb-0">Sarah Johnson</h5>
+                                            <p class="text-muted mb-0">CEO, Premium Glass Solutions</p>
+                                        </div>
+                                        <div class="text-warning">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="testimonial-card">
+                                <div class="testimonial-avatar">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="img-fluid" />
+                                </div>
+                                <div class="testimonial-content">
+                                    <p>"Implementation was surprisingly fast. Within a week, our entire team was comfortable using @appSettings.Value.CompanyName, and we saw immediate improvements in efficiency."</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="mb-0">Michael Chen</h5>
+                                            <p class="text-muted mb-0">IT Director, Global Glass Industries</p>
+                                        </div>
+                                        <div class="text-warning">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="py-5 my-5 about-section ">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="section-title text-center" data-aos="fade-up">About @appSettings.Value.CompanyName</h2>
+                        <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">Transforming the glass industry with innovative technology solutions</p>
+                    </div>
+
+                    <div class="row align-items-center mb-5">
+                        <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Our Story" class="img-fluid rounded-3 about-img hover-scale">
+                                <div class="position-absolute bottom-0 start-0 bg-primary text-white p-3 rounded-end" style="width: 80%;">
+                                    <h5 class="mb-0">15+ Years in Glass Industry</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
+                            <h3 class="mb-4 animated-underline">Our Story</h3>
+                            <p class="lead">Founded in 2010 by glass industry veterans, @appSettings.Value.CompanyName was born from a need for specialized software solutions in the glass manufacturing sector.</p>
+                            <p>We understand the unique challenges of glass production, from raw material management to fragile product handling. Our team combines deep industry knowledge with cutting-edge technology expertise to deliver solutions that truly work for your business.</p>
+                            <div class="d-flex align-items-center mt-4">
+                                <div class="bg-primary rounded-circle p-3 text-white me-3">
+                                    <i class="fas fa-bullseye fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Mission</h5>
+                                    <p class="mb-0">To revolutionize glass industry operations through innovative technology</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-12 mb-5" data-aos="fade-up">
+                            <div class="mission-card p-4 text-center">
+                                <h3 class="mb-4">Why Choose @appSettings.Value.CompanyName?</h3>
+                                <p class="lead mb-4">We're not just another ERP provider. Our solutions are built specifically for the glass industry, addressing your unique challenges with tailored features.</p>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3 mb-md-0">
+                                        <div class="bg-white rounded-3 p-3 text-dark h-100">
+                                            <i class="fas fa-industry fa-2x mb-3 text-primary"></i>
+                                            <h5>Industry-Specific</h5>
+                                            <p>Built exclusively for glass manufacturers and suppliers</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3 mb-md-0">
+                                        <div class="bg-white rounded-3 p-3 text-dark h-100">
+                                            <i class="fas fa-cogs fa-2x mb-3 text-primary"></i>
+                                            <h5>Comprehensive</h5>
+                                            <p>End-to-end solution covering all aspects of your business</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="bg-white rounded-3 p-3 text-dark h-100">
+                                            <i class="fas fa-rocket fa-2x mb-3 text-primary"></i>
+                                            <h5>Innovative</h5>
+                                            <p>Cutting-edge technology with continuous updates</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <h3 class="mb-5" data-aos="fade-up">Meet Our Leadership Team</h3>
+                        <div class="row">
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                                <div class="team-card">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="John Smith" class="img-fluid">
+                                    <h4>John Smith</h4>
+                                    <p class="text-primary">CEO & Founder</p>
+                                    <p>25+ years in glass manufacturing and technology</p>
+                                    <div class="social-icons">
+                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                                <div class="team-card">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Sarah Johnson" class="img-fluid">
+                                    <h4>John Smith</h4>
+                                    <p class="text-primary">CTO</p>
+                                    <p>Enterprise software expert with glass industry focus</p>
+                                    <div class="social-icons">
+                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                                <div class="team-card">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Sarah Johnson" class="img-fluid">
+                                    <h4>John Smith</h4>
+                                    <p class="text-primary">Head of Product</p>
+                                    <p>Specializes in glass industry workflow optimization</p>
+                                    <div class="social-icons">
+                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
 
             <!-- Contact Section -->
-            <section id="contact" class="py-5 my-5">
-                <div class="container">
-                    <div class="text-center mb-5">
-                        <h2 class="section-title text-center">Ready to Transform Your Glass Factory?</h2>
-                        <p class="lead text-muted">Contact our specialists for a customized consultation</p>
-                    </div>
+            <section id="contact" class="py-6 p-4 py-lg-8 bg-light position-relative overflow-hidden">
+                <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10">
+                    <div class="position-absolute top-0 end-0  rounded-circle" style="background-color:var(--primary-color);width: 300px; height: 300px; transform: translate(30%, -30%);"></div>
+                    <div class="position-absolute bottom-0 start-0  rounded-circle" style="background-color:var(--primary-color);width: 200px; height: 200px; transform: translate(-30%, 30%);"></div>
+                </div>
 
-                    <div class="row g-4">
-                        <div class="col-lg-5">
-                            <div class="contact-info">
-                                <h4 class="mb-4">Implementation Support</h4>
-                                <p>Our team of glass manufacturing experts will guide you through every step of digital transformation.</p>
+                <div class="container position-relative">
+                    <div class="row justify-content-between">
+                        <!-- Contact Info Column -->
+                        <div class="col-lg-5 mb-5 mb-lg-0">
+                            <div class="pe-lg-4">
+                                <h2 class="display-5 fw-bold mb-4">Let's Connect</h2>
+                                <p class="lead text-muted mb-5">We're eager to discuss how @appSettings.Value.CompanyName can serve your needs. Reach out anytime.</p>
 
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-map-marker-alt fa-2x"></i>
+                                <div class="contact-info">
+                                    <!-- Contact Item 1 -->
+                                    <div class="d-flex mb-4 animate-on-scroll" data-animation="fadeInLeft">
+                                        <div class="bg-primary bg-gradient rounded-3 p-3 text-white me-4">
+                                            <i class="fas fa-map-marker-alt fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-1">Global Headquarters</h5>
+                                            <p class="mb-0 text-muted">1234 Innovation Drive, Tech Valley, NY 10001</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h5 class="mb-0">Global Headquarters</h5>
-                                        <p class="mb-0">123 GlassTech Boulevard, Toledo, OH 43601</p>
-                                    </div>
-                                </div>
 
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-phone fa-2x"></i>
+                                    <!-- Contact Item 2 -->
+                                    <div class="d-flex mb-4 animate-on-scroll" data-animation="fadeInLeft" data-delay="100">
+                                        <div class="bg-primary bg-gradient rounded-3 p-3 text-white me-4 ">
+                                            <i class="fas fa-phone-alt fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-1">Direct Line</h5>
+                                            <p class="mb-0 text-muted">+1 (800) 555-GLASS</p>
+                                            <small class="text-muted">Mon-Fri, 9am-5pm EST</small>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h5 class="mb-0">Support Center</h5>
-                                        <p class="mb-0">+1 (800) GLASS-PRO</p>
-                                    </div>
-                                </div>
 
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-envelope fa-2x"></i>
+                                    <!-- Contact Item 3 -->
+                                    <div class="d-flex mb-4 animate-on-scroll" data-animation="fadeInLeft" data-delay="200">
+                                        <div class="bg-primary bg-gradient rounded-3 p-3 text-white me-4">
+                                            <i class="fas fa-envelope fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-1">Email Us</h5>
+                                            <p class="mb-0 text-muted">contact@@@{@appSettings.Value.CompanyName}.com</p>
+                                            <small class="text-muted">Response within 24 hours</small>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h5 class="mb-0">Email</h5>
-                                        <p class="mb-0">solutions@glassfactorypro.com</p>
-                                    </div>
-                                </div>
 
-                                <div class="mt-4">
-                                    <h5>Implementation Process</h5>
-                                    <div class="progress mt-3" style="height: 8px;">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-2 small">
-                                        <span>Assessment</span>
-                                        <span>Deployment</span>
+                                    <!-- Social Media -->
+                                    <div class="social-icons mt-5 animate-on-scroll" data-animation="fadeInUp">
+                                        <h6 class="text-uppercase mb-3 text-muted">Follow Us</h6>
+                                        <a href="#" class="btn btn-sm btn-outline-primary btn-icon rounded-circle me-2"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="btn btn-sm btn-outline-primary btn-icon rounded-circle me-2"><i class="fab fa-twitter"></i></a>
+                                        <a href="#" class="btn btn-sm btn-outline-primary btn-icon rounded-circle me-2"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="#" class="btn btn-sm btn-outline-primary btn-icon rounded-circle me-2"><i class="fab fa-instagram"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Contact Form Column -->
                         <div class="col-lg-7">
-                            <div class="contact-form">
-                                <h4 class="mb-4">Get Started Today</h4>
-                                <form>
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="name" class="form-label">Full Name *</label>
-                                                <input type="text" class="form-control" id="name" placeholder="Your name" required>
+                            <div class="card border-0  rounded-2 overflow-hidden animate-on-scroll" data-animation="fadeInRight">
+                                <div class="card-body p-5">
+                                    <h3 class="fw-bold mb-4">Send Us a Message</h3>
+                                    <p class="text-muted mb-4">Complete the form below and our team will respond promptly</p>
+
+                                    <form id="contactForm" novalidate>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+                                                <div class="invalid-feedback">Please enter your name</div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="company" class="form-label">Company Name *</label>
-                                                <input type="text" class="form-control" id="company" placeholder="Your company" required>
+                                            <div class="col-md-6">
+                                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                                <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+                                                <div class="invalid-feedback">Please enter a valid email</div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="email" class="form-label">Email *</label>
-                                                <input type="email" class="form-control" id="email" placeholder="work@email.com" required>
+                                            <div class="col-12">
+                                                <label for="company" class="form-label">Company</label>
+                                                <input type="text" class="form-control" id="company" placeholder="Your company name">
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="phone" class="form-label">Phone *</label>
-                                                <input type="tel" class="form-control" id="phone" placeholder="+1 (___) ___-____" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="employees" class="form-label">Factory Size</label>
-                                                <select class="form-select" id="employees">
-                                                    <option selected>Select number of employees</option>
-                                                    <option>1-50</option>
-                                                    <option>51-200</option>
-                                                    <option>201-500</option>
-                                                    <option>501-1000</option>
-                                                    <option>1000+</option>
+                                            <div class="col-12">
+                                                <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="subject" required>
+                                                    <option value="" selected disabled>Select a topic</option>
+                                                    <option>General Inquiry</option>
+                                                    <option>Product Information</option>
+                                                    <option>Technical Support</option>
+                                                    <option>Partnership Opportunities</option>
                                                 </select>
+                                                <div class="invalid-feedback">Please select a subject</div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                                                <textarea class="form-control" id="message" rows="4" placeholder="How can we help you?" required></textarea>
+                                                <div class="invalid-feedback">Please enter your message</div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="consent" required>
+                                                    <label class="form-check-label small text-muted" for="consent">
+                                                        I agree to the <a href="#" class="text-primary">privacy policy</a> and consent to @appSettings.Value.CompanyName contacting me
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <button type="submit" class="btn btn-primary px-4 py-3">
+                                                    <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                                    Send Message
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="products" class="form-label">Primary Glass Products</label>
-                                                <select class="form-select" id="products" multiple>
-                                                    <option>Flat glass</option>
-                                                    <option>Container glass</option>
-                                                    <option>Specialty glass</option>
-                                                    <option>Fiberglass</option>
-                                                    <option>Automotive glass</option>
-                                                    <option>Architectural glass</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="message" class="form-label">Your Challenges</label>
-                                                <textarea class="form-control" id="message" rows="4" placeholder="Describe your current operational challenges"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="submit" class="btn btn-primary w-100">Request Consultation</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <!-- Required CSS (add to your stylesheet) -->
+            <style>
+                .animate-on-scroll {
+                    opacity: 0;
+                    transform: translateY(30px);
+                    transition: all 0.6s ease-out;
+                }
+
+                    .animate-on-scroll.animated {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+
+                .btn-icon {
+                    width: 36px;
+                    height: 36px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                #contact {
+                    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                }
+            </style>
+
+            <script>
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const delay = entry.target.getAttribute('data-delay') || 0;
+                                setTimeout(() => {
+                                    entry.target.classList.add('animated');
+                                }, delay);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+
+                    animateElements.forEach(el => observer.observe(el));
+
+                    // Form validation
+                    const form = document.getElementById('contactForm');
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else {
+                            const submitBtn = form.querySelector('button[type="submit"]');
+                            const spinner = submitBtn.querySelector('.spinner-border');
+                            submitBtn.disabled = true;
+                            spinner.classList.remove('d-none');
+                            // Here you would typically add your form submission logic
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            </script>
         </main>
     </div>
 
-    <footer class="footer text-white py-5">
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <h5 class="mb-4">GlassFactory Pro</h5>
-                    <p>The complete digital management platform for modern glass manufacturing facilities.</p>
-                    <div class="social-icons mt-4">
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4 class="logo-text text-white mb-4">@appSettings.Value.CompanyName</h4>
+                    <p class="mb-4">The complete enterprise solution designed specifically for the glass industry. Streamline your operations, maximize efficiency, and boost profitability.</p>
+                    <div class="social-icons">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-6">
-                    <h5 class="mb-4">Solutions</h5>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-white mb-4">Solutions</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#">Production</a></li>
-                        <li class="mb-2"><a href="#">Warehouse</a></li>
-                        <li class="mb-2"><a href="#">Quality</a></li>
-                        <li class="mb-2"><a href="#">Logistics</a></li>
-                        <li class="mb-2"><a href="#">Analytics</a></li>
+                        <li class="mb-2"><a href="#">Warehouse Management</a></li>
+                        <li class="mb-2"><a href="#">HR Management</a></li>
+                        <li class="mb-2"><a href="#">Order Management</a></li>
+                        <li class="mb-2"><a href="#">Quality Control</a></li>
+                        <li class="mb-2"><a href="#">Financial Management</a></li>
+                        <li class="mb-2"><a href="#">Business Intelligence</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-6">
-                    <h5 class="mb-4">Resources</h5>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-white mb-4">Company</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#">Case Studies</a></li>
-                        <li class="mb-2"><a href="#">Whitepapers</a></li>
+                        <li class="mb-2"><a href="#">About Us</a></li>
+                        <li class="mb-2"><a href="#">Careers</a></li>
+                        <li class="mb-2"><a href="#">Blog</a></li>
+                        <li class="mb-2"><a href="#">Press</a></li>
+                        <li class="mb-2"><a href="#">Partners</a></li>
+                        <li class="mb-2"><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-white mb-4">Resources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Documentation</a></li>
+                        <li class="mb-2"><a href="#">API Reference</a></li>
+                        <li class="mb-2"><a href="#">Tutorials</a></li>
                         <li class="mb-2"><a href="#">Webinars</a></li>
-                        <li class="mb-2"><a href="#">API Docs</a></li>
-                        <li class="mb-2"><a href="#">Help Center</a></li>
+                        <li class="mb-2"><a href="#">Support Center</a></li>
+                        <li class="mb-2"><a href="#">Community</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <h5 class="mb-4">Newsletter</h5>
-                    <p>Subscribe for the latest in glass manufacturing technology and best practices.</p>
-                    <form class="mt-3">
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Your email">
-                            <button class="btn btn-primary" type="submit">Subscribe</button>
-                        </div>
-                    </form>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="text-white mb-4">Legal</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#">Terms of Service</a></li>
+                        <li class="mb-2"><a href="#">Cookie Policy</a></li>
+                        <li class="mb-2"><a href="#">GDPR Compliance</a></li>
+                        <li class="mb-2"><a href="#">Security</a></li>
+                    </ul>
                 </div>
             </div>
-            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.1);">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-md-0">© 2023 GlassFactory Pro. All Rights Reserved.</p>
+            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.1)">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2025 @appSettings.Value.CompanyName. All rights reserved.</p>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="me-3">Privacy Policy</a>
-                    <a href="#" class="me-3">Terms of Service</a>
-                    <a href="#">GDPR Compliance</a>
+                <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                    <img src="/api/placeholder/200/40" alt="Payment Methods" class="img-fluid" style="max-width: 200px;">
                 </div>
             </div>
         </div>
     </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Navbar scroll effect
-            const navbar = document.getElementById('mainNav');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 100) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
+        // Make navbar transparent on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
                 }
             });
-
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // Animation on scroll
-            const animateOnScroll = function() {
-                const elements = document.querySelectorAll('.module-card, .flow-step, .stats-card');
-                elements.forEach(element => {
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const screenPosition = window.innerHeight / 1.2;
-
-                    if (elementPosition < screenPosition) {
-                        element.classList.add('animate__animated', 'animate__fadeInUp');
-                    }
-                });
-            };
-
-            window.addEventListener('scroll', animateOnScroll);
-            animateOnScroll(); // Run once on page load
-
-            // Multiple select for products
-            const productsSelect = document.getElementById('products');
-            if (productsSelect) {
-                productsSelect.addEventListener('change', function() {
-                    const selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
-                    console.log('Selected products:', selectedOptions);
-                });
-            }
         });
     </script>
 </body>
